@@ -12,7 +12,7 @@ namespace Models
         public string Gender { get; set; }
         public double Weight { get; set; }      
         public double Height { get; set; }
-        public string Status { get; set; }
+        public Role UserRole { get; set; }
         public virtual List<TrainingProgram> TrainingPrograms { get; set; }
         public virtual List<NutritionProgram> NutritionPrograms { get; set; }
 
@@ -31,7 +31,7 @@ namespace Models
         public User()
         {
             Random random = new Random();
-            Name = $"User#{random.Next(1000,9999)}";
+            Name = $"User#{Id}";
         }
 
         public User(string name)
@@ -47,7 +47,7 @@ namespace Models
             Weight = weight;
             Height = height;
         }
-        public override string ToString() => $"{Status} {Name}, {Age}";
+        public override string ToString() => $"{UserRole} {Name}, {Age}";
         
     }
 }

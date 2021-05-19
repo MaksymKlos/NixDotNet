@@ -11,13 +11,12 @@ namespace Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public List<Food> Foods { get; set; }
+        public virtual List<Food> Foods { get; set; }
 
-        public NutritionProgram(string name, string description, List<Food> foods)
+        public NutritionProgram(string name, string description)
         {
             Name = name;
             Description = description;
-            Foods = foods;
         }
     }
 }

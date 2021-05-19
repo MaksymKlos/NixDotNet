@@ -14,12 +14,11 @@ namespace Models
         public string Description { get; set; }
         public virtual List<Exercise> Exercises { get; set; }
 
-        public TrainingProgram(string name, string type, string description, List<Exercise> exercises)
+        public TrainingProgram(string name, string type, string description)
         {
             Name = name;
             Type = type;
             Description = description;
-            Exercises = exercises;
         }
 
     }
