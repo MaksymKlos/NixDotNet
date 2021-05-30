@@ -13,7 +13,7 @@ namespace Models.Services
         #endregion
 
         #region Methods
-        public abstract void GetInfoAboutProgram();
+        public abstract string GetInfoAboutProgram();
         #endregion
     }
 }

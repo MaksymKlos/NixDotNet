@@ -52,7 +52,7 @@ namespace Models.People
         /// <param name="ageRestriction">The age restriction</param>
         /// <param name="setOfExercises">The sets of exercises that program is containing</param>
         /// <returns>new Training program</returns>
-        private TrainingProgram CreateTrainingProgram(
+        public TrainingProgram CreateTrainingProgram(
             string programName,
             string programDescription, string typeOfProgram,
             string requiredSkillLevel, int? ageRestriction,
@@ -67,9 +67,25 @@ namespace Models.People
                 ageRestriction,
                 setOfExercises);
         }
+        public TrainingProgram CreateTrainingProgram(
+            string programName,
+            string programDescription, string typeOfProgram,
+            string requiredSkillLevel, int? ageRestriction,
+            ICollection<SetOfExercise> setOfExercises,
+            decimal price)
+        {
+            return new TrainingProgram(
+                programName,
+                programDescription,
+                this,
+                typeOfProgram,
+                requiredSkillLevel,
+                ageRestriction,
+                setOfExercises,
+                price);
+        }
 
-
-        private SetOfExercise CreateSetOfExercise(
+        public SetOfExercise CreateSetOfExercise(
             string name,
             string muscleGroup,
             ICollection<Exercise> exercises)

@@ -106,7 +106,7 @@ namespace Models.Services
         #endregion
 
         #region Methods
-        public override void GetInfoAboutProgram()
+        public override string GetInfoAboutProgram()
         {
             throw new NotImplementedException();
         }

@@ -120,11 +120,18 @@ namespace Models.Services
 
         #region Methods
 
-        public override void GetInfoAboutProgram()
+        public override string GetInfoAboutProgram()
         {
-            throw new NotImplementedException();
+            return $"Program name: {ProgramName}\n" +
+                   $"Program description: {ProgramDescription}\n" +
+                   $"Trainer: {Specialist.Name}\n" +
+                   $"Price: {Price}\n" +
+                   $"Destination: {Destination}\n" +
+                   $"Type of program: {TypeOfProgram}\n" +
+                   $"RequiredSkillLevel: {RequiredSkillLevel}\n" +
+                   $"Age restriction: {AgeRestriction??0}";
         }
-
+        
         #endregion
 
     }
