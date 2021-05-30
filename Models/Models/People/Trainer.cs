@@ -41,6 +41,7 @@ namespace Models.People
         #endregion
 
         #region Methods
+
         /// <summary>
         /// Create new training program from this trainer.
         /// </summary>
@@ -51,18 +52,30 @@ namespace Models.People
         /// <param name="ageRestriction">The age restriction</param>
         /// <param name="setOfExercises">The sets of exercises that program is containing</param>
         /// <returns>new Training program</returns>
-        public TrainingProgram CreateTrainingProgram(string programName,
-            string programDescription,string typeOfProgram,
+        private TrainingProgram CreateTrainingProgram(
+            string programName,
+            string programDescription, string typeOfProgram,
             string requiredSkillLevel, int? ageRestriction,
-            ICollection<SetOfExercise> setOfExercises) => 
-                new TrainingProgram(programName, programDescription, this,
-                typeOfProgram,requiredSkillLevel,ageRestriction,setOfExercises);
-        public SetOfExercise CreateSetOfExercise()
+            ICollection<SetOfExercise> setOfExercises)
         {
-            return null;
+            return new TrainingProgram(
+                programName,
+                programDescription,
+                this,
+                typeOfProgram,
+                requiredSkillLevel,
+                ageRestriction,
+                setOfExercises);
+        }
+
+
+        private SetOfExercise CreateSetOfExercise(
+            string name,
+            string muscleGroup,
+            ICollection<Exercise> exercises)
+        {
+            return new SetOfExercise(name, muscleGroup, exercises);
         }
         #endregion
-
-
     }
 }

@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
-using System.Text;
 using Models.People;
 
 namespace Models.Services
@@ -17,9 +15,12 @@ namespace Models.Services
         public override string ProgramName { get; }
         public override string ProgramDescription { get; }
         public override Trainer Specialist { get; }
+        public override decimal Price { get; } = 0;
+        public override string Destination { get; } = "General";
         public string TypeOfProgram { get; }
         public string RequiredSkillLevel { get; }
         public int? AgeRestriction { get; }
+        
 
         public ICollection<SetOfExercise> SetsOfExercises
         {
@@ -71,7 +72,50 @@ namespace Models.Services
             ProgramName = programName;
             ProgramDescription = programDescription;
            }
+        public TrainingProgram(string programName,
+            string programDescription,
+            Trainer specialist,
+            string typeOfProgram,
+            string requiredSkillLevel,
+            int? ageRestriction,
+            ICollection<SetOfExercise> setsOfExercises,
+            decimal price)
+        :this(programName, programDescription, specialist, typeOfProgram, requiredSkillLevel, ageRestriction, setsOfExercises)
+        {
+            if (string.IsNullOrWhiteSpace(programName))
+            {
+                throw new ArgumentException("The name of program can't be empty or null.", nameof(programName));
+            }
+            if (string.IsNullOrWhiteSpace(programDescription))
+            {
+                throw new ArgumentException("The description of program can't be empty or null.", nameof(programDescription));
+            }
+            if (string.IsNullOrWhiteSpace(typeOfProgram))
+            {
+                throw new ArgumentException("The type of program can't be empty or null.", nameof(typeOfProgram));
+            }
+            if (string.IsNullOrWhiteSpace(requiredSkillLevel))
+            {
+                throw new ArgumentException("The required skill level can't be empty or null.", nameof(requiredSkillLevel));
+            }
 
+            if (price < 0)
+            {
+                throw new ArgumentException("Price can't be less than 0.",nameof(price));
+            }
+            Specialist = specialist ?? throw new ArgumentNullException(nameof(specialist), "Specialist can't be null");
+            if (price > 0)
+            {
+                Price = price;
+                Destination = "Personal";
+            }
+            SetsOfExercises = setsOfExercises;
+            TypeOfProgram = typeOfProgram;
+            RequiredSkillLevel = requiredSkillLevel;
+            AgeRestriction = ageRestriction;
+            ProgramName = programName;
+            ProgramDescription = programDescription;
+        }
         #endregion
 
         #region Methods

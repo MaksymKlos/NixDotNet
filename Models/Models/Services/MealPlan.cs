@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Models.Services
 {
@@ -13,8 +12,8 @@ namespace Models.Services
         #region Properties
 
         public int Id { get; set; }
-        public string Name { get; set; }
-        public double Calories { get; set; }
+        public string Name { get; }
+        public double Calories => CalculateCalories();
 
         public ICollection<Food> Food => _food;
 
@@ -23,6 +22,15 @@ namespace Models.Services
 
         #region Constructors
 
+        public MealPlan(string name, ICollection<Food> food)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentException("Name can't be empty or null.", nameof(name));
+            }
+            _food = food?? throw new ArgumentNullException(nameof(food), "Food can't be null");
+            Name = name;
+        }
 
 
         #endregion
@@ -38,6 +46,16 @@ namespace Models.Services
             _food.Add(food);
         }
 
+        private double CalculateCalories()
+        {
+            double cal = 0;
+            foreach (var food in _food)
+            {
+                cal += food.Calories;
+            }
+
+            return cal;
+        }
         #endregion
     }
 }

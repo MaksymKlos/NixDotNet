@@ -6,7 +6,14 @@ namespace Models.People
 {
     public class VipUser:Client
     {
-        public VipUser(string login, string name, DateTime birthDate, string email, DateTime startWorkDate, string education) : base(login, name, birthDate, email, startWorkDate, education)
+        private protected override string Status { get;} = "VIP";
+
+        public VipUser(
+            string login,
+            string name,
+            DateTime birthDate,
+            string email)
+            : base(login, name, birthDate, email)
         {
         }
     }

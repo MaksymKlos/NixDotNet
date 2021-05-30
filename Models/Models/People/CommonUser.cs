@@ -6,7 +6,9 @@ namespace Models.People
 {
     public class CommonUser:Client
     {
-        public CommonUser(string login, string name, DateTime birthDate, string email, DateTime startWorkDate, string education) : base(login, name, birthDate, email, startWorkDate, education)
+        private protected override string Status { get;} = "Regular";
+
+        public CommonUser(string login, string name, DateTime birthDate, string email) : base(login, name, birthDate, email)
         {
         }
     }

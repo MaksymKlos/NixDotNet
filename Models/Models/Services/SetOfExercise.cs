@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Models.Services
 {
@@ -22,7 +21,6 @@ namespace Models.Services
 
         public SetOfExercise(string name, string muscleGroup, ICollection<Exercise> exercises)
         {
-            _exercises = new List<Exercise>();
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Name can't be empty or null.", nameof(name));

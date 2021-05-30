@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.VisualBasic;
+
 namespace Models.Interaction
 {
     public class Subscription
@@ -18,13 +20,18 @@ namespace Models.Interaction
         #endregion
 
         #region Constructors
+
+        public Subscription(int personId, int? nutritionProgramId, int? trainingProgramId)
+        {
+            PersonId = personId;
+            NutritionProgramId = nutritionProgramId;
+            TrainingProgramId = trainingProgramId;
+            _subscriptionStartDate = DateTime.Now;
+        }
         #endregion
 
         #region Methods
-
         private TimeSpan CalculateDuration(DateTime startDate) => DateTime.Now - startDate;
-
-
         #endregion
 
 

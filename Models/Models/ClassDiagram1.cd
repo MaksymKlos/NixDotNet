@@ -3,14 +3,14 @@
   <Class Name="Models.Interaction.EventCalendar" Collapsed="true">
     <Position X="10" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAgAAAAAIAAAAAgABAAAAAAAAAAAEAAAAA=</HashCode>
       <FileName>Interaction\EventCalendar.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Models.Interaction.Feedback" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="10" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAgAACAAAAAEAAAIAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAIAgAACAAAAAEAAAIAAQAAAAAAAAAAABAAAAAAAA=</HashCode>
       <FileName>Interaction\Feedback.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" Collapsed="true" />
@@ -25,28 +25,21 @@
   <Class Name="Models.People.Client" Collapsed="true">
     <Position X="5.5" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAEAAAIAAAAAAgAAAAAAAAACAAAAAAAAAAAAAA=</HashCode>
       <FileName>People\Client.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Models.People.CommonUser" Collapsed="true">
     <Position X="6.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>People\CommonUser.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Models.People.Manager" Collapsed="true">
-    <Position X="8" Y="3.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>People\Manager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Models.People.Nutritionist" Collapsed="true">
     <Position X="3" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <HashCode>AAEAAAAAAAACAABAAAAAAAAAAAAAAAAAAAAAAABAAAA=</HashCode>
       <FileName>People\Nutritionist.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -82,7 +75,7 @@
   <Class Name="Models.People.VipUser" Collapsed="true">
     <Position X="4.25" Y="4.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>People\VipUser.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -96,7 +89,7 @@
   <Class Name="Models.Services.FitnessProgram&lt;T&gt;" Collapsed="true">
     <Position X="1.75" Y="6.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAACEAAAAAQAA=</HashCode>
+      <HashCode>AAAAAAAAASAAAAAAAAAAAAAAAAAAAAAEACEAAAAAQAA=</HashCode>
       <FileName>Services\FitnessProgram.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -110,14 +103,14 @@
   <Class Name="Models.Services.MealPlan" Collapsed="true">
     <Position X="0.5" Y="8.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAACAAAAAAAAAAABAAAAAAQAAAAAAAAAAAAAAgAAEAA=</HashCode>
+      <HashCode>IAACAAAAAAAAAAABAAAAAEQAAAAAAAAAAAAAAgAAEAA=</HashCode>
       <FileName>Services\MealPlan.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Models.Services.NutritionProgram" Collapsed="true">
     <Position X="0.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>CAACAAAAACAAAAAAAAAAAAAAAAgAAAAAACEAAAAAQAQ=</HashCode>
+      <HashCode>CAACAAAAASAAAAAAAAAAAAAAAAgAAAAEACEAAAAAQAQ=</HashCode>
       <FileName>Services\NutritionProgram.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -131,7 +124,7 @@
   <Class Name="Models.Services.TrainingProgram" Collapsed="true">
     <Position X="2.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAACAAAAAAAABAAAAgAAAAAAACACMAABAAQAA=</HashCode>
+      <HashCode>AAACAAAAASAAAAAAAABAAAAgAAAAAAAGACMAABAAQAA=</HashCode>
       <FileName>Services\TrainingProgram.cs</FileName>
     </TypeIdentifier>
   </Class>

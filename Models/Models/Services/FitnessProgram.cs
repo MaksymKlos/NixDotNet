@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Models.People;
+﻿using Models.People;
 
 namespace Models.Services
 {
@@ -11,6 +8,8 @@ namespace Models.Services
         public abstract string ProgramName { get; }
         public abstract string ProgramDescription { get;}
         public abstract T Specialist { get;}
+        public abstract decimal Price { get; }
+        public abstract string Destination { get; }
         #endregion
 
         #region Methods
