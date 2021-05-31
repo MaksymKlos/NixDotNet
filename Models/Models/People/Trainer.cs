@@ -88,7 +88,7 @@ namespace Models.People
         public SetOfExercise CreateSetOfExercise(
             string name,
             string muscleGroup,
-            ICollection<Exercise> exercises)
+            List<Exercise> exercises)
         {
             return new SetOfExercise(name, muscleGroup, exercises);
         }

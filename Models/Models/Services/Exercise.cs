@@ -26,7 +26,13 @@ namespace Models.Services
             Name = name;
             MuscleGroups = muscleGroups;
         }
-        
+
+        #endregion
+
+        #region Methods
+
+        public override string ToString() => $"{Name}";
+
         #endregion
     }
 }

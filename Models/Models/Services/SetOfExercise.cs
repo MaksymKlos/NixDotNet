@@ -7,19 +7,19 @@ namespace Models.Services
     {
         #region Fields
 
-        private readonly ICollection<Exercise> _exercises;
+        private readonly List<Exercise> _exercises;
         #endregion
 
         #region Properties
         public int Id { get; set; }
         public string Name { get; }
         public string MuscleGroup { get; }
-        public ICollection<Exercise> Exercises => _exercises;
+        public List<Exercise> Exercises => _exercises;
         #endregion
 
         #region Constructors
 
-        public SetOfExercise(string name, string muscleGroup, ICollection<Exercise> exercises)
+        public SetOfExercise(string name, string muscleGroup, List<Exercise> exercises)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -46,6 +46,18 @@ namespace Models.Services
             }
             _exercises.Add(exercise);
         }
+
+        public override string ToString()
+        {
+            string result = "";
+            for (int i = 0; i < Exercises.Count; i++)
+            {
+                result += $"{_exercises[i]}\n";
+            }
+
+            return result;
+        }
+
         #endregion
     }
 }

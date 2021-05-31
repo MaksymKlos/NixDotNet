@@ -50,6 +50,20 @@ namespace TestProject
                 sets,
                 1000.0m);
             Console.WriteLine(trainingProgram.GetInfoAboutProgram());
+            Console.WriteLine("------------------------------------------------");
+            foreach (var setOfExercise in trainingProgram.SetsOfExercises)
+            {
+                Console.WriteLine(setOfExercise);
+            }
+
+            List<Food> MondayNutrition = new List<Food>()
+            {
+                new Food("Chicken breast",165,"Great source of protein."),
+                new Food("Buckwheat",343,"Has a rich and unique composition of vitamins and minerals."),
+                new Food("Cucumber",16,"Increase appetite, promote good assimilation of food.")
+            };
+            
+           
           }
     }
 }

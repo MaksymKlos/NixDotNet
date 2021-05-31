@@ -33,5 +33,12 @@ namespace Models.Services
         }
 
         #endregion
+
+        #region Methods
+
+        public override string ToString() => $"{Name}";
+
+
+        #endregion
     }
 }
