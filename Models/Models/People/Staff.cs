@@ -9,25 +9,25 @@ namespace Models.People
     {
         #region Fields
         private readonly DateTime _startWorkDate;
-        private List<Feedback> _feedbacks = new List<Feedback>();
+        //private List<Feedback> _feedback = new List<Feedback>();
         #endregion
 
         #region Properties
         public string Education { get; }
         public int WorkExperience => CalculateYears(_startWorkDate);
 
-        public virtual ICollection<Feedback> Feedbacks
-        {
-            get
-            {
-                if (_feedbacks != null)
-                {
-                    return _feedbacks;
-                }
+        //public virtual ICollection<Feedback> Feedback
+        //{
+        //    get
+        //    {
+        //        if (_feedback != null)
+        //        {
+        //            return _feedback;
+        //        }
 
-                throw new ArgumentNullException(nameof(_feedbacks), "Feedback has not assigned a value.");
-            }
-        }
+        //        throw new ArgumentNullException(nameof(_feedback), "Feedback has not assigned a value.");
+        //    }
+        //}
 
         #endregion
 
@@ -54,13 +54,13 @@ namespace Models.People
         }
         #endregion
         #region Methods
-        public void AddFeedback(Feedback feedback)
-        {
-            if (feedback!=null)
-            {
-                _feedbacks.Add(feedback);
-            }
-        }
+        //public void AddFeedback(Feedback feedback)
+        //{
+        //    if (feedback!=null)
+        //    {
+        //        _feedback.Add(feedback);
+        //    }
+        //}
         #endregion
     }
 }

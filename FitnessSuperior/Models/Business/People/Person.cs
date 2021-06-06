@@ -1,43 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using Models.Interfaces;
 
-namespace Models.People
+
+namespace Models.Business.People
 {
+    /// <summary>
+    /// Parent class uniting all people.
+    /// </summary>
     public class Person:IPersonData
     {
         #region Fields
-        private DateTime _birthDate;
-
+        /// <summary>
+        /// Date of birth.
+        /// </summary>
+        private readonly DateTime _birthDate;
+        
         private string _secondName;
         private string _phoneNumber;
+        private string _login;
+
         #endregion
         #region Properties
-        public int PersonId { get; set; }
-        public string Login { get; private set; }
+
+        public string Login
+        {
+            get
+            {
+                if (_login == null)
+                {
+                    throw new ArgumentNullException(nameof(_login), "Login has not assigned a value.");
+                }
+                return _login;
+            }
+            set => _login = ChangeLogin(value);
+        }
+
         public string Name { get; set; }
         /// <summary>
         /// Returns the user's age based on their date of birth.
         /// </summary>
         public int Age => CalculateYears(_birthDate);
-        public string Email { get; private set; }
+        public string Email { get; }
 
-        private DateTime BirthDate
-        {
-            get => _birthDate;
-            set => _birthDate = value;
-        }
+
 
         public string SecondName
         {
-            get
-            {
-                if (_secondName != null)
-                {
-                    throw new ArgumentNullException(nameof(_secondName), "Second name has not assigned the value.");
-                }
-                return _secondName;
-            }
+            get => _secondName;
+           
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -50,15 +60,8 @@ namespace Models.People
 
         public string PhoneNumber
         {
-            get
-            {
-                if (_phoneNumber != null)
-                {
-                    throw new ArgumentNullException(nameof(_secondName), "Second name has not assigned the value.");
-                }
-                return _phoneNumber;
-
-            }
+            get => _phoneNumber;
+           
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
@@ -74,7 +77,7 @@ namespace Models.People
 
         public Person(string login, string name, DateTime birthDate, string email)
         {
-            ChangeLogin(login);
+            Login = login;
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Name can't be empty or null.", nameof(name));
@@ -94,7 +97,7 @@ namespace Models.People
                 throw new ArgumentException("This email is already in use,", nameof(email));
             }
             Name = name;
-            BirthDate = birthDate;
+            _birthDate = birthDate;
             Email = email;
             People.AddPerson(this);
         }
@@ -116,7 +119,7 @@ namespace Models.People
         /// Allows the user to change their login.
         /// </summary>
         /// <param name="login">Unique login</param>
-        public void ChangeLogin(string login)
+        private string ChangeLogin(string login)
         {
             if (string.IsNullOrWhiteSpace(login))
             {
@@ -127,7 +130,8 @@ namespace Models.People
             {
                 throw new ArgumentException("This login is already in use,", nameof(login));
             }
-            Login = login;
+
+            return login;
         }
         #endregion
 
