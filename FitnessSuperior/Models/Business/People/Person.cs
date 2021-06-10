@@ -75,6 +75,10 @@ namespace Models.Business.People
         #endregion
         #region Constructors
 
+        public Person()
+        {
+            
+        }
         public Person(string login, string name, DateTime birthDate, string email)
         {
             Login = login;

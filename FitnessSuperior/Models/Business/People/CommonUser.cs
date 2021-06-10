@@ -6,6 +6,10 @@ namespace Models.Business.People
     {
         public override string Status { get;} = "Regular";
 
+        public CommonUser()
+        {
+            
+        }
         public CommonUser(string login, string name, DateTime birthDate, string email) : base(login, name, birthDate, email)
         {
         }

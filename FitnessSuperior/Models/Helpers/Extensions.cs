@@ -19,7 +19,13 @@ namespace Models.Helpers
                 user.Name,
                 user.Age,
                 user.Email,
-                user.Status);
+                user.Status)
+            {
+                PhoneNumber = user.PhoneNumber,
+                SecondName = user.SecondName,
+                TrainingPrograms = user.TrainingPrograms,
+
+            };
         }
         public static TrainerDto ModelToDto(this Trainer trainer)
         {

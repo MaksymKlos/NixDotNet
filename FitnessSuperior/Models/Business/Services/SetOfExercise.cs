@@ -18,6 +18,10 @@ namespace Models.Business.Services
 
         #region Constructors
 
+        public SetOfExercise()
+        {
+            
+        }
         public SetOfExercise(string name, string muscleGroup, List<Exercise> exercises)
         {
             if (string.IsNullOrWhiteSpace(name))

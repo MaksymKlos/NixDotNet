@@ -40,6 +40,10 @@ namespace Models.Business.Services
 
         #region Constructors
 
+        public TrainingProgram()
+        {
+            
+        }
         public TrainingProgram(string programName,
             string programDescription,
             Trainer specialist,

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 using Models.Interfaces;
 
 namespace Models.Dto.Person
@@ -9,12 +10,17 @@ namespace Models.Dto.Person
     {
         public int Id { get; set; }
         public string Login { get; set; }
+        [JsonPropertyName("FirstName")]
         public string Name { get; set; }
         public string SecondName { get; set; }
         public int Age { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
 
+        public PersonDto()
+        {
+            
+        }
         public PersonDto(
             string login,
             string name,

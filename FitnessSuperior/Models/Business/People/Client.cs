@@ -14,6 +14,11 @@ namespace Models.Business.People
         #endregion
 
         #region Constructors
+
+        public Client()
+        {
+            
+        }
         public Client(
             string login,
             string name,
