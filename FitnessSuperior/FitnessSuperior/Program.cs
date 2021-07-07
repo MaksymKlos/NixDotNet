@@ -175,11 +175,23 @@ namespace FitnessSuperior
                 new Exercise("Push-ups", "Chest,triceps,shoulders").ModelToDto()
             };
             var db = new LinkToSql<ExerciseDto>();
+            var eService = new ExerciseService();
             foreach (var exercise in listOfExercises)
             {
                 Console.WriteLine(db.Create(exercise).Name);
             }
-            db.Remove(3);
+            db.Remove(1003);
+            var l = db.GetAll();
+            foreach (var item in l)
+            {
+                Console.WriteLine($"Id: {item.Id}, Name {item.Name}, Muscle group: {item.MuscleGroups}");
+            }
+
+            var ex = new Exercise("Lunges", "Leg").ModelToDto();
+            ex.Id = 7;
+            eService.Update(ex);
+
+            Console.WriteLine($"Id: 5, Name: {db.GetById(5).Name}");
             
 
             //Entity Framework

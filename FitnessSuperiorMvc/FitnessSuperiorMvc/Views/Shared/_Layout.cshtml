@@ -1,0 +1,117 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*@model Models.ViewModels.RegisterViewModel*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A website that will help you become healthier.
+          Author: Klos Maksym, ">
+    <meta name="theme-color" content="#340647">
+    <title>@ViewData["Title"] - FitnessSuperiorMvc</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
+    <link rel="shortcut icon" href="~/images/FS.ico" type="image/x-icon">
+    <link rel="apple-touch-icon" href="~/images/FS.ico">
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    @await RenderSectionAsync("Styles", required: false)
+    
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-xxl">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <img src="~/images/logo.png" alt="logo" class="logo">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Workouts
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item"  asp-controller="Workout" asp-action="CreateProgram">Create workout</a></li>
+                                <li><a class="dropdown-item" asp-controller="Workout" asp-action="ExistingPrograms">Existing programs</a></li>
+                                <li><a class="dropdown-item" asp-controller="Workout" asp-action="MyPrograms">My programs</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Workout" asp-action="Calendar" >Calendar</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Nutrition
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" asp-controller="Nutrition" asp-action="CreateProgram">Create nutrition</a></li>
+                                <li><a class="dropdown-item" asp-controller="Nutrition" asp-action="ExistingPrograms">Existing programs</a></li>
+                                <li><a class="dropdown-item" asp-controller="Nutrition" asp-action="MyPrograms">My programs</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Community
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item disabled" asp-controller="Community" asp-action="MyReview">My reviews</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Resources
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" asp-controller="Resources" asp-action="Workout">Workout</a></li>
+                                <li><a class="dropdown-item" asp-controller="Resources" asp-action="Nutrition">Nutrition</a></li>
+                                <li><a class="dropdown-item" asp-controller="Resources" asp-action="Rest">Rest</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                About
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item disabled" asp-controller="Home" asp-action="About" target="Information about the site.">Learn more</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item disabled" asp-controller="Home" asp-action="ContactUs">Contact us</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <div class="d-flex">
+                        <button class="sign-in-link sign-link" data-bs-toggle="modal" data-bs-target="#sign-in" >Sign in</button>
+                        <button class="sign-up-link sign-link" data-bs-toggle="modal" data-bs-target="#sign-up" asp-action="Register">Sign up</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <partial name="~/Views/Home/_SignIn.cshtml" />
+        <partial name="~/Views/Home/_SignUp.cshtml" />
+    </header>
+    <main role="main" class="pb-3">
+        <div class="container-xxl">
+            @RenderBody()
+            
+        </div>
+    </main>
+    
+    <footer class="footer text-muted">
+        <div class="container nav-link">
+            &copy; 2021 - Fitness Superior - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+   
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

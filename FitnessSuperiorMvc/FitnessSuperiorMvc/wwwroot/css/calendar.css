@@ -1,0 +1,7 @@
+﻿:root {
+    --fc-button-bg-color: #604980;
+}
+#calendar {
+    color: #ccc;
+    font-family: 'Rubic', sans-serif;
+}

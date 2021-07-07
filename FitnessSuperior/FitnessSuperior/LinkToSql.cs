@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Data.Linq;
 using System.Linq;
+using LinqToDB;
 using LinqToDB.Reflection;
 using Models.Interfaces;
 using Models.Dto.FitnessProgram;
 using Models.Dto.Person;
+using DataContext = System.Data.Linq.DataContext;
 
 namespace FitnessSuperior
 {
@@ -15,7 +16,7 @@ namespace FitnessSuperior
         private static string _connectionString =
             @"Data Source=MAXVEL\SQLEXPRESS;Initial Catalog=LinqToDb;Integrated Security=True";
 
-        private DataContext db = new DataContext(_connectionString);
+        protected DataContext db = new DataContext(_connectionString);
         //public static void Add(T obj)
         //{
         //    CreateTable().InsertOnSubmit(obj);
@@ -51,8 +52,9 @@ namespace FitnessSuperior
             throw new ArgumentNullException(nameof(entity));
         }
 
-        public void Update(T entity)
+        public virtual void Update(T entity)
         {
+            
             throw new NotImplementedException();
         }
 

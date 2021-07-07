@@ -1,0 +1,53 @@
+﻿@*@model Models.ViewModels.RegisterViewModel*@
+<div class="modal fade" id="sign-up" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Sign up</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    @*asp-controller="Account" asp-action="Register"*@
+                    <div class="mb-3">
+                        <label for="login" class="form-label required">Login</label>
+                        <input class="form-control" id="login" required @*type="text" asp-for="UserName"*@>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label required">Name</label>
+                        <input class="form-control" id="name" required type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label for="surname" class="form-label">Surname</label>
+                        <input class="form-control" id="surname" type="text">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label required">Email address</label>
+                        <input class="form-control" id="email" required aria-describedby="emailHelp" placeholder="example@gmail.com" @*type="email" asp-for="Email"*@>
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="birthdate" class="form-label required">Birth date</label>
+                        <input class="form-control" id="birthdate" required type="date">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone number</label>
+                        <input type="tel" class="form-control" id="phone">
+                    </div>
+                    <div class="mb-3">
+                        <label for="password" class="form-label required">Password</label>
+                        <input class="form-control" id="password" required @*type="password" asp-for="Password"*@>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmPassword" class="form-label required">Confirm password</label>
+                        <input class="form-control" id="confirmPassword" required @*type="password" asp-for="ConfirmPassword"*@>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-light" type="submit" value="Register">Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
