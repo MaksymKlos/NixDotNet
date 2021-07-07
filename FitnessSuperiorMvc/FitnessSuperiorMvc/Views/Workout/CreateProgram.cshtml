@@ -1,0 +1,62 @@
+﻿@{
+    ViewData["Title"] = "Create Workout";
+}
+<div class="main__content m-height">
+    <div class="main__title center">
+        Create Program
+    </div>
+    <div class="main__text center">
+        Fill out the form below to create your own fitness program
+    </div>
+    <div class="main__form center">
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="programName">Program name:</label>
+            <input class="form__input col-md-3" type="text" name="programName" id="programName">
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="description">Description:</label>
+            <textarea class="form__input col-md-3" type="text" name="description" id="description" rows="2"></textarea>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="price">Price:</label>
+            <input class="form__input col-md-3" type="text" name="price" id="price" placeholder="$">
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="destination">Destination:</label>
+            <select class="form__input col-md-3" name="destination" id="destination">
+                <option value="men">For men</option>
+                <option value="women">For women</option>
+                <option value="all">For all</option>
+            </select>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="type">Type of program:</label>
+            <select class="form__input col-md-3" name="type" id="type">
+                <option value="loss">Weight loss</option>
+                <option value="gain">Muscle gain</option>
+            </select>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="skill">Required skill level:</label>
+            <select class="form__input col-md-3" name="skill" id="skill">
+                <option value="">Beginner</option>
+                <option value="">Average level</option>
+                <option value="">Professional</option>
+            </select>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="age">Age restriction:</label>
+            <input class="form__input col-md-3" type="text" name="age" id="age" placeholder="Leave blank if not">
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="sets">Sets of exercises:</label>
+            <select class="form__input col-md-3" name="sets" id="sets">
+                <option value="">Monday</option>
+                <option value="">Wednesday</option>
+                <option value="">Friday</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-light">Create</button>
+    </div>
+   
+</div>

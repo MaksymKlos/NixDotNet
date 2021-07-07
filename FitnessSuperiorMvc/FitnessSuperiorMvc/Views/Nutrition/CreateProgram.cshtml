@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Create Workout";
+}
+<div class="main__content m-height">
+    <div class="main__title center">
+        Create Program
+    </div>
+    <div class="main__text center">
+        Fill out the form below to create your own nutrition program
+    </div>
+    <div class="main__form center">
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="programName">Program name:</label>
+            <input class="form__input col-md-3" type="text" name="programName" id="programName">
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="description">Description:</label>
+            <textarea class="form__input col-md-3" type="text" name="description" id="description" rows="2"></textarea>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="price">Price:</label>
+            <input class="form__input col-md-3" type="text" name="price" id="price" placeholder="$">
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="destination">Destination:</label>
+            <select class="form__input col-md-3" name="destination" id="destination">
+                <option value="">For men</option>
+                <option value="">For women</option>
+                <option value="">For all</option>
+            </select>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="type">Type of diet:</label>
+            <select class="form__input col-md-3" name="type" id="type">
+                <option value="loss">Weight loss</option>
+                <option value="gain">Muscle gain</option>
+            </select>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="meal">Meal plans:</label>
+            <select class="form__input col-md-3" name="meal" id="meal">
+                <option value="">Monday</option>
+                <option value="">Wednesday</option>
+                <option value="">Friday</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-light">Create</button>
+    </div>
+
+</div>
