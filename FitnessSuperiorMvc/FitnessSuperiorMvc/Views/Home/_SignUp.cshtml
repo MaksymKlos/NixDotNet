@@ -7,40 +7,40 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form method="post">
+                <form method="post" name="registration">
                     @*asp-controller="Account" asp-action="Register"*@
                     <div class="mb-3">
                         <label for="login" class="form-label required">Login</label>
-                        <input class="form-control" id="login" required @*type="text" asp-for="UserName"*@>
+                        <input class="form-control" id="login" name="login" type="text" placeholder="from 7 to 40 symbols" @*asp-for="UserName"*@>
                     </div>
                     <div class="mb-3">
                         <label for="name" class="form-label required">Name</label>
-                        <input class="form-control" id="name" required type="text">
+                        <input class="form-control" id="name" name="name" type="text" placeholder="from 2 to 40 symbols">
                     </div>
                     <div class="mb-3">
                         <label for="surname" class="form-label">Surname</label>
-                        <input class="form-control" id="surname" type="text">
+                        <input class="form-control" id="surname" name="surname" type="text" placeholder="from 2 to 40 symbols">
                     </div>
                     <div class="mb-3">
                         <label for="email" class="form-label required">Email address</label>
-                        <input class="form-control" id="email" required aria-describedby="emailHelp" placeholder="example@gmail.com" @*type="email" asp-for="Email"*@>
+                        <input class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="example@gmail.com" @*type="email" asp-for="Email"*@>
                         <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                     </div>
                     <div class="mb-3">
                         <label for="birthdate" class="form-label required">Birth date</label>
-                        <input class="form-control" id="birthdate" required type="date">
+                        <input class="form-control" id="birthdate" name="birthdate" type="date">
                     </div>
                     <div class="mb-3">
                         <label for="phone" class="form-label">Phone number</label>
-                        <input type="tel" class="form-control" id="phone">
+                        <input type="tel" class="form-control" name="phone" id="phone">
                     </div>
                     <div class="mb-3">
                         <label for="password" class="form-label required">Password</label>
-                        <input class="form-control" id="password" required @*type="password" asp-for="Password"*@>
+                        <input class="form-control" id="password" name="password" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" @*asp-for="Password"*@>
                     </div>
                     <div class="mb-3">
                         <label for="confirmPassword" class="form-label required">Confirm password</label>
-                        <input class="form-control" id="confirmPassword" required @*type="password" asp-for="ConfirmPassword"*@>
+                        <input class="form-control" id="confirmPassword" name="confirmPassword" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" @*asp-for="ConfirmPassword"*@>
                     </div>
 
                     <div class="modal-footer">
