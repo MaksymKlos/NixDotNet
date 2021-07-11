@@ -125,7 +125,7 @@ $(function () {
             description: {
                 required: "Please enter a description!",
                 minlength: "Description name must contain at least 6 characters",
-                maxlength: "Description name must contain no more than 50 characters"
+                maxlength: "Description name must contain no more than 300 characters"
             },
             price: {
                 number: "Price must be decimal type (x.xx)"
@@ -135,6 +135,32 @@ $(function () {
                 min: "Min age restriction - 10",
                 max: "Max age restriction - 18"
             }
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    }),
+    $("form[name='contact']").validate({
+        rules: {
+            email: {
+                required: true,
+                email: true
+            },
+            message: {
+                required: true,
+                maxlength: 500
+            }
+        },
+        messages: {
+            email: {
+                required: "Please enter an email!",
+                email: "Please enter correct email"
+            },
+            message: {
+                required: "Please enter a message!",
+                maxlength: "Message name must contain no more than 500 characters"
+            }
+
         },
         submitHandler: function (form) {
             form.submit();

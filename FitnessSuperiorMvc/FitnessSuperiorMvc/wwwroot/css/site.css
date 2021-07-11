@@ -141,7 +141,7 @@ header {
     color: #2c2c2c;
 }
 .dropdown-item {
-    
+    cursor: pointer;
 }
 .dropdown-item:hover {
     background-color: #dfcbf7;
