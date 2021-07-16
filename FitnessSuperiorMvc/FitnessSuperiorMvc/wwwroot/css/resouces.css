@@ -9,6 +9,7 @@
     margin: 0.7rem;
     -webkit-box-shadow: inset 4px 2px 9px -2px #FF19E4;
     box-shadow: inset 4px 2px 9px -2px #FF19E4;
+    max-width: 96%;
 }
 
 .resource-article__title {

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccess.EF.Migrations
 {
     [DbContext(typeof(FitnessAppContext))]
-    [Migration("20210707094256_InitialDb")]
+    [Migration("20210713205932_InitialDb")]
     partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -41,7 +41,7 @@ namespace DataAccess.EF.Migrations
 
                     b.HasIndex("SetOfExercisesDtoId");
 
-                    b.ToTable("ExerciseDto");
+                    b.ToTable("Exercises");
                 });
 
             modelBuilder.Entity("Models.Dto.FitnessProgram.FoodDto", b =>

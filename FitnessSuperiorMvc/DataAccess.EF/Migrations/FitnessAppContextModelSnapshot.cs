@@ -39,7 +39,7 @@ namespace DataAccess.EF.Migrations
 
                     b.HasIndex("SetOfExercisesDtoId");
 
-                    b.ToTable("ExerciseDto");
+                    b.ToTable("Exercises");
                 });
 
             modelBuilder.Entity("Models.Dto.FitnessProgram.FoodDto", b =>

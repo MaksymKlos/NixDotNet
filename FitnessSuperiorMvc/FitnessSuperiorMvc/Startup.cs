@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using DataAccess.EF;
 using Microsoft.AspNetCore.Identity;
+using Models.Interfaces;
+using Services;
 
 namespace FitnessSuperiorMvc
 {
@@ -22,9 +24,14 @@ namespace FitnessSuperiorMvc
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.Configure<RepositoryOptions>(Configuration);
+            services.AddDbContext<FitnessAppContext>();
             services.AddDbContext<SecurityContext>();
-            
+
+            services.AddScoped<ExerciseService>();
+            services.AddScoped<SetOfExercisesService>();
+            services.AddScoped<TrainingProgramsService>();
+
+            services.Add(ServiceDescriptor.Scoped(typeof(IRepository<>),typeof(FitnessAppRepository<>)));
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<SecurityContext>();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Models.Interfaces;
 
@@ -16,6 +17,14 @@ namespace Models.Dto.FitnessProgram
         {
             Name = name;
             MuscleGroup = muscleGroup;
+        }
+        public void AddItem(ExerciseDto exercise)
+        {
+            var ex = Exercises.FirstOrDefault(e => e.Id == exercise.Id);
+            if (ex == null)
+            {
+                Exercises.Add(exercise);
+            }
         }
     }
 }

@@ -7,7 +7,7 @@ using Models.Interfaces;
 
 namespace Models.ViewModels
 {
-    public class ExistingProgramsViewModel<T> where T:FitnessProgramDto
+    public class ExistingProgramsViewModel<T> where T:IKey
     {
         public IEnumerable<T> ExistingPrograms { get; set; }
         public int WorkoutPerPage { get; set; }

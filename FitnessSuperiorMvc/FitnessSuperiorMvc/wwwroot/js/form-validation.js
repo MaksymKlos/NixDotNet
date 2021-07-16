@@ -95,9 +95,37 @@ $(function () {
             form.submit();
         }
     }),
+    $("form[name='exercise']").validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 1,
+                maxlength: 50
+            },
+            muscleGroups: {
+                required: true,
+                maxlength: 300
+            }
+        },
+        messages: {
+            name: {
+                required: "Please enter a name!",
+                minlength: "Name must contain at least 1 character",
+                maxlength: "Name must contain no more than 50 characters"
+            },
+            muscleGroups: {
+                required: "Please enter the muscle groups to be loaded during training!",
+                maxlength: "The field must contain no more than 300 characters"
+            }
+        },
+        submitHandler: function (form) {
+            alert("Exercise successfully created!");
+            form.submit();
+            }
+    }),
     $("form[name='program']").validate({
         rules: {
-            programName: {
+            name: {
                 required: true,
                 minlength: 6,
                 maxlength: 50
@@ -117,11 +145,16 @@ $(function () {
             }
         },
         messages: {
-            programName: {
-                required: "Please enter a program name!",
-                minlength: "Program name must contain at least 6 characters",
-                maxlength: "Program name must contain no more than 50 characters"
+            name: {
+                required: "Please enter a name!",
+                minlength: "Name must contain at least 6 characters",
+                maxlength: "Name must contain no more than 50 characters"
             },
+            muscleGroups: {
+                required: "Please enter the muscle groups to be loaded during training!",
+                maxlength: "The field must contain no more than 300 characters"
+            },
+
             description: {
                 required: "Please enter a description!",
                 minlength: "Description name must contain at least 6 characters",
@@ -137,7 +170,9 @@ $(function () {
             }
         },
         submitHandler: function (form) {
+            alert("Program successfully created!");
             form.submit();
+            
         }
     }),
     $("form[name='contact']").validate({

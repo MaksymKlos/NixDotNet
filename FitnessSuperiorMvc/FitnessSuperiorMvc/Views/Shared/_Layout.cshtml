@@ -40,11 +40,18 @@
                                 Workouts
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <li><a class="dropdown-item"  asp-controller="Workout" asp-action="CreateProgram">Create workout</a></li>
+                                <li><a class="dropdown-item" asp-controller="Workout" asp-action="CreateExercise">Create exercise</a></li>
+                                <li><a class="dropdown-item" asp-controller="Workout" asp-action="ExistingExercises">Existing exercises</a></li>
+
+                                <li><a class="dropdown-item" asp-controller="Workout" asp-action="CreateComplex">Create set of exercises</a></li>
+                                <li><a class="dropdown-item" asp-controller="Workout" asp-action="ExistingComplexes">Existing complexes</a></li>
+
+                                <li><a class="dropdown-item" asp-controller="Workout" asp-action="CreateProgram">Create training program</a></li>
                                 <li><a class="dropdown-item" asp-controller="Workout" asp-action="ExistingPrograms">Existing programs</a></li>
+
                                 <li><a class="dropdown-item" asp-controller="Workout" asp-action="MyPrograms">My programs</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" asp-controller="Workout" asp-action="Calendar" >Calendar</a></li>
+                                <li><a class="dropdown-item" asp-controller="Workout" asp-action="Calendar">Calendar</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">

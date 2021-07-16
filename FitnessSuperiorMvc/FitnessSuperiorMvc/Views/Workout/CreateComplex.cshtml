@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Create complex";
+}
+<div class="main__content m-height">
+    <div class="main__title center">
+        Create Program
+    </div>
+    <div class="main__text center">
+        Fill out the form below to create your own fitness program
+    </div>
+    <form class="main__form center" name="program" method="post">
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="name">Complex name:</label>
+            <input class="form__input col-md-3" type="text" name="name" id="name" placeholder="from 6 to 50 symbols">
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="muscleGroups">Active muscles:</label>
+            <textarea class="form__input col-md-3" type="text" name="muscleGroups" id="muscleGroups" rows="2" placeholder="from 6 to 300 symbols"></textarea>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" for="sets">Exercises:</label>
+            <select class="form__input col-md-3" name="sets" id="sets">
+                <option value="monday">Monday</option>
+                <option value="wednesday">Wednesday</option>
+                <option value="friday">Friday</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-light">Create</button>
+    </form>
+
+</div>
