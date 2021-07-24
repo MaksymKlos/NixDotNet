@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Sign in";
+}
+@model LoginViewModel
+<div class="main__content reg-content m-height">
+    <div class="main__title center">
+        Sign in
+    </div>
+    <form class="main__form center" asp-route-returnUrl="@ViewBag.ReturnUrl" asp-action="Login" method="post">
+        <div class="form__input-group row">
+            <label class="form-label col-md-2" asp-for="Login">Login:</label>
+            <input class="form-control col-md-3 reg-input" type="text" placeholder="from 6 to 20 characters" asp-for="Login">
+            <span asp-validation-for="Login" class="text-danger" style="display: block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form-label col-md-2" asp-for="Password">Password:</label>
+            <input class="form-control col-md-3 reg-input" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" asp-for="Password">
+            <span asp-validation-for="Password" class="text-danger" style="display: block"></span>
+        </div>
+        <div class="mb-3 form-check form__input-group reg-check">
+            <input type="checkbox" class="form-check-input" asp-for="Confirm">
+            <label class="form-check-label" asp-for="Confirm">Check me out</label>
+        </div>
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <button type="submit" class="btn btn-light reg-btn">Login</button>
+    </form>
+
+</div>
+@section Styles{
+    <link href="~/css/auth.css" type="text/css" rel="stylesheet" />
+}

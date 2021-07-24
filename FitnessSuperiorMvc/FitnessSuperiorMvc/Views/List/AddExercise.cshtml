@@ -1,0 +1,31 @@
+﻿@using FitnessSuperiorMvc.BLL.Dto.Services.Sport
+@model FitnessSuperiorMvc.BLL.Services.AddingExercises
+<div class="main__content m-height">
+    <div class="main__title center">
+        Add exercise to complex
+    </div>
+    <form class="form-horizontal">
+        <table class="table" style="color: #ccc">
+            <tr class="d-md-table-row">
+                <th class="d-md-table-cell">Name</th>
+                <th class="d-md-table-cell">MuscleGroup</th>
+            </tr>
+            @if (Model.Exercises != null)
+            {
+                @foreach (ExerciseDto exercise in Model.Exercises)
+                {
+                    <tr class="d-md-table-row">
+                        <td class="d-md-table-cell">@exercise.Name</td>
+                        <td class="d-md-table-cell">@exercise.MuscleGroups</td>
+                    </tr>
+                }
+            }
+            
+        </table>
+    </form>
+
+    <div class="col-md-3" style="display: inline-block;">
+        <a class="form__input col-md-3" asp-action="ExistingExercises" asp-controller="Workout">Add exercise</a>
+    </div>
+
+</div>

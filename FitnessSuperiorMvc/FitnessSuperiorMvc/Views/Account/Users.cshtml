@@ -1,0 +1,30 @@
+﻿@model UsersViewModel
+
+@{
+    ViewData["Title"] = "Users";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="text-light">Users</h2>
+
+<table class="table text-light">
+    <thead>
+        <tr>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.UserNames)
+        {
+        <tr>
+            <td>
+                @item
+            </td>
+            <td>
+                @Html.ActionLink("Assign Role", "AssignUserRole", new { userName = item })
+            </td>
+        </tr>
+        }
+    </tbody>
+</table>

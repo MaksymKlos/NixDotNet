@@ -1,0 +1,67 @@
+﻿@{
+    ViewData["Title"] = "Sign up";
+}
+@model RegisterViewModel
+<div class="main__content reg-content m-height">
+    <div class="main__title center">
+        Sign up
+    </div>
+    <form class="main__form center" asp-action="Register" method="post">
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" style="text-align:center;" asp-for="Role">Chose a role:</label>
+            <select class="form__input col-md-3 reg-input reg-select" asp-for="Role">
+                <option value="User">User</option>
+                <option value="Trainer">Trainer</option>
+                <option value="Nutritionist">Nutritionist</option>
+
+            </select>
+        </div>
+        <div class="form__input-group row">
+            <label class="form-label col-md-2" asp-for="Login">Login:</label>
+            <input class="form-control col-md-3 reg-input" type="text" placeholder="from 7 to 40 symbols" asp-for="Login">
+            <span asp-validation-for="Login" class="text-danger" style="display: block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form-label col-md-2" asp-for="Name">Name:</label>
+            <input class="form-control col-md-3 reg-input" type="text" placeholder="from 2 to 40 symbols" asp-for="Name">
+            <span asp-validation-for="Name" class="text-danger" style="display: block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form-label col-md-2" asp-for="Surname">Surname:</label>
+            <input class="form-control col-md-3 reg-input" type="text" placeholder="from 2 to 40 symbols" asp-for="Surname">
+            <span asp-validation-for="Surname" class="text-danger" style="display: block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form-label col-md-2" asp-for="Email">Email address:</label>
+            <input class="form-control col-md-3 reg-input" type="email" placeholder="example@gmail.com" asp-for="Email">
+            <span asp-validation-for="Email" class="text-danger" style="display: block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form-label col-md-2" asp-for="BirthDate">Birth date:</label>
+            <input class="form-control col-md-3 reg-input" type="date" asp-for="BirthDate">
+            <span asp-validation-for="BirthDate" class="text-danger" style="display: block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form-label col-md-2" asp-for="Phone">Phone number:</label>
+            <input class="form-control col-md-3 reg-input" type="tel" asp-for="Phone">
+            <span asp-validation-for="Phone" class="text-danger" style="display: block"></span>
+        </div>
+
+
+        <div class="form__input-group row">
+            <label class="form-label col-md-2" asp-for="Password">Password:</label>
+            <input class="form-control col-md-3 reg-input" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" asp-for="Password">
+            <span asp-validation-for="Password" class="text-danger" style="display: block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form-label col-md-2" asp-for="ConfirmPassword">Confirm password:</label>
+            <input class="form-control col-md-3 reg-input" type="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;&#9679;" asp-for="ConfirmPassword">
+            <span asp-validation-for="ConfirmPassword" class="text-danger" style="display: block"></span>
+        </div>
+        <button type="submit" class="btn btn-light reg-btn">Register</button>
+    </form>
+
+</div>
+@section Styles{ 
+    <link href="~/css/auth.css" type="text/css" rel="stylesheet"/>
+}
