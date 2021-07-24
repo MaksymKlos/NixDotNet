@@ -11,9 +11,7 @@ namespace FitnessSuperiorMvc.BLL.Dto.People.Staff
         public string WorkWithGender { get; set; }
         public virtual ICollection<TrainingProgramDto> TrainingPrograms { get; set; } = new List<TrainingProgramDto>();
 
-        public TrainerDto()
-        {
-            
-        }
+
+        public TrainerDto() { }
     }
 }

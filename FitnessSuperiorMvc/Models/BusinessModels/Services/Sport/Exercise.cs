@@ -1,12 +1,13 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using FitnessSuperiorMvc.BLL.Dto.Services.Sport;
+
 
 namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
 {
+    /// <summary>
+    /// Represents exercise.
+    /// </summary>
     public class Exercise
     {
-        #region Properties
         /// <summary>
         /// The name of the exercise.
         /// </summary>
@@ -15,9 +16,7 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
         /// Muscles that are used during the exercise.
         /// </summary>
         public string MuscleGroups { get; }
-        #endregion
 
-        #region Constructors
         /// <summary>
         /// Exercise creation.
         /// </summary>
@@ -37,6 +36,5 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
             Name = name;
             MuscleGroups = muscleGroups;
         }
-        #endregion
     }
 }

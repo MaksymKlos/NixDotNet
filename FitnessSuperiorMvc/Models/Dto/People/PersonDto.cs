@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
-using FitnessSuperiorMvc.BLL.Interfaces;
+﻿using FitnessSuperiorMvc.BLL.Interfaces;
 
 namespace FitnessSuperiorMvc.BLL.Dto.People
 {
@@ -15,10 +13,7 @@ namespace FitnessSuperiorMvc.BLL.Dto.People
 
         public string IdentityId { get; set; }
 
-        public PersonDto()
-        {
-            
-        }
+        public PersonDto() { }
 
     }
 }

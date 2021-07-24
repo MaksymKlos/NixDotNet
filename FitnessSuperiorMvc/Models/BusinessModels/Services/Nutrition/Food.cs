@@ -1,11 +1,13 @@
 ﻿using System;
-using FitnessSuperiorMvc.BLL.Dto.Services.Nutrition;
+
 
 namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
 {
+    /// <summary>
+    /// Represents food.
+    /// </summary>
     public class Food
     {
-        #region Properties
         /// <summary>
         /// Product name.
         /// </summary>
@@ -18,9 +20,7 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
         /// Beneficial properties of food.
         /// </summary>
         public string BeneficialFeatures { get; }
-        #endregion
 
-        #region Constructors
         /// <summary>
         /// Food creation.
         /// </summary>
@@ -45,18 +45,6 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
             Calories = calories;
             BeneficialFeatures = beneficialFeatures;
         }
-        #endregion
-
-        #region Methods
-        /// <summary>
-        /// Transform model to modelDto.
-        /// </summary>
-        /// <param name="food"></param>
-        public static explicit operator FoodDto(Food food)
-        {
-            return new FoodDto(food.Name, food.Calories, food.BeneficialFeatures);
-        }
-        #endregion
 
     }
 }

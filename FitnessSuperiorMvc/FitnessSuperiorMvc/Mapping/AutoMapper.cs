@@ -23,6 +23,7 @@ namespace FitnessSuperiorMvc.WEB.Mapping
             CreateMap<User, UserDto>();
             CreateMap<Trainer, TrainerDto>();
             CreateMap<Nutritionist, NutritionistDto>();
+            CreateMap<Manager, ManagerDto>();
         }
     }
 }

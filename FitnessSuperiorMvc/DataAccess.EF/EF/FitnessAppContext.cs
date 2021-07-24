@@ -15,6 +15,7 @@ namespace FitnessSuperiorMvc.DA.EF
         public DbSet<UserDto> UsersDto { get; set; }
         public DbSet<TrainerDto> Trainers { get; set; }
         public DbSet<NutritionistDto> Nutritionists { get; set; }
+        public DbSet<ManagerDto> Managers { get; set; }
 
         public FitnessAppContext()
         {

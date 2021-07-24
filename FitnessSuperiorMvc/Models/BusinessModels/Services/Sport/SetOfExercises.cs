@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using FitnessSuperiorMvc.BLL.Dto.Services.Sport;
+
 
 namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
 {
@@ -9,7 +9,6 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
     /// </summary>
     public class SetOfExercises
     {
-        #region Properties
         /// <summary>
         /// Complex name.
         /// </summary>
@@ -22,9 +21,7 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
         /// Exercises included in the complex.
         /// </summary>
         public List<Exercise> Exercises { get; }
-        #endregion
 
-        #region Constructors
         /// <summary>
         /// Complex creation.
         /// </summary>
@@ -45,11 +42,7 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
             Exercises = exercises ?? throw new ArgumentNullException(nameof(exercises), "Exercises can't be null");
             Name = name;
             MuscleGroups = muscleGroups;
-            }
-        #endregion
+        }
 
-        #region Methods
-
-        #endregion
     }
 }

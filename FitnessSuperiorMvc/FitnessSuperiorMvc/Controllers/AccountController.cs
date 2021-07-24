@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
 using AutoMapper;
-using FitnessSuperiorMvc.BLL.BusinessModels.People;
-using FitnessSuperiorMvc.BLL.Dto.People;
 using FitnessSuperiorMvc.DA.EF;
-using FitnessSuperiorMvc.WEB.ViewModels;
 using FitnessSuperiorMvc.WEB.ViewModels.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Linq;
-using System.Security.Claims;
 using FitnessSuperiorMvc.BLL.BusinessModels.People.Staff;
 using FitnessSuperiorMvc.BLL.BusinessModels.People.Users;
 using FitnessSuperiorMvc.BLL.Dto.People.Staff;
 using FitnessSuperiorMvc.BLL.Dto.People.Users;
-using Microsoft.EntityFrameworkCore;
+
 
 
 namespace FitnessSuperiorMvc.WEB.Controllers
@@ -66,7 +62,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             return View(model);
 
         }
-
+        [AllowAnonymous]
         public async Task<IActionResult> RegisterByRole(string role, string name, string surname, DateTime birthDate)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
@@ -101,13 +97,20 @@ namespace FitnessSuperiorMvc.WEB.Controllers
                     await _context.Nutritionists.AddAsync(dto);
                     break;
                 }
-                default:
+                case "Admin":
                 {
-                    //PersonDto dto = _mapper.Map<PersonDto>(person);
-                    //dto.IdentityId = user.Id;
-                    //await _context.Persons.AddAsync(dto);
+
+                
+                    Manager manager = (
+                        new Manager(name, surname, birthDate) { Position = "Admin" }
+                    );
+                    ManagerDto dto = _mapper.Map<ManagerDto>(manager);
+                    dto.IdentityId = user.Id;
+                    await _context.Managers.AddAsync(dto);
                     break;
                 }
+                default: return NotFound("Role does not exist");
+                
             }
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Home");

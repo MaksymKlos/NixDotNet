@@ -8,7 +8,6 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
     /// </summary>
     public class MealPlan
     {
-        #region Properties
         /// <summary>
         /// Meal plan name.
         /// </summary>
@@ -21,9 +20,7 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
         /// Food contains in meal plan.
         /// </summary>
         public List<Food> Food { get; }
-        #endregion
 
-        #region Constructors
         /// <summary>
         /// Meal plan creation.
         /// </summary>
@@ -38,9 +35,8 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
             Food = food ?? throw new ArgumentNullException(nameof(food), "Food can't be null");
             Name = name;
         }
-        #endregion
 
-        #region Methods
+
         private double CalculateCalories()
         {
             double cal = 0;
@@ -51,6 +47,5 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
 
             return cal;
         }
-        #endregion
     }
 }
