@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DataAccess.EF\FitnessSuperiorMvc.DA.csproj" />
-    <ProjectReference Include="..\Services\FitnessSuperiorMvc.Services.csproj" />
+    <ProjectReference Include="..\..\DataAccess\FitnessSuperiorMvc.DA\FitnessSuperiorMvc.DA.csproj" />
+    <ProjectReference Include="..\..\DataAccess\FitnessSuperiorMvc.Services\FitnessSuperiorMvc.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
