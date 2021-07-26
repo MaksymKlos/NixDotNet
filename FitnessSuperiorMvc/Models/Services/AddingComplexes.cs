@@ -5,7 +5,7 @@ namespace FitnessSuperiorMvc.BLL.Services
 {
     public class AddingComplexes
     {
-        public int AddingExercisesId { get; set; }
+        public int AddingComplexesId { get; set; }
         public SetOfExercisesDto SetOfExercisesDto { get; set; }
         public TrainerDto TrainerDto { get; set; }
         public int TrainerDtoId { get; set; }

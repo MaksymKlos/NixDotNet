@@ -21,7 +21,7 @@
                     <tr>
                         <td>@exercise.Name</td>
                         <td>@exercise.MuscleGroups</td>
-                        <td><a href="#" class="cross">&#10008;</a></td>
+                        <td><a asp-action="RemoveExerciseFromComplex" asp-route-id="@exercise.Id" class="cross">&#10008;</a></td>
                     </tr>
                 }
             </table>
