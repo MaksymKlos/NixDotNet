@@ -115,6 +115,20 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             
             return RedirectToAction("ComplexesInProgram");
         }
+        public async Task<IActionResult> RemoveComplexFromProgram(int id)
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Trainers.FirstOrDefaultAsync(u => u.IdentityId == userId);
+            var removingComplex = _context.AddingComplexes
+                .Include(e => e.SetOfExercisesDto)
+                .Where(t => t.TrainerDto == user).FirstOrDefault(a => a.SetOfExercisesDto.Id == id);
+            if (removingComplex != null)
+            {
+                user.AddingComplexes.Remove(removingComplex);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("ComplexesInProgram");
+        }
 
     }
 }

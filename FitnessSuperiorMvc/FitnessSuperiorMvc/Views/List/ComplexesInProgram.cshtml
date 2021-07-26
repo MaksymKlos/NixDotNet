@@ -21,7 +21,7 @@
                     <tr>
                         <td>@complex.Name</td>
                         <td>@complex.MuscleGroup</td>
-                        <td><a href="#" class="cross">&#10008;</a></td>
+                        <td><a asp-action="RemoveComplexFromProgram" asp-route-id="@complex.Id" class="cross">&#10008;</a></td>
                     </tr>
                 }
             </table>
@@ -29,9 +29,9 @@
        
         <div class="d-flex justify-content-between">
             <a class="grey-btn" asp-action="ExistingComplexes" asp-controller="Workout">Add complex</a>
-            @if (Model.Count < 3)
+            @if (Model.Count < 1)
             {
-                <a class="grey-btn-disabled" title="At least 3 exercises">Create Program (At least 3 complexes)</a>
+                <a class="grey-btn-disabled" title="At least 1 complex">Create Program (At least 1 complex)</a>
             }
         
             else

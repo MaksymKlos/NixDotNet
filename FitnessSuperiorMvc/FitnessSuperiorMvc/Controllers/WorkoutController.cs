@@ -136,26 +136,39 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateProgram(TrainingProgramViewModel model)
+        public async Task<IActionResult> CreateProgram(TrainingProgramViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid) return View();
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Trainers.FirstOrDefaultAsync(u => u.IdentityId == userId);
+
+            var adding = _context.AddingComplexes
+                .Include(e => e.SetOfExercisesDto)
+                .Where(t => t.TrainerDto == user);
+
+            var complexes = await adding
+                .Select(a => a.SetOfExercisesDto)
+                .ToListAsync();
+            var complex = _mapper.Map<TrainingProgramDto>
+            (
+                new TrainingProgram(model.Name,
+                    model.Description,
+                    model.Destination,
+                    model.TypeOfProgram,
+                    model.RequiredSkillLevel,
+                    model.AgeRestriction,
+                    model.Price)
+            );
+            complex.SetsOfExercises = complexes;
+            complex.Trainer = user;
+            _trainingProgramsService.Create(complex);
+            foreach (var addingComplex in adding)
             {
-                _trainingProgramsService.Create(_mapper.Map<TrainingProgramDto>
-                (
-                    new TrainingProgram(model.Name,
-                        model.Description,
-                        model.Destination,
-                        model.TypeOfProgram,
-                        model.RequiredSkillLevel,
-                        model.AgeRestriction,
-                        model.Price)
-                ));
-
-                return RedirectToAction("SuccessfulCreation", "Validation",
-                    new {type = "training program", name = model.Name});
+                _context.AddingComplexes.Remove(addingComplex);
             }
+            return RedirectToAction("SuccessfulCreation", "Validation",
+                new {type = "training program", name = model.Name});
 
-            return View();
         }
 
         [HttpGet]

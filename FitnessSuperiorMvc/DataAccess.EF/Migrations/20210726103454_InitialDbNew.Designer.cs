@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessSuperiorMvc.DA.Migrations
 {
     [DbContext(typeof(FitnessAppContext))]
-    [Migration("20210725194856_InitialDbNew")]
+    [Migration("20210726103454_InitialDbNew")]
     partial class InitialDbNew
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,9 +37,14 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.Property<string>("Text")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("TrainingProgramDtoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("NutritionistDtoId");
+
+                    b.HasIndex("TrainingProgramDtoId");
 
                     b.ToTable("Feedback");
                 });
@@ -356,6 +361,28 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.ToTable("TrainingPrograms");
                 });
 
+            modelBuilder.Entity("FitnessSuperiorMvc.BLL.Services.AddingComplexes", b =>
+                {
+                    b.Property<int>("AddingComplexesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("SetOfExercisesDtoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrainerDtoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddingComplexesId");
+
+                    b.HasIndex("SetOfExercisesDtoId");
+
+                    b.HasIndex("TrainerDtoId");
+
+                    b.ToTable("AddingComplexes");
+                });
+
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Services.AddingExercises", b =>
                 {
                     b.Property<int>("AddingExercisesId")
@@ -383,6 +410,10 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.HasOne("FitnessSuperiorMvc.BLL.Dto.People.Staff.NutritionistDto", null)
                         .WithMany("Feedback")
                         .HasForeignKey("NutritionistDtoId");
+
+                    b.HasOne("FitnessSuperiorMvc.BLL.Dto.Services.Sport.TrainingProgramDto", null)
+                        .WithMany("Feedback")
+                        .HasForeignKey("TrainingProgramDtoId");
                 });
 
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.Services.Nutrition.FoodDto", b =>
@@ -443,6 +474,23 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.Navigation("Trainer");
                 });
 
+            modelBuilder.Entity("FitnessSuperiorMvc.BLL.Services.AddingComplexes", b =>
+                {
+                    b.HasOne("FitnessSuperiorMvc.BLL.Dto.Services.Sport.SetOfExercisesDto", "SetOfExercisesDto")
+                        .WithMany()
+                        .HasForeignKey("SetOfExercisesDtoId");
+
+                    b.HasOne("FitnessSuperiorMvc.BLL.Dto.People.Staff.TrainerDto", "TrainerDto")
+                        .WithMany("AddingComplexes")
+                        .HasForeignKey("TrainerDtoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("SetOfExercisesDto");
+
+                    b.Navigation("TrainerDto");
+                });
+
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Services.AddingExercises", b =>
                 {
                     b.HasOne("FitnessSuperiorMvc.BLL.Dto.Services.Sport.ExerciseDto", "ExerciseDto")
@@ -469,6 +517,8 @@ namespace FitnessSuperiorMvc.DA.Migrations
 
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.People.Staff.TrainerDto", b =>
                 {
+                    b.Navigation("AddingComplexes");
+
                     b.Navigation("AddingExercises");
 
                     b.Navigation("TrainingPrograms");
@@ -498,6 +548,8 @@ namespace FitnessSuperiorMvc.DA.Migrations
 
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.Services.Sport.TrainingProgramDto", b =>
                 {
+                    b.Navigation("Feedback");
+
                     b.Navigation("SetsOfExercises");
                 });
 #pragma warning restore 612, 618

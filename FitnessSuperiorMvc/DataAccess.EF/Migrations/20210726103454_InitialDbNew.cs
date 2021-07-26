@@ -80,27 +80,6 @@ namespace FitnessSuperiorMvc.DA.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Feedback",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    NutritionistDtoId = table.Column<int>(type: "int", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Feedback", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Feedback_Nutritionists_NutritionistDtoId",
-                        column: x => x.NutritionistDtoId,
-                        principalTable: "Nutritionists",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "NutritionPrograms",
                 columns: table => new
                 {
@@ -186,6 +165,34 @@ namespace FitnessSuperiorMvc.DA.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Feedback",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NutritionistDtoId = table.Column<int>(type: "int", nullable: true),
+                    TrainingProgramDtoId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feedback", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Feedback_Nutritionists_NutritionistDtoId",
+                        column: x => x.NutritionistDtoId,
+                        principalTable: "Nutritionists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Feedback_TrainingPrograms_TrainingProgramDtoId",
+                        column: x => x.TrainingProgramDtoId,
+                        principalTable: "TrainingPrograms",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "SetOfExercisesDto",
                 columns: table => new
                 {
@@ -234,6 +241,32 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         principalTable: "MealPlanDto",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AddingComplexes",
+                columns: table => new
+                {
+                    AddingComplexesId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SetOfExercisesDtoId = table.Column<int>(type: "int", nullable: true),
+                    TrainerDtoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AddingComplexes", x => x.AddingComplexesId);
+                    table.ForeignKey(
+                        name: "FK_AddingComplexes_SetOfExercisesDto_SetOfExercisesDtoId",
+                        column: x => x.SetOfExercisesDtoId,
+                        principalTable: "SetOfExercisesDto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AddingComplexes_Trainers_TrainerDtoId",
+                        column: x => x.TrainerDtoId,
+                        principalTable: "Trainers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -286,6 +319,16 @@ namespace FitnessSuperiorMvc.DA.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AddingComplexes_SetOfExercisesDtoId",
+                table: "AddingComplexes",
+                column: "SetOfExercisesDtoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AddingComplexes_TrainerDtoId",
+                table: "AddingComplexes",
+                column: "TrainerDtoId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AddingExercises_ExerciseDtoId",
                 table: "AddingExercises",
                 column: "ExerciseDtoId");
@@ -304,6 +347,11 @@ namespace FitnessSuperiorMvc.DA.Migrations
                 name: "IX_Feedback_NutritionistDtoId",
                 table: "Feedback",
                 column: "NutritionistDtoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Feedback_TrainingProgramDtoId",
+                table: "Feedback",
+                column: "TrainingProgramDtoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FoodDto_MealPlanDtoId",
@@ -348,6 +396,9 @@ namespace FitnessSuperiorMvc.DA.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "AddingComplexes");
+
             migrationBuilder.DropTable(
                 name: "AddingExercises");
 
