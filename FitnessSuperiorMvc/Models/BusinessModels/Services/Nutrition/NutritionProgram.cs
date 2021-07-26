@@ -9,10 +9,9 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
 {
     public class NutritionProgram:FitnessProgram
     {
-        public override string ProgramName { get; }
-        public override string ProgramDescription { get; }
+        public override string Name { get; }
+        public override string Description { get; }
         public override decimal Price { get; }
-        public override List<Feedback> Feedback { get; set; } = new List<Feedback>();
 
         /// <summary>
         /// Program nutritionist.
@@ -22,11 +21,6 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
         /// Program type (muscle gain, weight loss).
         /// </summary>
         public string TypeOfDiet { get; set; }
-
-        /// <summary>
-        /// Meal plans that make up the program.
-        /// </summary>
-        public List<MealPlan> MealPlans { get; set; } = new List<MealPlan>();
         /// <summary>
         /// Create training program.
         /// </summary>
@@ -59,8 +53,8 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
                 Price = price;
             }
             TypeOfDiet = typeOfDiet;
-            ProgramName = programName;
-            ProgramDescription = programDescription;
+            Name = programName;
+            Description = programDescription;
         }
     }
 }

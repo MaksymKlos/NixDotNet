@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace FitnessSuperiorMvc.DA.Migrations.Security
 {
-    public partial class InitialDbNewSecurity : Migration
+    public partial class InitialDbNew2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

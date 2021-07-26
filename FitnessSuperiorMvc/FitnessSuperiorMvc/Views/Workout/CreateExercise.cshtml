@@ -13,13 +13,23 @@
     <form class="main__form center" asp-action="CreateExercise" asp-controller="Workout" method="post">
         <div class="form__input-group row">
             <label class="form__label col-md-2" asp-for="Name">Exercise name:</label>
-            <input class="form__input col-md-3" type="text" asp-for="Name" placeholder="from 6 to 50 symbols" asp-validation-for="name">
-            <span asp-validation-for="Name" class="text-danger" style="display: block"></span>
+            <input class="form__input col-md-3" type="text" asp-for="Name" placeholder="up to 50 symbols" asp-validation-for="name">
+            <span asp-validation-for="Name" class="text-danger d-block"></span>
         </div>
         <div class="form__input-group row">
             <label class="form__label col-md-2" asp-for="MuscleGroups">Active muscles:</label>
             <textarea class="form__input col-md-3" type="text" asp-for="MuscleGroups" rows="2" placeholder="up to 300 symbols"></textarea>
-            <span asp-validation-for="MuscleGroups" class="text-danger" style="display: block"></span>
+            <span asp-validation-for="MuscleGroups" class="text-danger d-block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="Description">Description:</label>
+            <textarea class="form__input col-md-3" type="text" asp-for="Description" rows="2" placeholder="up to 300 symbols"></textarea>
+            <span asp-validation-for="Description" class="text-danger d-block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="YoutubeUrl">Youtube link on exercise:</label>
+            <textarea class="form__input col-md-3" type="text" asp-for="YoutubeUrl" rows="2" placeholder="exercise video"></textarea>
+            <span asp-validation-for="YoutubeUrl" class="text-danger d-block"></span>
         </div>
         <input type="submit" class="btn btn-light" value="Create">
     </form>

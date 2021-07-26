@@ -18,7 +18,11 @@ namespace FitnessSuperiorMvc.WEB.Mapping
             CreateMap<Exercise, ExerciseDto>();
             CreateMap<ExerciseDto, Exercise>();
             CreateMap<List<ExerciseDto>, List<Exercise>>();
-            CreateMap<SetOfExercises, SetOfExercisesDto>();
+            CreateMap<SetOfExercises, SetOfExercisesDto>()
+                .ForMember(dest =>
+                    dest.MuscleGroup, opt =>
+                    opt.MapFrom(src => src.MuscleGroups));
+            CreateMap<TrainingProgram, TrainingProgramDto>();
             CreateMap<Person, PersonDto>();
             CreateMap<User, UserDto>();
             CreateMap<Trainer, TrainerDto>();

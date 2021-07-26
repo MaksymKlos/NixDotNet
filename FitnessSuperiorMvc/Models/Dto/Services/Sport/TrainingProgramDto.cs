@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using FitnessSuperiorMvc.BLL.BusinessModels.Services.Community;
 using FitnessSuperiorMvc.BLL.Dto.People.Staff;
 
 namespace FitnessSuperiorMvc.BLL.Dto.Services.Sport
@@ -13,8 +14,9 @@ namespace FitnessSuperiorMvc.BLL.Dto.Services.Sport
         public TrainerDto Trainer { get; set; }
         public string TypeOfProgram { get; set; }
         public string RequiredSkillLevel { get; set; }
-        public int? AgeRestriction { get; set; }
+        public int AgeRestriction { get; set; }
         public virtual ICollection<SetOfExercisesDto> SetsOfExercises { get; set; }
+        public virtual ICollection<Feedback> Feedback { get; set; }
         private TrainingProgramDto() { }
         public TrainingProgramDto(
             string name,
@@ -23,7 +25,7 @@ namespace FitnessSuperiorMvc.BLL.Dto.Services.Sport
             string destination, 
             string typeOfProgram,
             string requiredSkillLevel,
-            int? ageRestriction,
+            int ageRestriction,
             TrainerDto trainer
             ) :base(name, description, price, destination)
         {

@@ -8,16 +8,14 @@
     {
         <section class="main__content-section">
             <h2 class="main__title center">
-                <a class="main__title-link" asp-route-id="@exercise.Id" asp-controller="Workout" asp-action="ExerciseView">@exercise.Name</a>
+                <a class="main__title-link" asp-route-id="@exercise.Id" asp-route-returnUrl="ExistingExercises" asp-controller="Workout" asp-action="ExerciseView">@exercise.Name</a>
             </h2>
             <p class="main__text center">
                 Active muscle groups: @exercise.MuscleGroups
             </p>
             <div class="model-links">
-                <a class="model-link" asp-route-id="@exercise.Id" asp-action="AddExercise" asp-controller="List">+</a>
-
+                <a class="model-link" asp-route-id="@exercise.Id" asp-action="AddExerciseToComplex" asp-controller="List">+</a>
             </div>
-
         </section>
     }
     <nav aria-label="Page navigation example">

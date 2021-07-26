@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessSuperiorMvc.DA.Migrations.Security
 {
     [DbContext(typeof(SecurityContext))]
-    [Migration("20210723222900_InitialDbNewSecurity")]
-    partial class InitialDbNewSecurity
+    [Migration("20210724182425_InitialDbNew2")]
+    partial class InitialDbNew2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

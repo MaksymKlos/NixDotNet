@@ -7,6 +7,23 @@ namespace FitnessSuperiorMvc.DA.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Managers",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Position = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecondName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    IdentityId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Managers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Nutritionists",
                 columns: table => new
                 {
@@ -51,7 +68,6 @@ namespace FitnessSuperiorMvc.DA.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Balance = table.Column<decimal>(type: "decimal(10,2)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SecondName = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -61,6 +77,27 @@ namespace FitnessSuperiorMvc.DA.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_UsersDto", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Feedback",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NutritionistDtoId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Feedback", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Feedback_Nutritionists_NutritionistDtoId",
+                        column: x => x.NutritionistDtoId,
+                        principalTable: "Nutritionists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -103,7 +140,7 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     TrainerId = table.Column<int>(type: "int", nullable: true),
                     TypeOfProgram = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RequiredSkillLevel = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AgeRestriction = table.Column<int>(type: "int", nullable: true),
+                    AgeRestriction = table.Column<int>(type: "int", nullable: false),
                     UserDtoId = table.Column<int>(type: "int", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -156,11 +193,19 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MuscleGroup = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AuthorId = table.Column<int>(type: "int", nullable: true),
                     TrainingProgramDtoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SetOfExercisesDto", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SetOfExercisesDto_Trainers_AuthorId",
+                        column: x => x.AuthorId,
+                        principalTable: "Trainers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_SetOfExercisesDto_TrainingPrograms_TrainingProgramDtoId",
                         column: x => x.TrainingProgramDtoId,
@@ -199,6 +244,8 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MuscleGroups = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    YoutubeUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SetOfExercisesDtoId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
@@ -212,10 +259,51 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AddingExercises",
+                columns: table => new
+                {
+                    AddingExercisesId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExerciseDtoId = table.Column<int>(type: "int", nullable: true),
+                    TrainerDtoId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AddingExercises", x => x.AddingExercisesId);
+                    table.ForeignKey(
+                        name: "FK_AddingExercises_ExerciseDto_ExerciseDtoId",
+                        column: x => x.ExerciseDtoId,
+                        principalTable: "ExerciseDto",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_AddingExercises_Trainers_TrainerDtoId",
+                        column: x => x.TrainerDtoId,
+                        principalTable: "Trainers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AddingExercises_ExerciseDtoId",
+                table: "AddingExercises",
+                column: "ExerciseDtoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AddingExercises_TrainerDtoId",
+                table: "AddingExercises",
+                column: "TrainerDtoId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_ExerciseDto_SetOfExercisesDtoId",
                 table: "ExerciseDto",
                 column: "SetOfExercisesDtoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Feedback_NutritionistDtoId",
+                table: "Feedback",
+                column: "NutritionistDtoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_FoodDto_MealPlanDtoId",
@@ -238,6 +326,11 @@ namespace FitnessSuperiorMvc.DA.Migrations
                 column: "UserDtoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SetOfExercisesDto_AuthorId",
+                table: "SetOfExercisesDto",
+                column: "AuthorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SetOfExercisesDto_TrainingProgramDtoId",
                 table: "SetOfExercisesDto",
                 column: "TrainingProgramDtoId");
@@ -256,28 +349,37 @@ namespace FitnessSuperiorMvc.DA.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "ExerciseDto");
+                name: "AddingExercises");
+
+            migrationBuilder.DropTable(
+                name: "Feedback");
 
             migrationBuilder.DropTable(
                 name: "FoodDto");
 
             migrationBuilder.DropTable(
-                name: "SetOfExercisesDto");
+                name: "Managers");
+
+            migrationBuilder.DropTable(
+                name: "ExerciseDto");
 
             migrationBuilder.DropTable(
                 name: "MealPlanDto");
 
             migrationBuilder.DropTable(
-                name: "TrainingPrograms");
+                name: "SetOfExercisesDto");
 
             migrationBuilder.DropTable(
                 name: "NutritionPrograms");
 
             migrationBuilder.DropTable(
-                name: "Trainers");
+                name: "TrainingPrograms");
 
             migrationBuilder.DropTable(
                 name: "Nutritionists");
+
+            migrationBuilder.DropTable(
+                name: "Trainers");
 
             migrationBuilder.DropTable(
                 name: "UsersDto");

@@ -10,7 +10,9 @@ using FitnessSuperiorMvc.WEB.ViewModels;
 using FitnessSuperiorMvc.WEB.ViewModels.Page;
 using FitnessSuperiorMvc.WEB.ViewModels.Services.Sport;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Services;
 
 namespace FitnessSuperiorMvc.WEB.Controllers
@@ -18,19 +20,24 @@ namespace FitnessSuperiorMvc.WEB.Controllers
     [Authorize]
     public class WorkoutController : Controller
     {
-        private readonly FitnessAppContext _db = new FitnessAppContext();
+        private readonly FitnessAppContext _context;
         private readonly ExerciseService _exerciseService;
         private readonly SetOfExercisesService _setOfExercisesService;
+        private readonly TrainingProgramsService _trainingProgramsService;
+        private readonly UserManager<IdentityUser> _userManager;
         private readonly IMapper _mapper;
 
         public WorkoutController(
             ExerciseService exerciseService,
             SetOfExercisesService setOfExercisesService,
-            IMapper mapper)
+            IMapper mapper, UserManager<IdentityUser> userManager, FitnessAppContext context, TrainingProgramsService trainingProgramsService)
         {
             _exerciseService = exerciseService;
             _setOfExercisesService = setOfExercisesService;
             _mapper = mapper;
+            _userManager = userManager;
+            _context = context;
+            _trainingProgramsService = trainingProgramsService;
         }
         [HttpGet]
         public IActionResult CreateExercise()
@@ -42,10 +49,21 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                _exerciseService.Create(_mapper.Map<ExerciseDto>
-                (
-                    new Exercise(exerciseViewModel.Name, exerciseViewModel.MuscleGroups)
-                ));
+                if (string.IsNullOrWhiteSpace(exerciseViewModel.YoutubeUrl))
+                {
+                    _exerciseService.Create(_mapper.Map<ExerciseDto>
+                    (
+                        new Exercise(exerciseViewModel.Name, exerciseViewModel.MuscleGroups, exerciseViewModel.Description)
+                    ));
+                }
+                else
+                {
+                    _exerciseService.Create(_mapper.Map<ExerciseDto>
+                    (
+                        new Exercise(exerciseViewModel.Name, exerciseViewModel.MuscleGroups, exerciseViewModel.Description, exerciseViewModel.YoutubeUrl)
+                    ));
+                }
+                
                 
                 return RedirectToAction("SuccessfulCreation","Validation",new{type = "exercise",name= exerciseViewModel.Name});
                 
@@ -57,28 +75,58 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ExerciseView(int id)
+        public async Task<IActionResult> ExerciseView(int id, string returnUrl)
         {
             var exercise = Task.Run(() => _exerciseService.GetById(id));
+            ViewBag.ReturnUrl = returnUrl;
             return View(await exercise);
         }
         [HttpGet]
-        public IActionResult CreateComplex()
+        public async Task<IActionResult> ComplexView(int id, string returnUrl)
+        {
+            var exercise = Task.Run(() => _exerciseService.GetById(id));
+            ViewBag.ReturnUrl = returnUrl;
+            return View(await exercise);
+        }
+        [HttpGet]
+        public async Task<IActionResult> TrainingProgramView(int id, string returnUrl)
+        {
+            var exercise = Task.Run(() => _exerciseService.GetById(id));
+            ViewBag.ReturnUrl = returnUrl;
+            return View(await exercise);
+        }
+        [HttpGet]
+        [Authorize(Roles = "Trainer")]
+        public IActionResult CreateComplex() 
         {
             return View();
         }
         [HttpPost]
-        public IActionResult CreateComplex(string name, string muscleGroups)
+        [Authorize(Roles = "Trainer")]
+        public async Task<IActionResult> CreateComplex(SetOfExerciseViewModel model)
         {
-            //List<Exercise> ex = new List<Exercise>()
-            //{
-            //    _mapper.Map<Exercise>(_exerciseService.GetById(11))
-            //};
-            //_setOfExercisesService.Create(_mapper.Map<SetOfExercisesDto>
-            //(
-            //    new SetOfExercises(name, muscleGroups, ex)
-            //));
-            return RedirectToAction("AddExercise","List",new {name,muscleGroups});
+            if (!ModelState.IsValid) return View();
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Trainers.FirstOrDefaultAsync(u => u.IdentityId == userId);
+
+            var adding = _context.AddingExercises
+                .Include(e => e.ExerciseDto)
+                .Where(t => t.TrainerDto == user);
+
+            var exercises = await adding
+                .Select(a => a.ExerciseDto)
+                .ToListAsync();
+            SetOfExercisesDto setDto = _mapper.Map<SetOfExercisesDto>(new SetOfExercises(model.Name, model.MuscleGroups, model.Description));
+            setDto.Exercises = exercises;
+            setDto.Author = user;
+            _setOfExercisesService.Create(setDto);
+            foreach (var addingExercise in adding)
+            {
+                _context.AddingExercises.Remove(addingExercise);
+            }
+            await _context.SaveChangesAsync();
+            string type = "set of exercises";
+            return RedirectToAction("SuccessfulCreation", "Validation", new { type, model.Name });
         }
 
         [HttpGet]
@@ -86,30 +134,27 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public IActionResult CreateProgram(
-            string name,
-            string description,
-            string price,
-            string destination,
-            string type,
-            string skill,
-            string age,
-            string sets)
+        public IActionResult CreateProgram(TrainingProgramViewModel model)
         {
-            decimal finalPrice = price == null ? 0 : decimal.Parse(price);
-            int ageRestriction = age == null ? 0 : int.Parse(age);
-            TrainerDto tr = _db.Trainers.ToList().Find(t => t.Id == 2);
-            _db.TrainingPrograms.Add(new TrainingProgramDto(
-                name,
-                description,
-                finalPrice,
-                destination,
-                type,
-                skill,
-                ageRestriction,
-                tr));
-            _db.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                _trainingProgramsService.Create(_mapper.Map<TrainingProgramDto>
+                (
+                    new TrainingProgram(model.Name,
+                        model.Description,
+                        model.Destination,
+                        model.TypeOfProgram,
+                        model.RequiredSkillLevel,
+                        model.AgeRestriction,
+                        model.Price)
+                ));
+
+                return RedirectToAction("SuccessfulCreation", "Validation",
+                    new {type = "training program", name = model.Name});
+            }
+
             return View();
         }
 
@@ -125,12 +170,6 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             };
             return View(exerciseView);
         }
-
-        //[HttpGet]
-        //public IActionResult AddExercise()
-        //{
-        //    return View();
-        //}
 
         [HttpGet]
         public IActionResult ExistingComplexes(int page = 1)
@@ -151,7 +190,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var programView = new PaginationViewModel<TrainingProgramDto>()
             {
                 WorkoutPerPage = 3,
-                ExistingPrograms = _db.TrainingPrograms,
+                ExistingPrograms = _context.TrainingPrograms,
                 CurrentPage = page
             };
             return View(programView);

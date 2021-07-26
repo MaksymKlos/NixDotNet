@@ -113,7 +113,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
                 
             }
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Logout");
         }
         [HttpGet]
         [AllowAnonymous]

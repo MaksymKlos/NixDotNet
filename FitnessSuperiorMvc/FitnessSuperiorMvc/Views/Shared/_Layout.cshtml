@@ -43,8 +43,8 @@
                                 @if (User.IsInRole("Trainer"))
                                 {
                                     <li><a class="dropdown-item" asp-controller="Workout" asp-action="CreateExercise">Create exercise</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Workout" asp-action="CreateComplex">Create set of exercises</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Workout" asp-action="CreateProgram">Create training program</a></li>
+                                    <li><a class="dropdown-item" asp-controller="List" asp-action="ExercisesInComplex">Create set of exercises</a></li>
+                                    <li><a class="dropdown-item" asp-controller="List" asp-action="ComplexesInProgram">Create training program</a></li>
                                 }
                                 <li><a class="dropdown-item" asp-controller="Workout" asp-action="ExistingPrograms">Existing programs</a></li>
                                 @if (User.IsInRole("User"))
@@ -135,7 +135,19 @@
                         </ul>
                    
                     }
-                       
+                    @*<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" style="text-transform: none;" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Profile
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" asp-controller="Account" asp-action="CreateRole">Create role</a></li>
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Users">Assign user role</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>*@
                 </div>
             </div>
         </nav>

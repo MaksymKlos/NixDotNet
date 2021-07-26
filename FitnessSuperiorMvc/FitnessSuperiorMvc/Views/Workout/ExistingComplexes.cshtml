@@ -7,16 +7,19 @@
         Sets of exercises
     </h1>
     <hr>
-    @foreach (var exercise in Model.PaginatedPrograms)
+    @foreach (var complex in Model.PaginatedPrograms)
     {
-        <section class="main__content-section">
-            <h2 class="main__title center">
-                <a class="main__title-link" href="#">@exercise.Name</a>
-            </h2>
-            <p class="main__text center">
-                Active muscle groups: @exercise.MuscleGroup
-            </p>
-        </section>
+<section class="main__content-section">
+    <h2 class="main__title center">
+        <a class="main__title-link" asp-route-id="@complex.Id" asp-route-returnUrl="ExistingComplexes" asp-controller="Workout" asp-action="ComplexView">@complex.Name</a>
+    </h2>
+    <p class="main__text center">
+        Active muscle groups: @complex.MuscleGroup
+    </p>
+    <div class="model-links">
+        <a class="model-link" asp-route-id="@complex.Id" asp-action="AddComplexToProgram" asp-controller="List">+</a>
+    </div>
+</section>
     }
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-end">

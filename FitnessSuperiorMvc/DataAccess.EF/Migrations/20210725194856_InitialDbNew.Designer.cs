@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessSuperiorMvc.DA.Migrations
 {
     [DbContext(typeof(FitnessAppContext))]
-    [Migration("20210723222715_InitialDbNew")]
+    [Migration("20210725194856_InitialDbNew")]
     partial class InitialDbNew
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,56 @@ namespace FitnessSuperiorMvc.DA.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.8")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("FitnessSuperiorMvc.BLL.BusinessModels.Services.Community.Feedback", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("NutritionistDtoId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NutritionistDtoId");
+
+                    b.ToTable("Feedback");
+                });
+
+            modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.People.Staff.ManagerDto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Age")
+                        .HasColumnType("int");
+
+                    b.Property<string>("IdentityId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SecondName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Managers");
+                });
 
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.People.Staff.NutritionistDto", b =>
                 {
@@ -110,9 +160,6 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("SecondName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -213,6 +260,9 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MuscleGroups")
                         .HasColumnType("nvarchar(max)");
 
@@ -221,6 +271,9 @@ namespace FitnessSuperiorMvc.DA.Migrations
 
                     b.Property<int?>("SetOfExercisesDtoId")
                         .HasColumnType("int");
+
+                    b.Property<string>("YoutubeUrl")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -236,6 +289,12 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("AuthorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MuscleGroup")
                         .HasColumnType("nvarchar(max)");
 
@@ -246,6 +305,8 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AuthorId");
 
                     b.HasIndex("TrainingProgramDtoId");
 
@@ -259,7 +320,7 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AgeRestriction")
+                    b.Property<int>("AgeRestriction")
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
@@ -293,6 +354,35 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.HasIndex("UserDtoId");
 
                     b.ToTable("TrainingPrograms");
+                });
+
+            modelBuilder.Entity("FitnessSuperiorMvc.BLL.Services.AddingExercises", b =>
+                {
+                    b.Property<int>("AddingExercisesId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ExerciseDtoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrainerDtoId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddingExercisesId");
+
+                    b.HasIndex("ExerciseDtoId");
+
+                    b.HasIndex("TrainerDtoId");
+
+                    b.ToTable("AddingExercises");
+                });
+
+            modelBuilder.Entity("FitnessSuperiorMvc.BLL.BusinessModels.Services.Community.Feedback", b =>
+                {
+                    b.HasOne("FitnessSuperiorMvc.BLL.Dto.People.Staff.NutritionistDto", null)
+                        .WithMany("Feedback")
+                        .HasForeignKey("NutritionistDtoId");
                 });
 
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.Services.Nutrition.FoodDto", b =>
@@ -329,9 +419,15 @@ namespace FitnessSuperiorMvc.DA.Migrations
 
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.Services.Sport.SetOfExercisesDto", b =>
                 {
+                    b.HasOne("FitnessSuperiorMvc.BLL.Dto.People.Staff.TrainerDto", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
                     b.HasOne("FitnessSuperiorMvc.BLL.Dto.Services.Sport.TrainingProgramDto", null)
                         .WithMany("SetsOfExercises")
                         .HasForeignKey("TrainingProgramDtoId");
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.Services.Sport.TrainingProgramDto", b =>
@@ -347,13 +443,34 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.Navigation("Trainer");
                 });
 
+            modelBuilder.Entity("FitnessSuperiorMvc.BLL.Services.AddingExercises", b =>
+                {
+                    b.HasOne("FitnessSuperiorMvc.BLL.Dto.Services.Sport.ExerciseDto", "ExerciseDto")
+                        .WithMany()
+                        .HasForeignKey("ExerciseDtoId");
+
+                    b.HasOne("FitnessSuperiorMvc.BLL.Dto.People.Staff.TrainerDto", "TrainerDto")
+                        .WithMany("AddingExercises")
+                        .HasForeignKey("TrainerDtoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ExerciseDto");
+
+                    b.Navigation("TrainerDto");
+                });
+
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.People.Staff.NutritionistDto", b =>
                 {
+                    b.Navigation("Feedback");
+
                     b.Navigation("NutritionPrograms");
                 });
 
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.People.Staff.TrainerDto", b =>
                 {
+                    b.Navigation("AddingExercises");
+
                     b.Navigation("TrainingPrograms");
                 });
 

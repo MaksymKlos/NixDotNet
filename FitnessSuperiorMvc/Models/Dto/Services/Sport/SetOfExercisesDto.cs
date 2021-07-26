@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
+using FitnessSuperiorMvc.BLL.Dto.People.Staff;
 using FitnessSuperiorMvc.BLL.Interfaces;
 
 namespace FitnessSuperiorMvc.BLL.Dto.Services.Sport
@@ -9,20 +9,9 @@ namespace FitnessSuperiorMvc.BLL.Dto.Services.Sport
         public int Id { get; set; }
         public string Name { get; set; }
         public string MuscleGroup { get; set; }
+        public string Description { get; set; }
+        public TrainerDto Author { get; set; }
         public ICollection<ExerciseDto> Exercises { get; set; }
         public SetOfExercisesDto() { }
-        public SetOfExercisesDto(string name, string muscleGroup)
-        {
-            Name = name;
-            MuscleGroup = muscleGroup;
-        }
-        public void AddItem(ExerciseDto exercise)
-        {
-            var ex = Exercises.FirstOrDefault(e => e.Id == exercise.Id);
-            if (ex == null)
-            {
-                Exercises.Add(exercise);
-            }
-        }
     }
 }

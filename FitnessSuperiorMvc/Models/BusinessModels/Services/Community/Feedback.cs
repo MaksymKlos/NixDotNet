@@ -9,6 +9,7 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Community
     /// </summary>
     public class Feedback
     {
+        public int Id { get; set; }
         /// <summary>
         /// Name of user.
         /// </summary>

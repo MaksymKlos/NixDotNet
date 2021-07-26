@@ -10,15 +10,10 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
     /// </summary>
     public class TrainingProgram : FitnessProgram
     {
-        public override string ProgramName { get; }
-        public override string ProgramDescription { get; }
+        public override string Name { get; }
+        public override string Description { get; }
         public override decimal Price { get; }
-        public override List<Feedback> Feedback { get; set; } = new List<Feedback>();
-
-        /// <summary>
-        /// Program trainer.
-        /// </summary>
-        public TrainerDto Trainer { get; }
+        public string Destination { get; set; }
         /// <summary>
         /// Program type (muscle gain, weight loss).
         /// </summary>
@@ -31,24 +26,19 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
         /// Age limit.
         /// </summary>
         public int AgeRestriction { get; }
-        /// <summary>
-        /// The sets of exercises that make up the program.
-        /// </summary>
-        public List<SetOfExercises> SetsOfExercises { get; set; } = new List<SetOfExercises>();
 
         /// <summary>
         /// Create training program.
         /// </summary>
         /// <param name="programName">Program name.</param>
         /// <param name="programDescription">Program description.</param>
-        /// <param name="trainer">Program trainer.</param>
         /// <param name="typeOfProgram">Program type (muscle gain, weight loss).</param>
         /// <param name="requiredSkillLevel">Required skill level(professional, average, beginner).</param>
         /// <param name="ageRestriction">Age limit.</param>
         /// <param name="price"> Program price.</param>
         public TrainingProgram(string programName,
             string programDescription,
-            TrainerDto trainer,
+            string destination,
             string typeOfProgram,
             string requiredSkillLevel,
             int ageRestriction,
@@ -61,6 +51,10 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
             if (string.IsNullOrWhiteSpace(programDescription))
             {
                 throw new ArgumentException("The description of program can't be empty or null.", nameof(programDescription));
+            }
+            if (string.IsNullOrWhiteSpace(destination))
+            {
+                throw new ArgumentException("Destination can't be empty or null.", nameof(destination));
             }
             if (string.IsNullOrWhiteSpace(typeOfProgram))
             {
@@ -75,7 +69,6 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
             {
                 throw new ArgumentException("Price can't be less than 0.", nameof(price));
             }
-            Trainer = trainer ?? throw new ArgumentNullException(nameof(trainer), "Trainer can't be null");
             if (price > 0)
             {
                 Price = price;
@@ -83,8 +76,9 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
             TypeOfProgram = typeOfProgram;
             RequiredSkillLevel = requiredSkillLevel;
             AgeRestriction = ageRestriction;
-            ProgramName = programName;
-            ProgramDescription = programDescription;
+            Name = programName;
+            Description = programDescription;
+            Destination = destination;
         }
     }
 }

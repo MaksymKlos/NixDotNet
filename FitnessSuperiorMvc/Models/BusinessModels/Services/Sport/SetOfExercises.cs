@@ -18,17 +18,16 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
         /// </summary>
         public string MuscleGroups { get; }
         /// <summary>
-        /// Exercises included in the complex.
+        /// Complex description.
         /// </summary>
-        public List<Exercise> Exercises { get; }
-
+        public string Description { get; set; }
         /// <summary>
         /// Complex creation.
         /// </summary>
         /// <param name="name">Complex name.</param>
         /// <param name="muscleGroups"> Muscle group that are used during the complex.</param>
         /// <param name="exercises">Exercises included in the complex.</param>
-        public SetOfExercises(string name, string muscleGroups, List<Exercise> exercises)
+        public SetOfExercises(string name, string muscleGroups, string description)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -39,9 +38,14 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
             {
                 throw new ArgumentException("Muscle groups can't be empty or null.");
             }
-            Exercises = exercises ?? throw new ArgumentNullException(nameof(exercises), "Exercises can't be null");
+
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                throw new ArgumentException("Description can't be empty or null.");
+            }
             Name = name;
             MuscleGroups = muscleGroups;
+            Description = description;
         }
 
     }

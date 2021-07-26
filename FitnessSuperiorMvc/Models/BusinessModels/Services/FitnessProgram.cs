@@ -11,11 +11,11 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services
         /// <summary>
         /// Program name.
         /// </summary>
-        public abstract string ProgramName { get; }
+        public abstract string Name { get; }
         /// <summary>
         /// Program description.
         /// </summary>
-        public abstract string ProgramDescription { get; }
+        public abstract string Description { get; }
         /// <summary>
         /// Program price.
         /// </summary>
@@ -23,6 +23,5 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services
         /// <summary>
         /// Program reviews.
         /// </summary>
-        public abstract List<Feedback> Feedback { get; set; }
     }
 }
