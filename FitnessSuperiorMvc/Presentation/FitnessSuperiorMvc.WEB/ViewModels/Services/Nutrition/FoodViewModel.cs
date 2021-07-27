@@ -13,6 +13,12 @@ namespace FitnessSuperiorMvc.WEB.ViewModels.Services.Nutrition
         [Required]
         public double Calories { get; set; }
         [Required]
+        public int Proteins { get; set; }
+        [Required]
+        public int Fats { get; set; }
+        [Required]
+        public int Carbohydrates { get; set; }
+        [Required]
         public string BeneficialFeatures { get; set; }
     }
 }

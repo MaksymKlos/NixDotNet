@@ -24,15 +24,23 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         private readonly ExerciseService _exerciseService;
         private readonly SetOfExercisesService _setOfExercisesService;
         private readonly TrainingProgramsService _trainingProgramsService;
+
+        private readonly FoodService _foodService;
+        private readonly MealPlanService _mealPlanService;
+        private readonly NutritionProgramService _nutritionProgramService;
+
         private readonly FitnessAppContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        public ListController(ExerciseService exerciseService, SetOfExercisesService setOfExercisesService, TrainingProgramsService trainingProgramsService, FitnessAppContext context, UserManager<IdentityUser> userManager)
+        public ListController(ExerciseService exerciseService, SetOfExercisesService setOfExercisesService, TrainingProgramsService trainingProgramsService, FitnessAppContext context, UserManager<IdentityUser> userManager, FoodService foodService, MealPlanService mealPlanService, NutritionProgramService nutritionProgramService)
         {
             _exerciseService = exerciseService;
             _setOfExercisesService = setOfExercisesService;
             _trainingProgramsService = trainingProgramsService;
             _context = context;
             _userManager = userManager;
+            _foodService = foodService;
+            _mealPlanService = mealPlanService;
+            _nutritionProgramService = nutritionProgramService;
         }
 
         [HttpGet]
@@ -68,7 +76,8 @@ namespace FitnessSuperiorMvc.WEB.Controllers
 
             return RedirectToAction("ExercisesInComplex");
         }
-
+        [HttpGet]
+        [Authorize(Roles = "Trainer")]
         public async Task<IActionResult> RemoveExerciseFromComplex(int id)
         {
             var userId = _userManager.GetUserId(User);
@@ -83,9 +92,10 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             }
             return RedirectToAction("ExercisesInComplex");
         }
+
         [HttpGet]
         [Authorize(Roles = "Trainer")]
-        public async Task<IActionResult> ComplexesInProgram(TrainingProgramViewModel model)
+        public async Task<IActionResult> ComplexesInProgram()
         {
             var userId = _userManager.GetUserId(User);
             var user = await _context.Trainers.FirstOrDefaultAsync(u => u.IdentityId == userId);
@@ -116,6 +126,8 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             
             return RedirectToAction("ComplexesInProgram");
         }
+        [HttpGet]
+        [Authorize(Roles = "Trainer")]
         public async Task<IActionResult> RemoveComplexFromProgram(int id)
         {
             var userId = _userManager.GetUserId(User);
@@ -131,5 +143,105 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             return RedirectToAction("ComplexesInProgram");
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Nutritionist")]
+        public async Task<IActionResult> FoodInMealPlan()
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Nutritionists.FirstOrDefaultAsync(u => u.IdentityId == userId);
+            var exercises = _context.AddingFood
+                .Include(f => f.FoodDto)
+                .Where(n => n.NutritionistDto == user)
+                .Select(f => f.FoodDto)
+                .ToList();
+            return View(exercises);
+        }
+        [HttpGet]
+        [Authorize(Roles = "Nutritionist")]
+        public async Task<IActionResult> AddFoodToMealPlan(int id)
+        {
+
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Nutritionists.FirstOrDefaultAsync(u => u.IdentityId == userId);
+            var food = _foodService.GetById(id);
+            var foods = await _context.AddingFood
+                .Include(f => f.FoodDto)
+                .FirstOrDefaultAsync(a => a.FoodDto == food);
+            if (foods == null)
+            {
+                user.AddingFood.Add(new AddingFood() { FoodDto = food });
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("FoodInMealPlan");
+        }
+        [HttpGet]
+        [Authorize(Roles = "Nutritionist")]
+        public async Task<IActionResult> RemoveFoodFromMealPlan(int id)
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Nutritionists.FirstOrDefaultAsync(u => u.IdentityId == userId);
+            var removingFood = _context.AddingFood
+                .Include(f => f.FoodDto)
+                .Where(n => n.NutritionistDto == user).FirstOrDefault(a => a.FoodDto.Id == id);
+            if (removingFood != null)
+            {
+                user.AddingFood.Remove(removingFood);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("FoodInMealPlan");
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Nutritionist")]
+        public async Task<IActionResult> MealPlansInProgram()
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Trainers.FirstOrDefaultAsync(u => u.IdentityId == userId);
+            var complexes = _context.AddingComplexes
+                .Include(e => e.SetOfExercisesDto)
+                .Where(t => t.TrainerDto == user)
+                .Select(s => s.SetOfExercisesDto)
+                .ToList();
+            return View(complexes);
+        }
+        [HttpGet]
+        [Authorize(Roles = "Nutritionist")]
+        public async Task<IActionResult> AddMealPlanToProgram(int id)
+        {
+
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Nutritionists.FirstOrDefaultAsync(u => u.IdentityId == userId);
+            var mealPlan = _mealPlanService.GetById(id);
+            var mealPlans = await _context.AddingMealPlans
+                .Include(f=>f.MealPlanDto)
+                .FirstOrDefaultAsync(a => a.MealPlanDto == mealPlan);
+            if (mealPlans == null)
+            {
+                user.AddingMealPlans.Add(new AddingMealPlans() {MealPlanDto  = mealPlan });
+                _context.Update(user);
+                await _context.SaveChangesAsync();
+            }
+
+            return RedirectToAction("MealPlansInProgram");
+        }
+        [HttpGet]
+        [Authorize(Roles = "Nutritionist")]
+        public async Task<IActionResult> RemoveMealPlanFromProgram(int id)
+        {
+            var userId = _userManager.GetUserId(User);
+            var user = await _context.Nutritionists.FirstOrDefaultAsync(u => u.IdentityId == userId);
+            var removingMealPlan = _context.AddingMealPlans
+                .Include(m => m.MealPlanDto)
+                .Where(n => n.NutritionistDto == user).FirstOrDefault(a => a.MealPlanDto.Id == id);
+            if (removingMealPlan != null)
+            {
+                user.AddingMealPlans.Remove(removingMealPlan);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToAction("ComplexesInProgram");
+        }
     }
 }

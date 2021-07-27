@@ -51,7 +51,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             if (!ModelState.IsValid) return View();
             _foodService.Create(_mapper.Map<FoodDto>(
-            new Food(model.Name,model.Calories,model.BeneficialFeatures)
+            new Food(model.Name,model.Calories,model.BeneficialFeatures,model.Proteins,model.Fats,model.Carbohydrates)
             ));
             return RedirectToAction("SuccessfulCreation", "Validation", new { type = "food", name = model.Name });
 

@@ -13,7 +13,7 @@
     <form class="main__form center" asp-action="CreateExercise" asp-controller="Workout" method="post">
         <div class="form__input-group row">
             <label class="form__label col-md-2" asp-for="Name">Exercise name:</label>
-            <input class="form__input col-md-3" type="text" asp-for="Name" placeholder="up to 50 symbols" asp-validation-for="name">
+            <input class="form__input col-md-3" type="text" asp-for="Name" placeholder="up to 50 symbols">
             <span asp-validation-for="Name" class="text-danger d-block"></span>
         </div>
         <div class="form__input-group row">

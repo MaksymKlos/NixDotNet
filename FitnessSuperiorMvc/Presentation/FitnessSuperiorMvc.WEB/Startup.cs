@@ -36,6 +36,10 @@ namespace FitnessSuperiorMvc.WEB
             services.AddScoped<SetOfExercisesService>();
             services.AddScoped<TrainingProgramsService>();
 
+            services.AddScoped<FoodService>();
+            services.AddScoped<MealPlanService>();
+            services.AddScoped<NutritionProgramService>();
+
             services.Add(ServiceDescriptor.Scoped(typeof(IRepository<>),typeof(FitnessAppRepository<>)));
 
             services.AddAutoMapper(typeof(Startup));

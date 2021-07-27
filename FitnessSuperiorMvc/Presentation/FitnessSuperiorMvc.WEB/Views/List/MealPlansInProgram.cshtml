@@ -1,0 +1,44 @@
+﻿@using FitnessSuperiorMvc.BLL.Dto.Services.Sport
+@using FitnessSuperiorMvc.BLL.Services
+@using FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
+@model List<MealPlanDto>
+
+<div class="main__content m-height">
+    <div class="main__title center">
+        Add meal plan to program
+    </div>
+    <div class="adding-container">
+        @if (Model.Any())
+        {
+            <table class="table" style="color: #ccc">
+                <tr>
+                    <th>Name</th>
+                    <th>MuscleGroup</th>
+                    <th></th>
+                </tr>
+                @foreach (MealPlanDto mealPlan in Model)
+                {
+                    <tr>
+                        <td>@mealPlan.Name</td>
+                        <td>@mealPlan.Calories</td>
+                        <td><a asp-action="RemoveMealPlanFromProgram" asp-route-id="@mealPlan.Id" class="cross">&#10008;</a></td>
+                    </tr>
+                }
+            </table>
+        }
+
+        <div class="d-flex justify-content-between">
+            <a class="grey-btn" asp-action="ExistingMealPlans" asp-controller="Nutrition">Add meal plan</a>
+            @if (Model.Count < 1)
+            {
+        <a class="grey-btn-disabled" title="At least 1 meal plan">Create Program (At least 1 meal plan)</a>
+            }
+
+            else
+            {
+                <a class="grey-btn" asp-action="CreateProgram" asp-controller="Nutrition">Create program</a>
+            }
+
+        </div>
+    </div>
+</div>
