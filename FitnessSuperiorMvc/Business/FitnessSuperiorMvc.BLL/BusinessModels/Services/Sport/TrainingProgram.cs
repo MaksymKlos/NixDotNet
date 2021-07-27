@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using FitnessSuperiorMvc.BLL.BusinessModels.Services.Community;
-using FitnessSuperiorMvc.BLL.Dto.People.Staff;
-
 namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
 {
     /// <summary>
@@ -32,6 +28,7 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
         /// </summary>
         /// <param name="programName">Program name.</param>
         /// <param name="programDescription">Program description.</param>
+        /// <param name="destination"></param>
         /// <param name="typeOfProgram">Program type (muscle gain, weight loss).</param>
         /// <param name="requiredSkillLevel">Required skill level(professional, average, beginner).</param>
         /// <param name="ageRestriction">Age limit.</param>
@@ -73,7 +70,20 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
             {
                 Price = price;
             }
-            TypeOfProgram = typeOfProgram;
+
+            TypeOfProgram = typeOfProgram switch
+            {
+                "loss" => "Weight loss",
+                "gain" => "Muscle gain",
+                _ => TypeOfProgram
+            };
+            Destination = destination switch
+            {
+                "men" => "For men",
+                "women" => "For women",
+                "all" => "For all",
+                _ => Destination
+            };
             RequiredSkillLevel = requiredSkillLevel;
             AgeRestriction = ageRestriction;
             Name = programName;

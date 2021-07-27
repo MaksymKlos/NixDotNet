@@ -12,24 +12,21 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
         public override string Name { get; }
         public override string Description { get; }
         public override decimal Price { get; }
-
-        /// <summary>
-        /// Program nutritionist.
-        /// </summary>
-        public Nutritionist Nutritionist { get; set; }
+        public string Destination { get; set; }
         /// <summary>
         /// Program type (muscle gain, weight loss).
         /// </summary>
         public string TypeOfDiet { get; set; }
+
         /// <summary>
         /// Create training program.
         /// </summary>
         /// <param name="programName">Program name.</param>
         /// <param name="programDescription">Program description.</param>
-        /// <param name="nutritionist">Program nutritionist.</param>
         /// <param name="typeOfDiet">Program type (muscle gain, weight loss).</param>
+        /// <param name="destination"></param>
         /// <param name="price"> Program price.</param>
-        public NutritionProgram(string programName, string programDescription, decimal price, Nutritionist nutritionist, string typeOfDiet)
+        public NutritionProgram(string programName, string programDescription, string destination, decimal price,string typeOfDiet)
         {
             if (string.IsNullOrWhiteSpace(programName))
             {
@@ -39,6 +36,10 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
             {
                 throw new ArgumentException("The description of program can't be empty or null.", nameof(programDescription));
             }
+            if (string.IsNullOrWhiteSpace(destination))
+            {
+                throw new ArgumentException("The destination can't be empty or null.", nameof(destination));
+            }
             if (string.IsNullOrWhiteSpace(typeOfDiet))
             {
                 throw new ArgumentException("The type of diet can't be empty or null.", nameof(typeOfDiet));
@@ -47,7 +48,7 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
             {
                 throw new ArgumentException("Price can't be less than 0.", nameof(price));
             }
-            Nutritionist = nutritionist ?? throw new ArgumentNullException(nameof(nutritionist), "Nutritionist can't be null");
+            
             if (price > 0)
             {
                 Price = price;
@@ -55,6 +56,7 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
             TypeOfDiet = typeOfDiet;
             Name = programName;
             Description = programDescription;
+            Destination = destination;
         }
     }
 }

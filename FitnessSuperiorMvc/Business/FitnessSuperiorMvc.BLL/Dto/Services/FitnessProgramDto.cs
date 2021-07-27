@@ -8,7 +8,7 @@ namespace FitnessSuperiorMvc.BLL.Dto.Services
         public virtual int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        [Column(TypeName = "decimal(2,5)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         public string Destination { get; set; }
         protected FitnessProgramDto() { }

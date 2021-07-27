@@ -6,6 +6,7 @@ using FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport;
 using FitnessSuperiorMvc.BLL.Dto.People.Staff;
 using FitnessSuperiorMvc.BLL.Dto.Services.Sport;
 using FitnessSuperiorMvc.DA.EF;
+using FitnessSuperiorMvc.Services;
 using FitnessSuperiorMvc.WEB.ViewModels;
 using FitnessSuperiorMvc.WEB.ViewModels.Page;
 using FitnessSuperiorMvc.WEB.ViewModels.Services.Sport;
@@ -21,9 +22,11 @@ namespace FitnessSuperiorMvc.WEB.Controllers
     public class WorkoutController : Controller
     {
         private readonly FitnessAppContext _context;
+
         private readonly ExerciseService _exerciseService;
         private readonly SetOfExercisesService _setOfExercisesService;
         private readonly TrainingProgramsService _trainingProgramsService;
+
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IMapper _mapper;
 
@@ -39,41 +42,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             _context = context;
             _trainingProgramsService = trainingProgramsService;
         }
-        [HttpGet]
-        public IActionResult CreateExercise()
-        {
-            return View();
-        }
-        [HttpPost]
-        public IActionResult CreateExercise(ExerciseViewModel exerciseViewModel)
-        {
-            if (ModelState.IsValid)
-            {
-                if (string.IsNullOrWhiteSpace(exerciseViewModel.YoutubeUrl))
-                {
-                    _exerciseService.Create(_mapper.Map<ExerciseDto>
-                    (
-                        new Exercise(exerciseViewModel.Name, exerciseViewModel.MuscleGroups, exerciseViewModel.Description)
-                    ));
-                }
-                else
-                {
-                    _exerciseService.Create(_mapper.Map<ExerciseDto>
-                    (
-                        new Exercise(exerciseViewModel.Name, exerciseViewModel.MuscleGroups, exerciseViewModel.Description, exerciseViewModel.YoutubeUrl)
-                    ));
-                }
-                
-                
-                return RedirectToAction("SuccessfulCreation","Validation",new{type = "exercise",name= exerciseViewModel.Name});
-                
-            }
-
-            return View();
-
-
-        }
-
+       
         [HttpGet]
         public async Task<IActionResult> ExerciseView(int id, string returnUrl)
         {
@@ -84,16 +53,45 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> ComplexView(int id, string returnUrl)
         {
-            var exercise = Task.Run(() => _exerciseService.GetById(id));
+            var complex = Task.Run(() => _setOfExercisesService.GetById(id));
             ViewBag.ReturnUrl = returnUrl;
-            return View(await exercise);
+            return View(await complex);
         }
         [HttpGet]
         public async Task<IActionResult> TrainingProgramView(int id, string returnUrl)
         {
-            var exercise = Task.Run(() => _exerciseService.GetById(id));
+            var program = Task.Run(() => _trainingProgramsService.GetById(id));
             ViewBag.ReturnUrl = returnUrl;
-            return View(await exercise);
+            return View(await program);
+        }
+        [HttpGet]
+        public IActionResult CreateExercise()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult CreateExercise(ExerciseViewModel exerciseViewModel)
+        {
+            if (!ModelState.IsValid) return View();
+            if (string.IsNullOrWhiteSpace(exerciseViewModel.YoutubeUrl))
+            {
+                _exerciseService.Create(_mapper.Map<ExerciseDto>
+                (
+                    new Exercise(exerciseViewModel.Name, exerciseViewModel.MuscleGroups, exerciseViewModel.Description)
+                ));
+            }
+            else
+            {
+                _exerciseService.Create(_mapper.Map<ExerciseDto>
+                (
+                    new Exercise(exerciseViewModel.Name, exerciseViewModel.MuscleGroups, exerciseViewModel.Description, exerciseViewModel.YoutubeUrl)
+                ));
+            }
+
+
+            return RedirectToAction("SuccessfulCreation", "Validation", new { type = "exercise", name = exerciseViewModel.Name });
+
+
         }
         [HttpGet]
         [Authorize(Roles = "Trainer")]
@@ -125,8 +123,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
                 _context.AddingExercises.Remove(addingExercise);
             }
             await _context.SaveChangesAsync();
-            string type = "set of exercises";
-            return RedirectToAction("SuccessfulCreation", "Validation", new { type, model.Name });
+            return RedirectToAction("SuccessfulCreation", "Validation", new { type = "set of exercises",name = model.Name });
         }
 
         [HttpGet]
@@ -166,6 +163,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             {
                 _context.AddingComplexes.Remove(addingComplex);
             }
+            await _context.SaveChangesAsync();
             return RedirectToAction("SuccessfulCreation", "Validation",
                 new {type = "training program", name = model.Name});
 
@@ -185,12 +183,13 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         }
 
         [HttpGet]
-        public IActionResult ExistingComplexes(int page = 1)
+        public async Task<IActionResult> ExistingComplexes(int page = 1)
         {
+            var getData = Task.Run(() => _setOfExercisesService.GetAll());
             var exerciseView = new PaginationViewModel<SetOfExercisesDto>()
             {
                 WorkoutPerPage = 3,
-                ExistingPrograms = _setOfExercisesService.GetAll(),
+                ExistingPrograms = await getData,
                 CurrentPage = page
             };
             return View(exerciseView);
@@ -198,12 +197,13 @@ namespace FitnessSuperiorMvc.WEB.Controllers
 
 
         [HttpGet]
-        public IActionResult ExistingPrograms(int page = 1)
+        public async Task<IActionResult> ExistingPrograms(int page = 1)
         {
+            var getData = Task.Run(() => _trainingProgramsService.GetAll());
             var programView = new PaginationViewModel<TrainingProgramDto>()
             {
                 WorkoutPerPage = 3,
-                ExistingPrograms = _context.TrainingPrograms,
+                ExistingPrograms = await getData,
                 CurrentPage = page
             };
             return View(programView);

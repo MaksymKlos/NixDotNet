@@ -19,20 +19,19 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
         /// <summary>
         /// Food contains in meal plan.
         /// </summary>
-        public List<Food> Food { get; }
+        public List<Food> Food { get; set; }
 
         /// <summary>
         /// Meal plan creation.
         /// </summary>
         /// <param name="name">Meal plan name.</param>
         /// <param name="food">Food contains in meal plan.</param>
-        public MealPlan(string name, List<Food> food)
+        public MealPlan(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
                 throw new ArgumentException("Name can't be empty or null.", nameof(name));
             }
-            Food = food ?? throw new ArgumentNullException(nameof(food), "Food can't be null");
             Name = name;
         }
 

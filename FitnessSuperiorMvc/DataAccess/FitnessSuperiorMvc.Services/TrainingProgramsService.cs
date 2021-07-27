@@ -32,7 +32,7 @@ namespace Services
             var trainingProgram = _trainingProgramRepository.GetById(id);
             if (trainingProgram == null)
             {
-                throw new ArgumentNullException(nameof(trainingProgram), $"Cannot find complex with id '{id}'");
+                throw new ArgumentNullException(nameof(trainingProgram), $"Cannot find program with id '{id}'");
             }
 
             foreach (var complex in trainingProgram.SetsOfExercises.ToList())

@@ -8,6 +8,7 @@ using FitnessSuperiorMvc.BLL.Dto.People.Users;
 using FitnessSuperiorMvc.BLL.Dto.Services.Sport;
 using FitnessSuperiorMvc.BLL.Services;
 using FitnessSuperiorMvc.DA.EF;
+using FitnessSuperiorMvc.Services;
 using FitnessSuperiorMvc.WEB.ViewModels.Services.Sport;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

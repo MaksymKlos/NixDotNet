@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Threading.Tasks.Dataflow;
 using FitnessSuperiorMvc.BLL.Dto.Services.Sport;
 using FitnessSuperiorMvc.BLL.Interfaces;
 
-namespace Services
+namespace FitnessSuperiorMvc.Services
 {
     public class ExerciseService
     {
@@ -40,7 +37,7 @@ namespace Services
             var exercise = _exerciseRepository.GetById(id);
             if (exercise == null)
             {
-                throw new ArgumentNullException(nameof(exercise),$"Cannot find student with id '{id}'");
+                throw new ArgumentNullException(nameof(exercise),$"Cannot find exercise with id '{id}'");
             }
             _exerciseRepository.Remove(id);
         }

@@ -11,7 +11,7 @@
     {
         <section class="main__content-section">
             <h2 class="main__title center">
-                <a class="main__title-link" href="#">@program.Name</a>
+                <a class="main__title-link" asp-route-id="@program.Id" asp-controller="Workout" asp-action="TrainingProgramView">@program.Name</a>
             </h2>
             <p class="main__text center">
                 @program.Description

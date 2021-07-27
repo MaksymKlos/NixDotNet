@@ -123,11 +123,13 @@
                                     @User.Identity.Name
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <li><a class="dropdown-item" asp-controller="Account" asp-action="Profile">Profile</a></li>
                                     @if (User.IsInRole("Admin"))
                                     {
                                         <li><a class="dropdown-item" asp-controller="Account" asp-action="CreateRole">Create role</a></li>
                                         <li><a class="dropdown-item" asp-controller="Account" asp-action="Users">Assign user role</a></li>
                                     }
+
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
                                 </ul>

@@ -1,6 +1,7 @@
 using FitnessSuperiorMvc.BLL.Interfaces;
 using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Repositories;
+using FitnessSuperiorMvc.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;

@@ -21,6 +21,8 @@ namespace FitnessSuperiorMvc.DA.EF
 
         public DbSet<AddingExercises> AddingExercises { get; set; }
         public DbSet<AddingComplexes> AddingComplexes { get; set; }
+        public DbSet<AddingFood> AddingFood { get; set; }
+        public DbSet<AddingMealPlans> AddingMealPlans { get; set; }
 
         public FitnessAppContext() {}
         public FitnessAppContext(DbContextOptions<FitnessAppContext> options)
@@ -28,5 +30,6 @@ namespace FitnessSuperiorMvc.DA.EF
         {
             Database.EnsureCreated();
         }
+
     }
 }
