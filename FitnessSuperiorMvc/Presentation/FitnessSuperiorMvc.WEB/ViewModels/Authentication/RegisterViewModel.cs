@@ -1,7 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using FitnessSuperiorMvc.WEB.Attributes;
 using FitnessSuperiorMvc.WEB.ViewModels.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualBasic;
 
 namespace FitnessSuperiorMvc.WEB.ViewModels.Authentication
 {
@@ -26,7 +29,9 @@ namespace FitnessSuperiorMvc.WEB.ViewModels.Authentication
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Birth date can't be empty")]
-        [DataType(DataType.Date)]
+        [DataType(DataType.DateTime)]
+        [DisplayName("Birth date")]
+        [DateRange("01.01.1900")]
         public DateTime BirthDate { get; set; }
 
         [Required(ErrorMessage = "Phone can't be empty")]

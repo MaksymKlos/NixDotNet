@@ -9,9 +9,10 @@ namespace FitnessSuperiorMvc.BLL.Dto.Services.Nutrition
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public double Calories { get; set; }
         public NutritionistDto Author { get; set; }
-        public virtual ICollection<FoodDto> Food { get; set; }
+        public ICollection<FoodDto> Food { get; set; }
 
         public MealPlanDto()
         {

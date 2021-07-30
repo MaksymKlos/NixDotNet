@@ -29,7 +29,7 @@ namespace FitnessSuperiorMvc.Services
         public virtual FoodDto GetById(int id) => _foodRepository.GetById(id);
         public virtual void Update(FoodDto food) => _foodRepository.Update(food);
 
-        public virtual void Delete(int id)
+        public virtual void Remove(int id)
         {
             var food = _foodRepository.GetById(id);
             if (food == null)

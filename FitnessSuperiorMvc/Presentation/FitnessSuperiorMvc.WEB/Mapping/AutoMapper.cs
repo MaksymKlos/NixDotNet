@@ -29,13 +29,11 @@ namespace FitnessSuperiorMvc.WEB.Mapping
             CreateMap<TrainingProgram, TrainingProgramDto>();
 
             CreateMap<Food, FoodDto>();
-            CreateMap<List<FoodDto>, List<Food>>()
-                .ForMember(dest => dest.Select(f => f.Name), opt => opt.MapFrom(src => src.Select(f => f.Name)))
-                .ForMember(dest => dest.Select(f => f.BeneficialFeatures),
-                    opt => opt.MapFrom(src => src.Select(f => f.BeneficialFeatures)))
-                .ForMember(dest => dest.Select(f => f.Calories),
-                    opt => opt.MapFrom(src => src.Select(f => f.Calories)));
+            CreateMap<FoodDto, Food>();
+            CreateMap<List<Food>, List<FoodDto>>();
+
             CreateMap<MealPlan, MealPlanDto>();
+            
             CreateMap<NutritionProgram, NutritionProgramDto>();
 
             CreateMap<Person, PersonDto>();

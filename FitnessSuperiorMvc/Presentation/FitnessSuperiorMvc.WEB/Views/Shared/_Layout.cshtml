@@ -64,8 +64,8 @@
                                 @if (User.IsInRole("Nutritionist"))
                                 {
                                     <li><a class="dropdown-item" asp-controller="Nutrition" asp-action="CreateFood">Create food</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Nutrition" asp-action="CreateMealPlan">Create meal plan</a></li>
-                                    <li><a class="dropdown-item" asp-controller="Nutrition" asp-action="CreateProgram">Create nutrition</a></li>
+                                    <li><a class="dropdown-item" asp-controller="List" asp-action="FoodInMealPlan">Create meal plan</a></li>
+                                    <li><a class="dropdown-item" asp-controller="List" asp-action="MealPlansInProgram">Create nutrition</a></li>
                                 }
                                 <li><a class="dropdown-item" asp-controller="Nutrition" asp-action="ExistingPrograms">Existing programs</a></li>
                                 @if (User.IsInRole("User"))

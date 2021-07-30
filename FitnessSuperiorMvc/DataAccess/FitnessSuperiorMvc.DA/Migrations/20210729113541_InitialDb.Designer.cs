@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessSuperiorMvc.DA.Migrations
 {
     [DbContext(typeof(FitnessAppContext))]
-    [Migration("20210727092147_Initialdb")]
-    partial class Initialdb
+    [Migration("20210729113541_InitialDb")]
+    partial class InitialDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -185,11 +185,20 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.Property<double>("Calories")
                         .HasColumnType("float");
 
+                    b.Property<double>("Carbohydrates")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Fats")
+                        .HasColumnType("float");
+
                     b.Property<int?>("MealPlanDtoId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Proteins")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -210,6 +219,9 @@ namespace FitnessSuperiorMvc.DA.Migrations
 
                     b.Property<double>("Calories")
                         .HasColumnType("float");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
@@ -572,7 +584,7 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .HasForeignKey("FoodDtoId");
 
                     b.HasOne("FitnessSuperiorMvc.BLL.Dto.People.Staff.NutritionistDto", "NutritionistDto")
-                        .WithMany()
+                        .WithMany("AddingFood")
                         .HasForeignKey("NutritionistDtoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -589,7 +601,7 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .HasForeignKey("MealPlanDtoId");
 
                     b.HasOne("FitnessSuperiorMvc.BLL.Dto.People.Staff.NutritionistDto", "NutritionistDto")
-                        .WithMany()
+                        .WithMany("AddingMealPlans")
                         .HasForeignKey("NutritionistDtoId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -601,6 +613,10 @@ namespace FitnessSuperiorMvc.DA.Migrations
 
             modelBuilder.Entity("FitnessSuperiorMvc.BLL.Dto.People.Staff.NutritionistDto", b =>
                 {
+                    b.Navigation("AddingFood");
+
+                    b.Navigation("AddingMealPlans");
+
                     b.Navigation("Feedback");
 
                     b.Navigation("NutritionPrograms");

@@ -19,9 +19,9 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
         /// <summary>
         /// Beneficial properties of food.
         /// </summary>
-        public int Proteins { get; }
-        public int Fats { get; }
-        public int Carbohydrates { get; }
+        public double Proteins { get; }
+        public double Fats { get; }
+        public double Carbohydrates { get; }
         public string BeneficialFeatures { get; }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
         /// <param name="proteins">Proteins per 100 grams.</param>
         /// <param name="fats">Fats per 100 grams.</param>
         /// <param name="carbohydrates">Carbohydrates per 100 grams.</param>
-        public Food(string name, double calories, string beneficialFeatures, int proteins, int fats, int carbohydrates)
+        public Food(string name, double calories, string beneficialFeatures, double proteins, double fats, double carbohydrates)
         {
             if (string.IsNullOrWhiteSpace(name))
             {

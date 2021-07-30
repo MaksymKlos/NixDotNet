@@ -53,10 +53,21 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Nutrition
             {
                 Price = price;
             }
-            TypeOfDiet = typeOfDiet;
+            TypeOfDiet = typeOfDiet switch
+            {
+                "loss" => "Weight loss",
+                "gain" => "Muscle gain",
+                _ => typeOfDiet
+            };
+            Destination = destination switch
+            {
+                "men" => "For men",
+                "women" => "For women",
+                "all" => "For all",
+                _ => Destination
+            };
             Name = programName;
             Description = programDescription;
-            Destination = destination;
         }
     }
 }

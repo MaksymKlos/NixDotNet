@@ -40,7 +40,28 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             _mapper = mapper;
         }
         [HttpGet]
-        [Authorize(Roles="Nutritionist")]
+        public async Task<IActionResult> FoodView(int id, string returnUrl)
+        {
+            var food = Task.Run(() => _foodService.GetById(id));
+            ViewBag.ReturnUrl = returnUrl;
+            return View(await food);
+        }
+        [HttpGet]
+        public async Task<IActionResult> MealPlanView(int id, string returnUrl)
+        {
+            var mealPlan = Task.Run(() => _mealPlanService.GetById(id));
+            ViewBag.ReturnUrl = returnUrl;
+            return View(await mealPlan);
+        }
+        [HttpGet]
+        public async Task<IActionResult> NutritionProgramView(int id, string returnUrl)
+        {
+            var program = Task.Run(() => _nutritionProgramService.GetById(id));
+            ViewBag.ReturnUrl = returnUrl;
+            return View(await program);
+        }
+        [HttpGet]
+        [Authorize(Roles= "Nutritionist")]
         public IActionResult CreateFood()
         {
             return View();
@@ -78,7 +99,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var food = await adding
                 .Select(f => f.FoodDto)
                 .ToListAsync();
-            MealPlan mealPlan = new MealPlan(model.Name) {Food = _mapper.Map<List<Food>>(food)};
+            MealPlan mealPlan = new MealPlan(model.Name, model.Description) {Food = _mapper.Map<List<Food>>(food)};
             MealPlanDto mealPlanDto = _mapper.Map<MealPlanDto>(mealPlan);
             mealPlanDto.Author = user;
 
@@ -129,7 +150,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             }
             await _context.SaveChangesAsync();
             return RedirectToAction("SuccessfulCreation", "Validation",
-                new { type = "nutrition program", name = model.TypeOfDiet });
+                new { type = "nutrition program", name = model.Name });
         }
         public IActionResult ExistingFood(int page = 1)
         {

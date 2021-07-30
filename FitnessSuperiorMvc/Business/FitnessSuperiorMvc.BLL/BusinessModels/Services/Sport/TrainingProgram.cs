@@ -88,7 +88,6 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
             AgeRestriction = ageRestriction;
             Name = programName;
             Description = programDescription;
-            Destination = destination;
         }
     }
 }

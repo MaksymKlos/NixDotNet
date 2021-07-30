@@ -1,27 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using FitnessSuperiorMvc.BLL.Dto.Services.Sport;
 using FitnessSuperiorMvc.BLL.Interfaces;
 
-namespace Services
+namespace FitnessSuperiorMvc.Services
 {
     public class TrainingProgramsService
     {
         private readonly IRepository<TrainingProgramDto> _trainingProgramRepository;
         private readonly IRepository<SetOfExercisesDto> _setOfExercisesRepository;
 
-        public TrainingProgramsService()
-        {
-
-        }
+        public TrainingProgramsService() {}
         public TrainingProgramsService(IRepository<TrainingProgramDto> trainingProgramRepository, IRepository<SetOfExercisesDto> setOfExercisesRepository)
         {
             _trainingProgramRepository = trainingProgramRepository;
             _setOfExercisesRepository = setOfExercisesRepository;
         }
-        public virtual List<TrainingProgramDto> GetAll() => _trainingProgramRepository.GetAll();
+        public virtual List<TrainingProgramDto> GetAll()
+        {
+            var programs = _trainingProgramRepository
+                .GetAll()
+                .GroupBy(n => n.Name)
+                .Select(grp => grp.First())
+                .OrderBy(id => id.Id)
+                .ToList();
+            return programs;
+        }
         public virtual TrainingProgramDto GetById(int id) => _trainingProgramRepository.GetById(id);
 
         public virtual void Update(TrainingProgramDto trainingProgram) =>
@@ -37,7 +42,7 @@ namespace Services
 
             foreach (var complex in trainingProgram.SetsOfExercises.ToList())
             {
-                _trainingProgramRepository.Remove(complex.Id);
+                _setOfExercisesRepository.Remove(complex.Id);
             }
             _trainingProgramRepository.Remove(id);
         }

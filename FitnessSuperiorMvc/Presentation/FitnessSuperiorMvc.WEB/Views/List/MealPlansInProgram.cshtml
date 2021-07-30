@@ -1,6 +1,4 @@
-﻿@using FitnessSuperiorMvc.BLL.Dto.Services.Sport
-@using FitnessSuperiorMvc.BLL.Services
-@using FitnessSuperiorMvc.BLL.BusinessModels.Services.Sport
+﻿@using FitnessSuperiorMvc.BLL.Dto.Services.Nutrition
 @model List<MealPlanDto>
 
 <div class="main__content m-height">
@@ -31,7 +29,7 @@
             <a class="grey-btn" asp-action="ExistingMealPlans" asp-controller="Nutrition">Add meal plan</a>
             @if (Model.Count < 1)
             {
-        <a class="grey-btn-disabled" title="At least 1 meal plan">Create Program (At least 1 meal plan)</a>
+                <a class="grey-btn-disabled" title="At least 1 meal plan">Create Program (At least 1 meal plan)</a>
             }
 
             else

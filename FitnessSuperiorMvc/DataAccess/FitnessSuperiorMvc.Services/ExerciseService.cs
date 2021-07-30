@@ -9,10 +9,7 @@ namespace FitnessSuperiorMvc.Services
     public class ExerciseService
     {
         private readonly IRepository<ExerciseDto> _exerciseRepository;
-        public ExerciseService()
-        {
-            
-        }
+        public ExerciseService() {}
         public ExerciseService(IRepository<ExerciseDto> exerciseRepository)
         {
             _exerciseRepository = exerciseRepository;
@@ -32,7 +29,7 @@ namespace FitnessSuperiorMvc.Services
         public virtual ExerciseDto GetById(int id) => _exerciseRepository.GetById(id);
         public virtual void Update(ExerciseDto exercise) => _exerciseRepository.Update(exercise);
 
-        public virtual void Delete(int id)
+        public virtual void Remove(int id)
         {
             var exercise = _exerciseRepository.GetById(id);
             if (exercise == null)

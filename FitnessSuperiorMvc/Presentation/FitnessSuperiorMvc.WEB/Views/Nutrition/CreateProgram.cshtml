@@ -1,6 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Create Nutrition program";
 }
+@model FitnessSuperiorMvc.WEB.ViewModels.Services.Nutrition.NutritionProgramViewModel
 <div class="main__content m-height">
     <div class="main__title center">
         Create Program
@@ -8,40 +9,35 @@
     <div class="main__text center">
         Fill out the form below to create your own nutrition program
     </div>
-    <form class="main__form center" name="program">
+    <form class="main__form center" asp-controller="Nutrition" asp-action="CreateProgram" method ="post">
         <div class="form__input-group row">
-            <label class="form__label col-md-2" for="name">Program name:</label>
-            <input class="form__input col-md-3" type="text" name="name" id="name" placeholder="from 6 to 50 symbols">
+            <label class="form__label col-md-2" asp-for="Name">Program name:</label>
+            <input class="form__input col-md-3" type="text" asp-for="Name" placeholder="from 6 to 50 symbols">
+            <span asp-validation-for="Name" class="text-danger d-block"></span>
         </div>
         <div class="form__input-group row">
-            <label class="form__label col-md-2" for="description">Description:</label>
-            <textarea class="form__input col-md-3" type="text" name="description" id="description" rows="2" placeholder="from 6 to 300 symbols"></textarea>
+            <label class="form__label col-md-2" asp-for="Description">Description:</label>
+            <textarea class="form__input col-md-3" type="text" asp-for="Description" rows="2" placeholder="from 6 to 300 symbols"></textarea>
+            <span asp-validation-for="Description" class="text-danger d-block"></span>
         </div>
         <div class="form__input-group row">
-            <label class="form__label col-md-2" for="price">Price:</label>
-            <input class="form__input col-md-3" type="text" name="price" id="price" placeholder="0 to make it free">
+            <label class="form__label col-md-2" asp-for="Price">Price:</label>
+            <input class="form__input col-md-3" type="text" asp-for="Price" placeholder="0 to make it free">
+            <span asp-validation-for="Price" class="text-danger d-block"></span>
         </div>
         <div class="form__input-group row">
-            <label class="form__label col-md-2" for="destination">Destination:</label>
-            <select class="form__input col-md-3" name="destination" id="destination">
-                <option value="">For men</option>
-                <option value="">For women</option>
-                <option value="">For all</option>
+            <label class="form__label col-md-2" asp-for="Destination">Destination:</label>
+            <select class="form__input col-md-3" asp-for="Destination">
+                <option value="men">For men</option>
+                <option value="women">For women</option>
+                <option value="all">For all</option>
             </select>
         </div>
         <div class="form__input-group row">
-            <label class="form__label col-md-2" for="type">Type of diet:</label>
-            <select class="form__input col-md-3" name="type" id="type">
+            <label class="form__label col-md-2" asp-for="TypeOfDiet">Type of diet:</label>
+            <select class="form__input col-md-3" asp-for="TypeOfDiet">
                 <option value="loss">Weight loss</option>
                 <option value="gain">Muscle gain</option>
-            </select>
-        </div>
-        <div class="form__input-group row">
-            <label class="form__label col-md-2" for="meal">Meal plans:</label>
-            <select class="form__input col-md-3" name="meal" id="meal">
-                <option value="">Monday</option>
-                <option value="">Wednesday</option>
-                <option value="">Friday</option>
             </select>
         </div>
         <button type="submit" class="btn btn-light">Create</button>

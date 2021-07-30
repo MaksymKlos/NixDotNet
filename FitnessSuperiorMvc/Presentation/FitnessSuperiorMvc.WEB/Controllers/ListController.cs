@@ -1,20 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using FitnessSuperiorMvc.BLL.Dto.People.Users;
-using FitnessSuperiorMvc.BLL.Dto.Services.Sport;
 using FitnessSuperiorMvc.BLL.Services;
 using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.Services;
-using FitnessSuperiorMvc.WEB.ViewModels.Services.Sport;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
-using Services;
 
 namespace FitnessSuperiorMvc.WEB.Controllers
 {
@@ -23,24 +15,25 @@ namespace FitnessSuperiorMvc.WEB.Controllers
     {
         private readonly ExerciseService _exerciseService;
         private readonly SetOfExercisesService _setOfExercisesService;
-        private readonly TrainingProgramsService _trainingProgramsService;
 
         private readonly FoodService _foodService;
         private readonly MealPlanService _mealPlanService;
-        private readonly NutritionProgramService _nutritionProgramService;
 
         private readonly FitnessAppContext _context;
         private readonly UserManager<IdentityUser> _userManager;
-        public ListController(ExerciseService exerciseService, SetOfExercisesService setOfExercisesService, TrainingProgramsService trainingProgramsService, FitnessAppContext context, UserManager<IdentityUser> userManager, FoodService foodService, MealPlanService mealPlanService, NutritionProgramService nutritionProgramService)
+        public ListController(ExerciseService exerciseService,
+            SetOfExercisesService setOfExercisesService,
+            FitnessAppContext context,
+            UserManager<IdentityUser> userManager,
+            FoodService foodService,
+            MealPlanService mealPlanService)
         {
             _exerciseService = exerciseService;
             _setOfExercisesService = setOfExercisesService;
-            _trainingProgramsService = trainingProgramsService;
             _context = context;
             _userManager = userManager;
             _foodService = foodService;
             _mealPlanService = mealPlanService;
-            _nutritionProgramService = nutritionProgramService;
         }
 
         [HttpGet]
@@ -199,13 +192,13 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         public async Task<IActionResult> MealPlansInProgram()
         {
             var userId = _userManager.GetUserId(User);
-            var user = await _context.Trainers.FirstOrDefaultAsync(u => u.IdentityId == userId);
-            var complexes = _context.AddingComplexes
-                .Include(e => e.SetOfExercisesDto)
-                .Where(t => t.TrainerDto == user)
-                .Select(s => s.SetOfExercisesDto)
+            var user = await _context.Nutritionists.FirstOrDefaultAsync(u => u.IdentityId == userId);
+            var mealPlans = _context.AddingMealPlans
+                .Include(m => m.MealPlanDto)
+                .Where(n => n.NutritionistDto == user)
+                .Select(m => m.MealPlanDto)
                 .ToList();
-            return View(complexes);
+            return View(mealPlans);
         }
         [HttpGet]
         [Authorize(Roles = "Nutritionist")]
@@ -241,7 +234,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
                 user.AddingMealPlans.Remove(removingMealPlan);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction("ComplexesInProgram");
+            return RedirectToAction("MealPlansInProgram");
         }
     }
 }

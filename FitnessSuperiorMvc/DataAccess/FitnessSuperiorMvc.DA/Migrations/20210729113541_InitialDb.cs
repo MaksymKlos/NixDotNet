@@ -2,7 +2,7 @@
 
 namespace FitnessSuperiorMvc.DA.Migrations
 {
-    public partial class Initialdb : Migration
+    public partial class InitialDb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -150,6 +150,7 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Calories = table.Column<double>(type: "float", nullable: false),
                     AuthorId = table.Column<int>(type: "int", nullable: true),
                     NutritionProgramDtoId = table.Column<int>(type: "int", nullable: true)
@@ -262,6 +263,9 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Calories = table.Column<double>(type: "float", nullable: false),
+                    Proteins = table.Column<double>(type: "float", nullable: false),
+                    Fats = table.Column<double>(type: "float", nullable: false),
+                    Carbohydrates = table.Column<double>(type: "float", nullable: false),
                     BeneficialFeatures = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MealPlanDtoId = table.Column<int>(type: "int", nullable: true)
                 },
