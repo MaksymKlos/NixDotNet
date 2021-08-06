@@ -1,0 +1,27 @@
+﻿@model FitnessSuperiorMvc.DA.Entities.Sport.TrainingProgram
+<div class="main__content reg-content m-height">
+    <div class="models">
+        <h1 class="model-title center">@Model.Name</h1>
+        <p class="model-text center">Active muscles: @Model.TypeOfProgram</p>
+        <p class="model-text center">Description: @Model.Description</p>
+        <p class="model-text center">Author: @Model.Trainer.Name</p>
+        <p class="model-text center">Sets of exercises:</p>
+        <div class="main__content-section">
+            @foreach (var complex in Model.SetsOfExercises)
+            {
+                <div>
+                    <p>
+                        <a class="model-text center" asp-route-id="@complex.Id" asp-route-returnUrl="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")" asp-controller="Workout" asp-action="ComplexView">@complex.Name</a>
+                    </p>
+                    <p>
+                        @complex.Description
+                    </p>
+                    <hr />
+                </div>
+            }
+        </div>
+    </div>
+    @section Styles{
+        <link href="~/css/model.css" type="text/css" rel="stylesheet" />
+    }
+</div>

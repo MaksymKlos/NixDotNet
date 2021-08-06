@@ -1,0 +1,42 @@
+﻿@*@using FitnessSuperiorMvc.BLL.Dto.Programs.Nutrition
+@model List<FitnessSuperiorMvc.DA.Entities.Nutrition.Food>
+
+<div class="main__content m-height">
+    <div class="main__title center">
+        Add food to meal plan
+    </div>
+    <div class="adding-container">
+        @if (Model.Any())
+        {
+            <table class="table" style="color: #ccc">
+                <tr>
+                    <th>Name</th>
+                    <th>Calories</th>
+                    <th></th>
+                </tr>
+                @foreach (FoodDto food in Model)
+                {
+                    <tr>
+                        <td>@food.Name</td>
+                        <td>@food.Calories</td>
+                        <td><a asp-action="RemoveFoodFromMealPlan" asp-route-id="@food.Id" class="cross">&#10008;</a></td>
+                    </tr>
+                }
+            </table>
+        }
+       
+        <div class="d-flex justify-content-between">
+            <a class="grey-btn" asp-action="ExistingFood" asp-controller="Nutrition">Add food</a>
+            @if (Model.Count < 3)
+            {
+                <a class="grey-btn-disabled" title="At least 3 food">Create meal plan (At least 3 food)</a>
+            }
+        
+            else
+            {
+                <a class="grey-btn" asp-action="CreateMealPlan" asp-controller="Nutrition">Create meal plan</a>
+            }
+        
+        </div>
+    </div>
+</div>*@
