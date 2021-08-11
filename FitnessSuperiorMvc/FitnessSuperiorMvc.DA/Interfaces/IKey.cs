@@ -5,7 +5,7 @@ using System.Text;
 
 namespace FitnessSuperiorMvc.DA.Interfaces
 {
-    internal interface IKey
+    public interface IKey
     {
         [Key]
         public int Id { get; set; }

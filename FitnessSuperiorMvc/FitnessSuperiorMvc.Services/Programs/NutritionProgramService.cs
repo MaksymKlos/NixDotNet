@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using FitnessSuperiorMvc.BLL.BusinessModels;
+using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Entities.Nutrition;
+using FitnessSuperiorMvc.DA.Entities.People;
+using FitnessSuperiorMvc.DA.Entities.Sport;
 using FitnessSuperiorMvc.DA.Interfaces;
 
 namespace FitnessSuperiorMvc.Services.Programs
@@ -17,18 +21,27 @@ namespace FitnessSuperiorMvc.Services.Programs
             _mealPlanRepository = mealPlanRepository;
         }
 
-        public virtual List<NutritionProgram> GetAll()
+        public virtual List<NutritionProgram> GetAll() => _programRepository.GetAll().OrderBy(s => s.Id).ToList();
+
+        public virtual NutritionProgram GetById(int id, FitnessAppContext context)
         {
-            var program = _programRepository
-                .GetAll()
-                .GroupBy(e => e.Name)
-                .Select(grp => grp.First())
-                .OrderBy(id => id.Id)
-                .ToList();
+            var binder = new Binder(context);
+            var program = _programRepository.GetById(id);
+            program.MealPlans = binder.GetMealPlansOfProgram(id);
+            program.Nutritionist = binder.GetNutritionistOfProgram(id);
             return program;
         }
-
-        public virtual NutritionProgram GetById(int id) => _programRepository.GetById(id);
+        public virtual List<MealPlan> GetAddingMealPlans(Nutritionist user, FitnessAppContext context)
+        {
+            AddingController controller = new AddingController(context);
+            var mealPlans = controller.GetMealPlans(user);
+            return mealPlans;
+        }
+        public virtual void DeleteAddingMealPlans(Nutritionist user, FitnessAppContext context)
+        {
+            AddingController controller = new AddingController(context);
+            controller.DeleteMealPlan(user);
+        }
         public virtual void Update(NutritionProgram program) => _programRepository.Update(program);
 
         public virtual void Remove(int id)

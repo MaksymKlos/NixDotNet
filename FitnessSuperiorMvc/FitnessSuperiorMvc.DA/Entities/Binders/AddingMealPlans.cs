@@ -1,8 +1,7 @@
-﻿
-using FitnessSuperiorMvc.DA.Entities.Nutrition;
+﻿using FitnessSuperiorMvc.DA.Entities.Nutrition;
 using FitnessSuperiorMvc.DA.Entities.People;
 
-namespace FitnessSuperiorMvc.DA.Entities.Bridging
+namespace FitnessSuperiorMvc.DA.Entities.Binders
 {
     public class AddingMealPlans
     {

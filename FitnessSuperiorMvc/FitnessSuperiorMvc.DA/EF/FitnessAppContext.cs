@@ -1,4 +1,4 @@
-﻿using FitnessSuperiorMvc.DA.Entities.Bridging;
+﻿using FitnessSuperiorMvc.DA.Entities.Binders;
 using FitnessSuperiorMvc.DA.Entities.Nutrition;
 using FitnessSuperiorMvc.DA.Entities.People;
 using FitnessSuperiorMvc.DA.Entities.Sport;
@@ -31,6 +31,11 @@ namespace FitnessSuperiorMvc.DA.EF
             : base(options)
         {
             Database.EnsureCreated();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FitnessSuperiorMvc.BLL.Interfaces;
+using FitnessSuperiorMvc.DA.Interfaces;
 using FitnessSuperiorMvc.WEB.ViewModels.Interfaces;
 
 namespace FitnessSuperiorMvc.WEB.ViewModels.Page

@@ -1,6 +1,6 @@
 ﻿namespace FitnessSuperiorMvc.BLL.Interfaces
 {
-    public interface IFitnessProgram:IKey
+    public interface IFitnessProgram
     {
         public string Name { get; set; }
         public string Description { get; set; }

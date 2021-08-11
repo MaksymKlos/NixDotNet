@@ -18,8 +18,6 @@ namespace FitnessSuperiorMvc.BLL.Dto.Programs.Sport
         /// Complex description.
         /// </summary>
         public string Description { get; set; }
-        public TrainerDto Author { get; set; }
-        public ICollection<ExerciseDto> Exercises { get; set; }
         /// <summary>
         /// Complex creation.
         /// </summary>

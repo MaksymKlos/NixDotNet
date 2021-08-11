@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using FitnessSuperiorMvc.BLL.Dto.Programs.Sport;
+using FitnessSuperiorMvc.DA.Entities.Binders;
 
 namespace FitnessSuperiorMvc.BLL.Dto.People.Staff
 {
@@ -18,10 +19,6 @@ namespace FitnessSuperiorMvc.BLL.Dto.People.Staff
         /// </summary>
         public string WorkWithGender { get; set; }
 
-        /// <summary>
-        /// Programs created by this trainer.
-        /// </summary>
-        public virtual ICollection<TrainingProgramDto> TrainingPrograms { get; set; } = new List<TrainingProgramDto>();
         /// <summary>
         /// Create trainer.
         /// </summary>

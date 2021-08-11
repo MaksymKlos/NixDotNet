@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using FitnessSuperiorMvc.BLL.BusinessModels;
+using FitnessSuperiorMvc.DA.EF;
+using FitnessSuperiorMvc.DA.Entities.People;
 using FitnessSuperiorMvc.DA.Entities.Sport;
 using FitnessSuperiorMvc.DA.Interfaces;
 
@@ -18,25 +20,34 @@ namespace FitnessSuperiorMvc.Services.Programs
             _trainingProgramRepository = trainingProgramRepository;
             _setOfExercisesRepository = setOfExercisesRepository;
         }
-        public virtual List<TrainingProgram> GetAll()
+
+        public virtual List<TrainingProgram> GetAll() =>
+            _trainingProgramRepository.GetAll().OrderBy(s => s.Id).ToList();
+        public virtual TrainingProgram GetById(int id, FitnessAppContext context)
         {
-            var programs = _trainingProgramRepository
-                .GetAll()
-                .GroupBy(n => n.Name)
-                .Select(grp => grp.First())
-                .OrderBy(id => id.Id)
-                .ToList();
-            return programs;
-        }
-        public virtual TrainingProgram GetById(int id)
-        {
-            var binder = new Binder();
+            var binder = new Binder(context);
             var program = _trainingProgramRepository.GetById(id);
             program.SetsOfExercises = binder.GetComplexFromProgram(id);
             program.Trainer = binder.GetTrainerOfProgram(id);
             return program;
         }
-
+        public virtual List<TrainingProgram> GetTrainingPrograms(int id, FitnessAppContext context)
+        {
+            Binder binder = new Binder(context);
+            var programs = binder.GetTrainingPrograms(id);
+            return programs;
+        }
+        public virtual List<SetOfExercises> GetAddingComplexes(Trainer user, FitnessAppContext context)
+        {
+            AddingController controller = new AddingController(context);
+            var complexes = controller.GetComplexes(user);
+            return complexes;
+        }
+        public virtual void DeleteAddingComplexes(Trainer user, FitnessAppContext context)
+        {
+            AddingController controller = new AddingController(context);
+            controller.DeleteComplex(user);
+        }
         public virtual void Update(TrainingProgram trainingProgram) =>
             _trainingProgramRepository.Update(trainingProgram);
 

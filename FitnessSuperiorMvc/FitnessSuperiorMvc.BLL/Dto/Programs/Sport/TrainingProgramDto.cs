@@ -18,7 +18,6 @@ namespace FitnessSuperiorMvc.BLL.Dto.Programs.Sport
         /// </summary>
         public int AgeRestriction { get; }
 
-        public ICollection<SetOfExercisesDto> SetsOfExercises { get; set; } = new List<SetOfExercisesDto>();
         public TrainingProgramDto(string name, string description, string destination, decimal price, string typeOfProgram, string requiredSkillLevel, int ageRestriction) : base(name, description, destination,price)
         {
             if (string.IsNullOrWhiteSpace(typeOfProgram))
@@ -35,7 +34,6 @@ namespace FitnessSuperiorMvc.BLL.Dto.Programs.Sport
                 "gain" => "Muscle gain",
                 _ => TypeOfProgram
             };
-            TypeOfProgram = typeOfProgram;
             RequiredSkillLevel = requiredSkillLevel;
             AgeRestriction = ageRestriction;
         }

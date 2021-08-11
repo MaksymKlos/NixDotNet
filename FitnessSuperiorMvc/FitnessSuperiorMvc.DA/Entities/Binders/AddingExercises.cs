@@ -1,8 +1,7 @@
-﻿
-using FitnessSuperiorMvc.DA.Entities.People;
+﻿using FitnessSuperiorMvc.DA.Entities.People;
 using FitnessSuperiorMvc.DA.Entities.Sport;
 
-namespace FitnessSuperiorMvc.DA.Entities.Bridging
+namespace FitnessSuperiorMvc.DA.Entities.Binders
 {
     public class AddingExercises
     {

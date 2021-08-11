@@ -1,4 +1,5 @@
-﻿using FitnessSuperiorMvc.DA.Interfaces;
+﻿using System.Collections.Generic;
+using FitnessSuperiorMvc.DA.Interfaces;
 
 namespace FitnessSuperiorMvc.DA.Entities.Nutrition
 {
@@ -11,5 +12,11 @@ namespace FitnessSuperiorMvc.DA.Entities.Nutrition
         public double Fats { get; set; }
         public double Carbohydrates { get; set; }
         public string BeneficialFeatures { get; set; }
+        public ICollection<MealPlan> MealPlans { get; set; }
+
+        public Food()
+        {
+            MealPlans = new List<MealPlan>();
+        }
     }
 }

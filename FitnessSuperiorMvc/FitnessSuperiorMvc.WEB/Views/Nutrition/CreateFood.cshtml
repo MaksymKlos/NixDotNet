@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Create Exercise";
+}
+@using FitnessSuperiorMvc.WEB.ViewModels.Services.Nutrition
+@model FoodViewModel
+<div class="main__content m-height">
+    <div class="main__title center">
+        Create exercise
+    </div>
+    <div class="main__text center">
+        Fill out the form below to create your own exercise
+    </div>
+    <form class="main__form center" asp-action="CreateFood" asp-controller="Nutrition" method="post">
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="Name">Food name:</label>
+            <input class="form__input col-md-3" type="text" asp-for="Name" placeholder="up to 50 symbols">
+            <span asp-validation-for="Name" class="text-danger d-block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="BeneficialFeatures">Beneficial features:</label>
+            <input class="form__input col-md-3" type="text" asp-for="BeneficialFeatures" placeholder="up to 300 symbols">
+            <span asp-validation-for="BeneficialFeatures" class="text-danger d-block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="Calories">Calories per 100 gram:</label>
+            <input class="form__input col-md-3" type="text" asp-for="Calories">
+            <span asp-validation-for="Calories" class="text-danger d-block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="Proteins">Proteins per 100 gram:</label>
+            <input class="form__input col-md-3" type="number" asp-for="Proteins">
+            <span asp-validation-for="Proteins" class="text-danger d-block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="Fats">Fats per 100 gram:</label>
+            <input class="form__input col-md-3" type="number" asp-for="Fats">
+            <span asp-validation-for="Fats" class="text-danger d-block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="Carbohydrates">Carbohydrates per 100 gram:</label>
+            <input class="form__input col-md-3" type="number" asp-for="Carbohydrates">
+            <span asp-validation-for="Carbohydrates" class="text-danger d-block"></span>
+        </div>
+        
+        <input type="submit" class="btn btn-light" value="Create">
+    </form>
+
+</div>
+

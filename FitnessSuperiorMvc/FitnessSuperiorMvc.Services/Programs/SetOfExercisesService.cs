@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using FitnessSuperiorMvc.BLL.BusinessModels;
+using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Entities.People;
 using FitnessSuperiorMvc.DA.Entities.Sport;
 using FitnessSuperiorMvc.DA.Interfaces;
@@ -19,39 +20,38 @@ namespace FitnessSuperiorMvc.Services.Programs
             _exerciseRepository = exerciseRepository;
             _setOfExercisesRepository = setOfExercisesRepository;
         }
-        public virtual List<SetOfExercises> GetAll()
-        {
-            var complexes = _setOfExercisesRepository
-                .GetAll()
-                .GroupBy(n => n.Name)
-                .Select(grp => grp.First())
-                .OrderBy(id => id.Id)
-                .ToList();
-            return complexes;
-        }
 
-        public virtual List<Exercise> GetAddingExercises(Trainer user)
+        public virtual List<SetOfExercises> GetAll() => _setOfExercisesRepository.GetAll().OrderBy(s => s.Id).ToList();
+        public virtual SetOfExercises GetById(int id, FitnessAppContext context)
         {
-            AddingController controller = new AddingController();
-            var exercises = controller.GetExercises(user);
-            return exercises;
-        }
-
-        public virtual void DeleteAddingExercises(Trainer user)
-        {
-            AddingController controller = new AddingController();
-            controller.DeleteExercises(user);
-        }
-
-        public virtual SetOfExercises GetById(int id)
-        {
-            var binder = new Binder();
+            var binder = new Binder(context);
             var complex = _setOfExercisesRepository.GetById(id);
             complex.Exercises = binder.GetExercisesFromComplex(id);
             complex.Author = binder.GetTrainerOfComplex(id);
             return complex;
-        } 
+        }
+        public virtual List<SetOfExercises> GetAddingComplexes(Trainer user, FitnessAppContext context)
+        {
+            AddingController controller = new AddingController(context);
+            var complexes = controller.GetComplexes(user);
+            return complexes;
+        }
+        public virtual void AddAddingComplexes(SetOfExercises complex, Trainer user, FitnessAppContext context)
+        {
+            AddingController controller = new AddingController(context);
+            controller.AddAddingComplexes(complex, user);
+        }
+        public virtual void DeleteAddingComplexes(Trainer user, FitnessAppContext context)
+        {
+            AddingController controller = new AddingController(context);
+            controller.DeleteComplex(user);
+        }
 
+        public virtual void RemoveAddingComplexes(int id, Trainer user, FitnessAppContext context)
+        {
+            AddingController controller = new AddingController(context);
+            controller.RemoveAddingComplexes(id, user);
+        }
         public virtual void Update(SetOfExercises setOfExercises) =>
             _setOfExercisesRepository.Update(setOfExercises);
 
@@ -72,5 +72,6 @@ namespace FitnessSuperiorMvc.Services.Programs
 
         public virtual SetOfExercises Create(SetOfExercises setOfExercises) =>
             _setOfExercisesRepository.Create(setOfExercises);
+
     }
 }

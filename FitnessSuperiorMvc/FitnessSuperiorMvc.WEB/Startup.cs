@@ -32,6 +32,12 @@ namespace FitnessSuperiorMvc.WEB
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<SecurityContext>();
 
             services.AddScoped<ExerciseService>();
+            services.AddScoped<SetOfExercisesService>();
+            services.AddScoped<TrainingProgramsService>();
+
+            services.AddScoped<FoodService>();
+            services.AddScoped<MealPlanService>();
+            services.AddScoped<NutritionProgramService>();
 
             services.AddScoped<UserService>();
             services.AddScoped<TrainerService>();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Net.Http.Headers;
 using System.Text;
 using FitnessSuperiorMvc.DA.Entities.Nutrition;
 using FitnessSuperiorMvc.DA.Entities.Sport;
@@ -20,5 +21,11 @@ namespace FitnessSuperiorMvc.DA.Entities.People
         public decimal Balance { get; set; }
         public ICollection<TrainingProgram> TrainingPrograms { get; set; }
         public ICollection<NutritionProgram> NutritionPrograms { get; set; }
+
+        public User()
+        {
+            TrainingPrograms = new List<TrainingProgram>();
+            NutritionPrograms = new List<NutritionProgram>();
+        }
     }
 }

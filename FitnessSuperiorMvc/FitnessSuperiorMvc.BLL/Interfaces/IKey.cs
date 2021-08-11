@@ -1,7 +1,10 @@
-﻿namespace FitnessSuperiorMvc.BLL.Interfaces
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace FitnessSuperiorMvc.BLL.Interfaces
 {
-    public interface IKey
+    internal interface IKey
     {
+        [Key]
         public int Id { get; set; }
     }
 }

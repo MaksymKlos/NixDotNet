@@ -1,4 +1,4 @@
-﻿@*@using FitnessSuperiorMvc.BLL.Dto.Programs.Nutrition
+﻿@using FitnessSuperiorMvc.DA.Entities.Nutrition
 @model List<FitnessSuperiorMvc.DA.Entities.Nutrition.Food>
 
 <div class="main__content m-height">
@@ -14,7 +14,7 @@
                     <th>Calories</th>
                     <th></th>
                 </tr>
-                @foreach (FoodDto food in Model)
+                @foreach (Food food in Model)
                 {
                     <tr>
                         <td>@food.Name</td>
@@ -39,4 +39,4 @@
         
         </div>
     </div>
-</div>*@
+</div>
