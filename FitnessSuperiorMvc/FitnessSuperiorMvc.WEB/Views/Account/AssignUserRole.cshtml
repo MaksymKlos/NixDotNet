@@ -1,0 +1,38 @@
+﻿@model AssignUserRoleViewModel
+
+@{
+    ViewData["Title"] = "Assign role";
+}
+
+<h2 class="text-light">@ViewData["Title"]</h2>
+<div class="row text-light">
+    <div class="col-md-4">
+        <section>
+            <form asp-action="AssignUserRole" method="post">
+                <h4>@Model.UserName</h4>
+                <hr />
+                <table >
+                    @Html.HiddenFor(m => Model.UserName)
+                    @for (var i = 0; i < Model.UserRoles.Count; i++)
+                    {
+                        <tr>
+                            @Html.HiddenFor(m => Model.UserRoles[i].RoleName)
+                            <td>@Model.UserRoles[i].RoleName</td>
+                            <td>
+                                @Html.CheckBoxFor(m => Model.UserRoles[i].IsAssigned)
+                            </td>
+                        </tr>}
+                </table>
+                <br/>
+                <button type="submit" class="btn btn-dark">Assign</button>
+            </form>
+        </section>
+    </div>
+
+
+
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

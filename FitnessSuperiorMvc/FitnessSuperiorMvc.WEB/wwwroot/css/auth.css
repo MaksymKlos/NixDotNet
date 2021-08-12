@@ -1,0 +1,39 @@
+﻿.reg-content {
+    background-color: #212020;
+    max-width: 80%;
+    margin: 0 auto;
+}
+.reg-input {
+    display: inline-block;
+    width: 40%;
+}
+.reg-select,
+.reg-select:focus,
+.reg-select:active {
+    background-color: #fff;
+}
+.reg-check {
+    width: 140px;
+    margin: 0 auto;
+}
+@media only screen and (max-width: 992px) {
+    .reg-content {
+        max-width: 100%;
+    }
+}
+@media only screen and (max-width: 576px) {
+    .reg-content {
+        max-width: 100%;
+    }
+}
+@media only screen and (max-width: 768px) {
+    .reg-check {
+        width: 100px;
+    }
+    .reg-input {
+        width: 70%;
+    }
+    .reg-btn {
+        width: 70%;
+    }
+}

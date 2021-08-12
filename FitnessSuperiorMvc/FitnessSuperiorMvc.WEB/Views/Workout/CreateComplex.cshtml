@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Create complex";
+}
+@model FitnessSuperiorMvc.WEB.ViewModels.Services.Sport.SetOfExerciseViewModel
+<div class="main__content m-height">
+    <div class="main__title center">
+        Create complex
+    </div>
+    <div class="main__text center">
+        Fill out the form below to create your own fitness program
+    </div>
+    <form class="main__form center" asp-action="CreateComplex" asp-controller="Workout" method="post">
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="Name">Complex name:</label>
+            <input class="form__input col-md-3" type="text" asp-for="Name" placeholder="from 5 to 50 symbols">
+            <span asp-validation-for="Name" class="text-danger d-block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="MuscleGroups">Active muscles:</label>
+            <textarea class="form__input col-md-3" type="text" asp-for="MuscleGroups" rows="2" placeholder="up to 300 symbols"></textarea>
+            <span asp-validation-for="MuscleGroups" class="text-danger d-block"></span>
+        </div>
+        <div class="form__input-group row">
+            <label class="form__label col-md-2" asp-for="Description">Description:</label>
+            <textarea class="form__input col-md-3" type="text" asp-for="Description" rows="2" placeholder="up to 300 symbols"></textarea>
+            <span asp-validation-for="Description" class="text-danger d-block"></span>
+        </div>
+        <button type="submit" class="btn btn-light">Create</button>
+    </form>
+
+</div>

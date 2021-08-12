@@ -1,0 +1,32 @@
+﻿<div class="modal fade" id="contact" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Contact us</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post" name="contact" asp-action="ContactUs" asp-controller="Home">
+                    <div class="mb-3">
+                        <label for="email" class="form-label required">Your email address</label>
+                        <input class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="example@gmail.com" @*type="email" asp-for="Email"*@>
+                        <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="name" class="form-label required">Your name</label>
+                        <input class="form-control" id="name" name="name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="subject" class="form-label required">Subject</label>
+                        <input class="form-control" id="subject" name="subject">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form__label required" for="message">Message</label>
+                        <textarea class="form-control" name="message" id="message" placeholder="Enter your message here! Up to 500 symbols"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-light">Send</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
