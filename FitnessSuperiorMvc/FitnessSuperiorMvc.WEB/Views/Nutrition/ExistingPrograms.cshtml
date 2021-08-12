@@ -18,8 +18,10 @@
             </p>
             <ul class="main__list">
                 <li class="main__item">Type of program: @program.TypeOfDiet</li>
-                @*<li class="main__item">Specialist: @program.</li>*@
             </ul>
+            <div class="model-links">
+                <a class="model-link" asp-route-id="@program.Id" asp-action="AddNutritionProgramToUser" asp-controller="List">+</a>
+            </div>
             <hr>
             <p class="main__price">Price: @program.Price &#36;</p>
         </section>
@@ -45,3 +47,6 @@
 
     </nav>
 </div>
+@section Styles{
+    <link href="~/css/model.css" rel="stylesheet" type="text/css"/>
+}

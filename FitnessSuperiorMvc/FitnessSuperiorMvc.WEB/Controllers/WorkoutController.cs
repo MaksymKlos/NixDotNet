@@ -22,6 +22,9 @@ namespace FitnessSuperiorMvc.WEB.Controllers
 
         private readonly TrainerService _trainerService;
         private readonly UserService _userService;
+
+        private readonly CalendarService _calendarService;
+
         private readonly FitnessAppContext _context;
 
         private readonly UserManager<IdentityUser> _userManager;
@@ -34,7 +37,8 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             TrainingProgramsService trainingProgramsService,
             TrainerService trainerService,
             FitnessAppContext context,
-            UserService userService)
+            UserService userService,
+            CalendarService calendarService)
         {
             _mapper = mapper;
             _userManager = userManager;
@@ -44,6 +48,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             _trainerService = trainerService;
             _context = context;
             _userService = userService;
+            _calendarService = calendarService;
         }
         [HttpGet]
         public async Task<IActionResult> ExerciseView(int id, string returnUrl)
@@ -214,6 +219,13 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         public IActionResult Calendar()
         {
             return View();
+        }
+
+        [HttpGet]
+        public IActionResult GetEvents()
+        {
+           var events = _calendarService.GetAll();
+           return new JsonResult(events);
         }
     }
 }

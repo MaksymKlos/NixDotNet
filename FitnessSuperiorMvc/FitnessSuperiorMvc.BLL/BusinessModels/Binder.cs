@@ -100,5 +100,13 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels
 
             return program;
         }
+        public List<NutritionProgram> GetNutritionPrograms(int id)
+        {
+            var program = _context.UsersDto
+                .Include(u => u.NutritionPrograms)
+                .FirstOrDefault(p => p.Id == id)
+                ?.NutritionPrograms.ToList();
+            return program;
+        }
     }
 }

@@ -31,6 +31,12 @@ namespace FitnessSuperiorMvc.Services.Programs
             program.Nutritionist = binder.GetNutritionistOfProgram(id);
             return program;
         }
+        public virtual List<NutritionProgram> GetNutritionPrograms(int id, FitnessAppContext context)
+        {
+            Binder binder = new Binder(context);
+            var programs = binder.GetNutritionPrograms(id);
+            return programs;
+        }
         public virtual List<MealPlan> GetAddingMealPlans(Nutritionist user, FitnessAppContext context)
         {
             AddingController controller = new AddingController(context);

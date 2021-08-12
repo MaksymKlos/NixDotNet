@@ -21,12 +21,13 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         private readonly NutritionProgramService _nutritionProgramService;
 
         private readonly NutritionistService _nutritionistService;
+        private readonly UserService _userService;
         private readonly FitnessAppContext _context;
 
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IMapper _mapper;
 
-        public NutritionController(FitnessAppContext context, FoodService foodService, MealPlanService mealPlanService, NutritionProgramService nutritionProgramService, UserManager<IdentityUser> userManager, IMapper mapper, NutritionistService nutritionistService)
+        public NutritionController(FitnessAppContext context, FoodService foodService, MealPlanService mealPlanService, NutritionProgramService nutritionProgramService, UserManager<IdentityUser> userManager, IMapper mapper, NutritionistService nutritionistService, UserService userService)
         {
             _context = context;
             _foodService = foodService;
@@ -35,6 +36,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             _userManager = userManager;
             _mapper = mapper;
             _nutritionistService = nutritionistService;
+            _userService = userService;
         }
         [HttpGet]
         public async Task<IActionResult> FoodView(int id, string returnUrl)
@@ -167,9 +169,20 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             };
             return View(programView);
         }
-        public IActionResult MyPrograms()
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> MyPrograms(int page)
         {
-            return View();
+            var userId = _userManager.GetUserId(User);
+            var user = await Task.Run(() => _userService.GetByIdentityId(userId));
+            var programs = Task.Run(() => _nutritionProgramService.GetNutritionPrograms(user.Id, _context));
+            var programView = new PaginationViewModel<NutritionProgram>()
+            {
+                WorkoutPerPage = 3,
+                ExistingPrograms = await programs,
+                CurrentPage = page
+            };
+            return View(programView);
         }
     }
 }

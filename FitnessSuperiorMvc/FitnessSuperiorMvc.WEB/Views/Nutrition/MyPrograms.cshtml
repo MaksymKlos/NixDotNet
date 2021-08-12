@@ -1,46 +1,55 @@
 ﻿@{
     ViewData["Title"] = "My programs";
 }
+@model FitnessSuperiorMvc.WEB.ViewModels.Page.PaginationViewModel<FitnessSuperiorMvc.DA.Entities.Nutrition.NutritionProgram>
 <div class="main__content">
     <h1 class="main__title center">
-        My nutrition programs
+        Workout programs
     </h1>
     <hr>
-    <section class="main__content-section">
-        <h2 class="main__title center">
-            <a class="main__title-link" href="#">Name of the program</a>
-        </h2>
-        <p class="main__text center">
-            There will be a description of the program
-        </p>
-        <ul class="main__list">
-            <li class="main__item">Type of diet: </li>
-            <li class="main__item">Specialist: </li>
-        </ul>
-    </section>
-    <section class="main__content-section">
-        <h2 class="main__title center">
-            <a class="main__title-link" href="#">Name of the program</a>
-        </h2>
-        <p class="main__text center">
-            There will be a description of the program
-        </p>
-        <ul class="main__list">
-            <li class="main__item">Type of diet: </li>
-            <li class="main__item">Specialist: </li>
-        </ul>
-    </section>
-    <section class="main__content-section">
-        <h2 class="main__title center">
-            <a class="main__title-link" href="#">Name of the program</a>
-        </h2>
-        <p class="main__text center">
-            There will be a description of the program
-        </p>
-        <ul class="main__list">
-            <li class="main__item">Type of diet: </li>
-            <li class="main__item">Specialist: </li>
-        </ul>
-    </section>
+    @foreach (var program in Model.PaginatedPrograms)
+    {
+        <section class="main__content-section">
+            <h2 class="main__title center">
+                <a class="main__title-link" asp-route-id="@program.Id" asp-route-returnUrl="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")" asp-controller="Workout" asp-action="TrainingProgramView">@program.Name</a>
+            </h2>
+            <p class="main__text center">
+                @program.Description
+            </p>
+            <ul class="main__list">
+                <li class="main__item">Type of program: @program.TypeOfDiet</li>
+            </ul>
+            <div class="model-links">
 
+                <a class="model-link cross" asp-route-id="@program.Id" asp-action="RemoveTrainingProgramInUser" asp-controller="List" title="Delete">&#10008;</a>
+            </div>
+            <hr>
+            <p class="main__price d-inline-block">Price: @program.Price &#36;</p>
+
+        </section>
+    }
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-end">
+            <li class="@(Model.CurrentPage == 1 ? "page-item disabled" : "page-item")">
+                <a class="page-link" href="@Url.Action("MyPrograms", new {page = Model.PreviousPage})">Previous</a>
+            </li>
+            @for (int i = 1; i <= Model.PageCount(); i++)
+            {
+
+
+                <li class="@(i == Model.CurrentPage ? "page-item active" : "page-item")">
+                    <a class="page-link" href="@Url.Action("MyPrograms", new {page = i})">@i</a>
+                </li>
+
+            }
+            <li class="@(Model.CurrentPage == Model.PageCount() ? "page-item disabled" : "page-item")">
+                <a class="page-link" href="@Url.Action("MyPrograms", new {page = Model.NextPage})">Next</a>
+            </li>
+        </ul>
+
+    </nav>
 </div>
+@section Styles
+{
+    <link href="~/css/model.css" type="text/css" rel="stylesheet" />
+}

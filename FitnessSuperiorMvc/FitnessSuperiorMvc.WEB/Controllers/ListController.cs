@@ -179,5 +179,61 @@ namespace FitnessSuperiorMvc.WEB.Controllers
 
             return RedirectToAction("MyPrograms","Workout");
         }
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> RemoveTrainingProgramInUser(int id)
+        {
+
+            var userId = _userManager.GetUserId(User);
+            var user = await Task.Run(() => _userService.GetByIdentityId(userId));
+
+            var program = await Task.Run(() => _trainingProgramsService.GetById(id, _context));
+            user.TrainingPrograms.Remove(program);
+            await Task.Run(() => _userService.Update(user));
+
+            return RedirectToAction("MyPrograms", "Workout");
+        }
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> AddNutritionProgramToUser(int id)
+        {
+
+            var userId = _userManager.GetUserId(User);
+            var user = await Task.Run(() => _userService.GetByIdentityId(userId));
+
+            var program = await Task.Run(() => _nutritionProgramService.GetById(id, _context));
+            user.NutritionPrograms.Add(program);
+            await Task.Run(() => _userService.Update(user));
+
+            return RedirectToAction("MyPrograms", "Nutrition");
+        }
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> RemoveNutritionProgramInUser(int id)
+        {
+
+            var userId = _userManager.GetUserId(User);
+            var user = await Task.Run(() => _userService.GetByIdentityId(userId));
+
+            var program = await Task.Run(() => _nutritionProgramService.GetById(id, _context));
+            user.NutritionPrograms.Remove(program);
+            await Task.Run(() => _userService.Update(user));
+
+            return RedirectToAction("MyPrograms", "Nutrition");
+        }
+        [HttpGet]
+        [Authorize(Roles = "User")]
+        public async Task<IActionResult> AddTrainingProgramToCalendar(int id)
+        {
+
+            var userId = _userManager.GetUserId(User);
+            var user = await Task.Run(() => _userService.GetByIdentityId(userId));
+
+            var program = await Task.Run(() => _trainingProgramsService.GetById(id, _context));
+            user.TrainingPrograms.Remove(program);
+            await Task.Run(() => _userService.Update(user));
+
+            return RedirectToAction("MyPrograms", "Workout");
+        }
     }
 }

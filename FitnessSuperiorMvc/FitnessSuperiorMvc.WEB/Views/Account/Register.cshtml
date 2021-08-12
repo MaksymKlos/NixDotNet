@@ -13,38 +13,38 @@
                 <option value="User">User</option>
                 <option value="Trainer">Trainer</option>
                 <option value="Nutritionist">Nutritionist</option>
-                <option value="Admin">Admin</option>
+                @*<option value="Admin">Admin</option>*@
             </select>
         </div>
         <div class="form__input-group row">
             <label class="form-label col-md-2" asp-for="Login">Login:</label>
             <input class="form-control col-md-3 reg-input" type="text" placeholder="from 7 to 40 symbols" asp-for="Login">
-            <span asp-validation-for="Login" class="text-danger" style="display: block"></span>
+            <span asp-validation-for="Login" class="text-danger d-block"></span>
         </div>
         <div class="form__input-group row">
             <label class="form-label col-md-2" asp-for="Name">Name:</label>
             <input class="form-control col-md-3 reg-input" type="text" placeholder="from 2 to 40 symbols" asp-for="Name">
-            <span asp-validation-for="Name" class="text-danger" style="display: block"></span>
+            <span asp-validation-for="Name" class="text-danger d-block"></span>
         </div>
         <div class="form__input-group row">
             <label class="form-label col-md-2" asp-for="Surname">Surname:</label>
             <input class="form-control col-md-3 reg-input" type="text" placeholder="from 2 to 40 symbols" asp-for="Surname">
-            <span asp-validation-for="Surname" class="text-danger" style="display: block"></span>
+            <span asp-validation-for="Surname" class="text-danger d-block"></span>
         </div>
         <div class="form__input-group row">
             <label class="form-label col-md-2" asp-for="Email">Email address:</label>
             <input class="form-control col-md-3 reg-input" type="email" placeholder="example@gmail.com" asp-for="Email">
-            <span asp-validation-for="Email" class="text-danger" style="display: block"></span>
+            <span asp-validation-for="Email" class="text-danger d-block"></span>
         </div>
         <div class="form__input-group row">
             <label class="form-label col-md-2" asp-for="BirthDate">Birth date:</label>
             <input class="form-control col-md-3 reg-input" type="date" asp-for="BirthDate">
-            <span asp-validation-for="BirthDate" class="text-danger" style="display: block"></span>
+            <span asp-validation-for="BirthDate" class="text-danger d-block"></span>
         </div>
         <div class="form__input-group row">
             <label class="form-label col-md-2" asp-for="Phone">Phone number:</label>
             <input class="form-control col-md-3 reg-input" type="tel" asp-for="Phone">
-            <span asp-validation-for="Phone" class="text-danger" style="display: block"></span>
+            <span asp-validation-for="Phone" class="text-danger d-block"></span>
         </div>
 
 

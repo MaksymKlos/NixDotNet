@@ -33,3 +33,9 @@
     font-size: 1.2rem;
     color: #d1d1d1;
 }
+.model-calendar {
+    /*transition: all 0.2s ease;*/
+}
+.model-calendar:hover {
+    background-color: #4b0082;
+}

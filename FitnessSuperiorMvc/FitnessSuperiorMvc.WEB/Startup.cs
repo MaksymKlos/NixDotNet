@@ -44,6 +44,8 @@ namespace FitnessSuperiorMvc.WEB
             services.AddScoped<NutritionistService>();
             services.AddScoped<ManagerService>();
 
+            services.AddScoped<CalendarService>();
+
             services.Add(ServiceDescriptor.Scoped(typeof(IRepository<>), typeof(FitnessAppRepository<>)));
 
             services.AddAutoMapper(typeof(Startup));

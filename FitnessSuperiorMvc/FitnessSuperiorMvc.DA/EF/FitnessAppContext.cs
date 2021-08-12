@@ -1,4 +1,5 @@
 ﻿using FitnessSuperiorMvc.DA.Entities.Binders;
+using FitnessSuperiorMvc.DA.Entities.Interaction;
 using FitnessSuperiorMvc.DA.Entities.Nutrition;
 using FitnessSuperiorMvc.DA.Entities.People;
 using FitnessSuperiorMvc.DA.Entities.Sport;
@@ -26,6 +27,8 @@ namespace FitnessSuperiorMvc.DA.EF
         public DbSet<AddingComplexes> AddingComplexes { get; set; }
         public DbSet<AddingFood> AddingFood { get; set; }
         public DbSet<AddingMealPlans> AddingMealPlans { get; set; }
+
+        public DbSet<Event> Events { get; set; }
         public FitnessAppContext() { }
         public FitnessAppContext(DbContextOptions<FitnessAppContext> options)
             : base(options)

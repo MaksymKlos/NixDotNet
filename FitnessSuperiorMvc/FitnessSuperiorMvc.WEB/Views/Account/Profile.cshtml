@@ -1,23 +1,26 @@
 ﻿@model Microsoft.AspNetCore.Identity.IdentityUser
 
 <div class="main__content reg-content m-height">
+   
     @if (User.IsInRole("Admin"))
     {
-        <partial name="~/Views/Account/_managerProfile.cshtml" />
+        <partial name="~/Views/Account/_managerProfile.cshtml"/>
     }
     else if (User.IsInRole("Nutritionist"))
     {
-        <partial name="~/Views/Account/_nutritionistProfile.cshtml" />
+        <partial name="~/Views/Account/_nutritionistProfile.cshtml"/>
     }
     else if (User.IsInRole("Trainer"))
     {
-        <partial name="~/Views/Account/_trainerProfile.cshtml" />
+        <partial name="~/Views/Account/_trainerProfile.cshtml"/>
     }
     else if (User.IsInRole("User"))
     {
-        <partial name="~/Views/Account/_userProfile.cshtml" />
+        <partial name="~/Views/Account/_userProfile.cshtml"/>
     }
-
+    <p class="main__text">Email: @Model.Email</p>
+    <p class="main__text">Login: @Model.UserName</p>
+    <p class="main__text">Phone number: @Model.PhoneNumber</p>
 
 </div>
 
