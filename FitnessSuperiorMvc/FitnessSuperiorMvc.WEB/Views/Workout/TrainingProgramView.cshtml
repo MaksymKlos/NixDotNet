@@ -2,10 +2,10 @@
 <div class="main__content reg-content m-height">
     <div class="models">
         <h1 class="model-title center">@Model.Name</h1>
-        <p class="model-text center">Type of program: @Model.TypeOfProgram</p>
-        <p class="model-text center">Description: @Model.Description</p>
-        <p class="model-text center">Author: @Model.Trainer.Name @Model.Trainer.SecondName</p>
-        <p class="model-text center">Sets of exercises:</p>
+        <p class="model-text center"><span class="model-span">Type of program:</span> @Model.TypeOfProgram</p>
+        <p class="model-text center"><span class="model-span">Description:</span> @Model.Description</p>
+        <p class="model-text center"><span class="model-span">Author:</span> @Model.Trainer.Name @Model.Trainer.SecondName</p>
+        <p class="model-text center"><span class="model-span">Sets of exercises:</span></p>
         <div class="main__content-section">
             @foreach (var complex in Model.SetsOfExercises)
             {

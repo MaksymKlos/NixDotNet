@@ -3,18 +3,19 @@ using FitnessSuperiorMvc.WEB.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Diagnostics;
-using System.Net.Mail;
+using FitnessSuperiorMvc.BLL.BusinessModels;
+using FitnessSuperiorMvc.DA.EF;
 
 namespace FitnessSuperiorMvc.WEB.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly string _userName = "fitnesssuperiorapp@gmail.com";
-        private readonly string _password = "12345Qwerty*";
+        private readonly FitnessAppContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, FitnessAppContext context)
         {
+            _context = context;
             _logger = logger;
         }
         [HttpGet]
@@ -42,29 +43,8 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         [HttpPost]
         public IActionResult ContactUs(string email, string name, string subject, string message)
         {
-            try
-            {
-                MailMessage mailMessage = new MailMessage {From = new MailAddress(_userName) };
-                mailMessage.To.Add(_userName);
-                mailMessage.Subject = subject;
-                mailMessage.IsBodyHtml = true;
-                mailMessage.Body = $"<b>Sender name:</b> {name}<br/>" +
-                                   $"<b>Sender email:</b> {email}<br/>" +
-                                   $"<b>Text of message:</b> {message}";
-                
-
-                using SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587)
-                {
-                    EnableSsl = true, Credentials = new System.Net.NetworkCredential(_userName, _password),
-                };
-                smtpClient.Send(mailMessage);
-                
-            }
-            catch(Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-
+            EmailSender mailSender = new EmailSender(_context);
+            mailSender.PushEmail(email,name,subject,message);
             return View();
         }
     }

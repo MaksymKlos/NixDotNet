@@ -138,6 +138,9 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.Property<DateTime>("Start")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("EventId");
 
                     b.HasIndex("SetOfExercisesId");
@@ -165,6 +168,24 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.HasIndex("TrainerId");
 
                     b.ToTable("Feedback");
+                });
+
+            modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.Interaction.Mailer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Mailer");
                 });
 
             modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.Nutrition.Food", b =>

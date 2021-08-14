@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FitnessSuperiorMvc.DA.Migrations
 {
     [DbContext(typeof(FitnessAppContext))]
-    [Migration("20210811171120_InitialDbNew2")]
-    partial class InitialDbNew2
+    [Migration("20210812123611_InitialDbNew")]
+    partial class InitialDbNew
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -124,6 +124,32 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.ToTable("AddingMealPlans");
                 });
 
+            modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.Interaction.Event", b =>
+                {
+                    b.Property<int>("EventId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("SetOfExercisesId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("EventId");
+
+                    b.HasIndex("SetOfExercisesId");
+
+                    b.ToTable("Events");
+                });
+
             modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.Interaction.Feedback", b =>
                 {
                     b.Property<int>("Id")
@@ -165,9 +191,6 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.Property<double>("Fats")
                         .HasColumnType("float");
 
-                    b.Property<int?>("MealPlanId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -175,8 +198,6 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("MealPlanId");
 
                     b.ToTable("Food");
                 });
@@ -200,14 +221,9 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("NutritionProgramId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AuthorId");
-
-                    b.HasIndex("NutritionProgramId");
 
                     b.ToTable("MealPlans");
                 });
@@ -465,6 +481,36 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.ToTable("TrainingPrograms");
                 });
 
+            modelBuilder.Entity("FoodMealPlan", b =>
+                {
+                    b.Property<int>("FoodId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MealPlansId")
+                        .HasColumnType("int");
+
+                    b.HasKey("FoodId", "MealPlansId");
+
+                    b.HasIndex("MealPlansId");
+
+                    b.ToTable("FoodMealPlan");
+                });
+
+            modelBuilder.Entity("MealPlanNutritionProgram", b =>
+                {
+                    b.Property<int>("MealPlansId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NutritionProgramsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("MealPlansId", "NutritionProgramsId");
+
+                    b.HasIndex("NutritionProgramsId");
+
+                    b.ToTable("MealPlanNutritionProgram");
+                });
+
             modelBuilder.Entity("SetOfExercisesTrainingProgram", b =>
                 {
                     b.Property<int>("SetsOfExercisesId")
@@ -563,6 +609,15 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.Navigation("NutritionistDto");
                 });
 
+            modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.Interaction.Event", b =>
+                {
+                    b.HasOne("FitnessSuperiorMvc.DA.Entities.Sport.SetOfExercises", "SetOfExercises")
+                        .WithMany()
+                        .HasForeignKey("SetOfExercisesId");
+
+                    b.Navigation("SetOfExercises");
+                });
+
             modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.Interaction.Feedback", b =>
                 {
                     b.HasOne("FitnessSuperiorMvc.DA.Entities.People.Nutritionist", null)
@@ -574,22 +629,11 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .HasForeignKey("TrainerId");
                 });
 
-            modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.Nutrition.Food", b =>
-                {
-                    b.HasOne("FitnessSuperiorMvc.DA.Entities.Nutrition.MealPlan", null)
-                        .WithMany("Food")
-                        .HasForeignKey("MealPlanId");
-                });
-
             modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.Nutrition.MealPlan", b =>
                 {
                     b.HasOne("FitnessSuperiorMvc.DA.Entities.People.Nutritionist", "Author")
                         .WithMany("MealPlans")
                         .HasForeignKey("AuthorId");
-
-                    b.HasOne("FitnessSuperiorMvc.DA.Entities.Nutrition.NutritionProgram", null)
-                        .WithMany("MealPlans")
-                        .HasForeignKey("NutritionProgramId");
 
                     b.Navigation("Author");
                 });
@@ -629,6 +673,36 @@ namespace FitnessSuperiorMvc.DA.Migrations
                     b.Navigation("Trainer");
                 });
 
+            modelBuilder.Entity("FoodMealPlan", b =>
+                {
+                    b.HasOne("FitnessSuperiorMvc.DA.Entities.Nutrition.Food", null)
+                        .WithMany()
+                        .HasForeignKey("FoodId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FitnessSuperiorMvc.DA.Entities.Nutrition.MealPlan", null)
+                        .WithMany()
+                        .HasForeignKey("MealPlansId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("MealPlanNutritionProgram", b =>
+                {
+                    b.HasOne("FitnessSuperiorMvc.DA.Entities.Nutrition.MealPlan", null)
+                        .WithMany()
+                        .HasForeignKey("MealPlansId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("FitnessSuperiorMvc.DA.Entities.Nutrition.NutritionProgram", null)
+                        .WithMany()
+                        .HasForeignKey("NutritionProgramsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SetOfExercisesTrainingProgram", b =>
                 {
                     b.HasOne("FitnessSuperiorMvc.DA.Entities.Sport.SetOfExercises", null)
@@ -642,16 +716,6 @@ namespace FitnessSuperiorMvc.DA.Migrations
                         .HasForeignKey("TrainingProgramId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.Nutrition.MealPlan", b =>
-                {
-                    b.Navigation("Food");
-                });
-
-            modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.Nutrition.NutritionProgram", b =>
-                {
-                    b.Navigation("MealPlans");
                 });
 
             modelBuilder.Entity("FitnessSuperiorMvc.DA.Entities.People.Nutritionist", b =>
