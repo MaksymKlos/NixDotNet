@@ -21,11 +21,16 @@
                 <li class="main__item">Required skill level: @program.RequiredSkillLevel</li>
                 @*<li class="main__item">Specialist: @program.Trainer.Name</li>*@
             </ul>
+        @if (User.IsInRole("User"))
+        {
+
             <div class="model-links">
                 <a class="model-link" asp-route-id="@program.Id" asp-action="AddTrainingProgramToUser" asp-controller="List">+</a>
             </div>
+        }
             <hr>
             <p class="main__price">Price: @program.Price &#36;</p>
+        
         </section>
     }
     <nav aria-label="Page navigation example">

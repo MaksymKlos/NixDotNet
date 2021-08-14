@@ -14,7 +14,7 @@
                 <a class="main__title-link" asp-route-id="@mealPlan.Id" asp-route-returnUrl="@($"{Context.Request.Scheme}://{Context.Request.Host}{Context.Request.Path}{Context.Request.QueryString}")" asp-controller="Nutrition" asp-action="MealPlanView">@mealPlan.Name</a>
             </h2>
             <p class="main__text center">
-                Active muscle groups: @mealPlan.Description
+                Description: @mealPlan.Description
             </p>
             <div class="model-links">
                 <a class="model-link" asp-route-id="@mealPlan.Id" asp-action="AddMealPlanToProgram" asp-controller="List">+</a>

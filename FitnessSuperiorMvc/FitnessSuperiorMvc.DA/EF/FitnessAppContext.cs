@@ -28,6 +28,7 @@ namespace FitnessSuperiorMvc.DA.EF
         public DbSet<AddingFood> AddingFood { get; set; }
         public DbSet<AddingMealPlans> AddingMealPlans { get; set; }
 
+        public DbSet<Mailer> Mailer { get; set; }
         public DbSet<Event> Events { get; set; }
         public FitnessAppContext() { }
         public FitnessAppContext(DbContextOptions<FitnessAppContext> options)
