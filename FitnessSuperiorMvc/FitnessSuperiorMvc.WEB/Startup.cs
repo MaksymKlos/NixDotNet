@@ -50,6 +50,7 @@ namespace FitnessSuperiorMvc.WEB
             services.AddScoped<ISecretesStorage, SecretesStorage>();
             services.AddScoped<IStaffRepository, StaffRepository>();
             services.AddScoped<IFitnessServicesRepository, FitnessServicesRepository>();
+            services.AddScoped<IClientService, ClientService>();
 
             services.Add(ServiceDescriptor.Scoped(typeof(IRepository<>), typeof(FitnessAppRepository<>)));
 

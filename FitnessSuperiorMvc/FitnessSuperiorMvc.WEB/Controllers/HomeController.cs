@@ -10,14 +10,6 @@ namespace FitnessSuperiorMvc.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly FitnessAppContext _context;
-
-        public HomeController(ILogger<HomeController> logger, FitnessAppContext context)
-        {
-            _context = context;
-            _logger = logger;
-        }
         [HttpGet]
         public IActionResult Index()
         {

@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using AutoMapper;
 using FitnessSuperiorMvc.BLL.Dto.Programs.Nutrition;
-using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Entities.Nutrition;
 using FitnessSuperiorMvc.Services.People;
 using FitnessSuperiorMvc.Services.Programs;
@@ -22,14 +21,18 @@ namespace FitnessSuperiorMvc.WEB.Controllers
 
         private readonly NutritionistService _nutritionistService;
         private readonly UserService _userService;
-        private readonly FitnessAppContext _context;
 
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IMapper _mapper;
 
-        public NutritionController(FitnessAppContext context, FoodService foodService, MealPlanService mealPlanService, NutritionProgramService nutritionProgramService, UserManager<IdentityUser> userManager, IMapper mapper, NutritionistService nutritionistService, UserService userService)
+        public NutritionController(
+            FoodService foodService,
+            MealPlanService mealPlanService,
+            NutritionProgramService nutritionProgramService,
+            UserManager<IdentityUser> userManager,
+            IMapper mapper,
+            NutritionistService nutritionistService, UserService userService)
         {
-            _context = context;
             _foodService = foodService;
             _mealPlanService = mealPlanService;
             _nutritionProgramService = nutritionProgramService;
@@ -48,7 +51,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> MealPlanView(int id, string returnUrl)
         {
-            var complex = await Task.Run(() => _mealPlanService.GetById(id, _context));
+            var complex = await Task.Run(() => _mealPlanService.GetById(id));
 
             ViewBag.ReturnUrl = returnUrl;
             return View(complex);
@@ -56,7 +59,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> NutritionProgramView(int id, string returnUrl)
         {
-            var programFromDb = await Task.Run(() => _nutritionProgramService.GetById(id, _context));
+            var programFromDb = await Task.Run(() => _nutritionProgramService.GetById(id));
 
             ViewBag.ReturnUrl = returnUrl;
             return View(programFromDb);
@@ -99,13 +102,13 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _nutritionistService.GetByIdentityId(userId));
 
-            var food = await Task.Run(() => _foodService.GetAddingFood(user, _context));
+            var food = await Task.Run(() => _foodService.GetAddingFood(user));
             var mealDto = new MealPlanDto(model.Name, model.Description);
             MealPlan mealPlan = _mapper.Map<MealPlan>(mealDto);
             mealPlan.Food = food;
             mealPlan.Author = user;
             _mealPlanService.Create(mealPlan);
-            _foodService.DeleteAddingFood(user, _context);
+            _foodService.DeleteAddingFood(user);
             return RedirectToAction("SuccessfulCreation", "Validation", new { type = "meal plan", name = model.Name });
 
         }
@@ -123,7 +126,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _nutritionistService.GetByIdentityId(userId));
 
-            var mealPlans = await Task.Run(() => _nutritionProgramService.GetAddingMealPlans(user, _context));
+            var mealPlans = await Task.Run(() => _nutritionProgramService.GetAddingMealPlans(user));
 
             var programDto = new NutritionProgramDto(
                 model.Name,
@@ -135,7 +138,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             nutritionProgram.MealPlans = mealPlans;
             nutritionProgram.Nutritionist = user;
             _nutritionProgramService.Create(nutritionProgram);
-            _nutritionProgramService.DeleteAddingMealPlans(user, _context);
+            _nutritionProgramService.DeleteAddingMealPlans(user);
             return RedirectToAction("SuccessfulCreation", "Validation",
                 new { type = "nutrition program", name = model.Name });
         }
@@ -175,7 +178,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _userService.GetByIdentityId(userId));
-            var programs = Task.Run(() => _nutritionProgramService.GetNutritionPrograms(user.Id, _context));
+            var programs = Task.Run(() => _nutritionProgramService.GetNutritionPrograms(user.Id));
             var programView = new PaginationViewModel<NutritionProgram>()
             {
                 WorkoutPerPage = 3,

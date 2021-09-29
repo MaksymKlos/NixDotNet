@@ -24,5 +24,6 @@ namespace FitnessSuperiorMvc.BLL.Dto.Programs.Nutrition
                 _ => typeOfDiet
             };
         }
+        
     }
 }

@@ -54,5 +54,6 @@ namespace FitnessSuperiorMvc.BLL.Dto.Programs.Nutrition
             Fats = fats;
             Carbohydrates = carbohydrates;
         }
+
     }
 }
