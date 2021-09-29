@@ -43,7 +43,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         [HttpPost]
         public IActionResult ContactUs(string email, string name, string subject, string message)
         {
-            EmailSender mailSender = new EmailSender(_context);
+            EmailSender mailSender = new EmailSender();
             mailSender.PushEmail(email,name,subject,message);
             return View();
         }

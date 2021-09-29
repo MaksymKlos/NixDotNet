@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FitnessSuperiorMvc.BLL.BusinessModels;
-using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Entities.People;
 using FitnessSuperiorMvc.DA.Entities.Sport;
 using FitnessSuperiorMvc.DA.Interfaces;
@@ -13,44 +11,48 @@ namespace FitnessSuperiorMvc.Services.Programs
     {
         private readonly IRepository<Exercise> _exerciseRepository;
         private readonly IRepository<SetOfExercises> _setOfExercisesRepository;
+       
+        private readonly IStaffRepository _staffRepository;
+        private readonly IFitnessServicesRepository _fitnessServicesRepository;
 
-        public SetOfExercisesService() {}
-        public SetOfExercisesService(IRepository<Exercise> exerciseRepository, IRepository<SetOfExercises> setOfExercisesRepository)
+        public SetOfExercisesService()
+        {
+        }
+        public SetOfExercisesService(
+            IRepository<Exercise> exerciseRepository,
+            IRepository<SetOfExercises> setOfExercisesRepository,
+            IStaffRepository staffRepository,
+            IFitnessServicesRepository fitnessServicesRepository)
         {
             _exerciseRepository = exerciseRepository;
             _setOfExercisesRepository = setOfExercisesRepository;
+            _staffRepository = staffRepository;
+            _fitnessServicesRepository = fitnessServicesRepository;
         }
 
         public virtual List<SetOfExercises> GetAll() => _setOfExercisesRepository.GetAll().OrderBy(s => s.Id).ToList();
-        public virtual SetOfExercises GetById(int id, FitnessAppContext context)
+        public virtual SetOfExercises GetById(int id)
         {
-            var binder = new Binder(context);
             var complex = _setOfExercisesRepository.GetById(id);
-            complex.Exercises = binder.GetExercisesFromComplex(id);
-            complex.Author = binder.GetTrainerOfComplex(id);
+            complex.Exercises = _fitnessServicesRepository.GetExercisesFromComplex(id);
+            complex.Author = _fitnessServicesRepository.GetTrainerOfComplex(id);
             return complex;
         }
-        public virtual List<SetOfExercises> GetAddingComplexes(Trainer user, FitnessAppContext context)
+        public virtual List<SetOfExercises> GetAddingComplexes(Trainer user)=>
+             _staffRepository.GetComplexes(user);
+        
+        public virtual void AddAddingComplexes(SetOfExercises complex, Trainer user)
         {
-            AddingController controller = new AddingController(context);
-            var complexes = controller.GetComplexes(user);
-            return complexes;
+            _staffRepository.AddAddingComplexes(complex, user);
         }
-        public virtual void AddAddingComplexes(SetOfExercises complex, Trainer user, FitnessAppContext context)
+        public virtual void DeleteAddingComplexes(Trainer user)
         {
-            AddingController controller = new AddingController(context);
-            controller.AddAddingComplexes(complex, user);
-        }
-        public virtual void DeleteAddingComplexes(Trainer user, FitnessAppContext context)
-        {
-            AddingController controller = new AddingController(context);
-            controller.DeleteComplex(user);
+            _staffRepository.DeleteComplex(user);
         }
 
-        public virtual void RemoveAddingComplexes(int id, Trainer user, FitnessAppContext context)
+        public virtual void RemoveAddingComplexes(int id, Trainer user)
         {
-            AddingController controller = new AddingController(context);
-            controller.RemoveAddingComplexes(id, user);
+            _staffRepository.RemoveAddingComplexes(id, user);
         }
         public virtual void Update(SetOfExercises setOfExercises) =>
             _setOfExercisesRepository.Update(setOfExercises);

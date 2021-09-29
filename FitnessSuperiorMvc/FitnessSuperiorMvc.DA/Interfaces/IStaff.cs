@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using FitnessSuperiorMvc.DA.Entities.Interaction;
 
 namespace FitnessSuperiorMvc.DA.Interfaces

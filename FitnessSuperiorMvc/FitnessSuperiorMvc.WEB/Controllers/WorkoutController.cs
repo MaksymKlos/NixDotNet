@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using FitnessSuperiorMvc.BLL.Dto.Programs.Sport;
-using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Entities.Sport;
 using FitnessSuperiorMvc.Services.People;
 using FitnessSuperiorMvc.Services.Programs;
@@ -25,8 +24,6 @@ namespace FitnessSuperiorMvc.WEB.Controllers
 
         private readonly CalendarService _calendarService;
 
-        private readonly FitnessAppContext _context;
-
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IMapper _mapper;
         public WorkoutController(
@@ -36,7 +33,6 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             SetOfExercisesService setOfExercisesService, 
             TrainingProgramsService trainingProgramsService,
             TrainerService trainerService,
-            FitnessAppContext context,
             UserService userService,
             CalendarService calendarService)
         {
@@ -46,7 +42,6 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             _setOfExercisesService = setOfExercisesService;
             _trainingProgramsService = trainingProgramsService;
             _trainerService = trainerService;
-            _context = context;
             _userService = userService;
             _calendarService = calendarService;
         }
@@ -61,7 +56,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> ComplexView(int id, string returnUrl)
         {
-            var complex = await Task.Run(() => _setOfExercisesService.GetById(id, _context));
+            var complex = await Task.Run(() => _setOfExercisesService.GetById(id));
             
             ViewBag.ReturnUrl = returnUrl;
             return View(complex);
@@ -69,7 +64,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         [HttpGet]
         public async Task<IActionResult> TrainingProgramView(int id, string returnUrl)
         {
-            var programFromDb = await Task.Run(() => _trainingProgramsService.GetById(id, _context));
+            var programFromDb = await Task.Run(() => _trainingProgramsService.GetById(id));
             
             ViewBag.ReturnUrl = returnUrl;
             return View(programFromDb);
@@ -122,13 +117,13 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _trainerService.GetByIdentityId(userId));
 
-            var exercises = await Task.Run(() => _exerciseService.GetAddingExercises(user,_context));
+            var exercises = await Task.Run(() => _exerciseService.GetAddingExercises(user));
             var setDto = new SetOfExercisesDto(model.Name, model.MuscleGroups, model.Description);
             SetOfExercises set = _mapper.Map<SetOfExercises>(setDto);
             set.Exercises = exercises;
             set.Author = user;
             _setOfExercisesService.Create(set);
-            _exerciseService.DeleteAddingExercises(user, _context);
+            _exerciseService.DeleteAddingExercises(user);
             return RedirectToAction("SuccessfulCreation", "Validation", new { type = "set of exercises", name = model.Name });
         }
         [HttpGet]
@@ -145,7 +140,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _trainerService.GetByIdentityId(userId));
 
-            var complexes = await Task.Run(() => _trainingProgramsService.GetAddingComplexes(user,_context));
+            var complexes = await Task.Run(() => _trainingProgramsService.GetAddingComplexes(user));
 
             var programDto = new TrainingProgramDto(
                 model.Name,
@@ -159,7 +154,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             trainingProgram.SetsOfExercises = complexes;
             trainingProgram.Trainer = user;
             _trainingProgramsService.Create(trainingProgram);
-            _trainingProgramsService.DeleteAddingComplexes(user,_context);
+            _trainingProgramsService.DeleteAddingComplexes(user);
             return RedirectToAction("SuccessfulCreation", "Validation",
                 new { type = "training program", name = model.Name });
 
@@ -206,7 +201,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _userService.GetByIdentityId(userId));
-            var programs = Task.Run(() => _trainingProgramsService.GetTrainingPrograms(user.Id,_context));
+            var programs = Task.Run(() => _trainingProgramsService.GetTrainingPrograms(user.Id));
             var programView = new PaginationViewModel<TrainingProgram>()
             {
                 WorkoutPerPage = 3,

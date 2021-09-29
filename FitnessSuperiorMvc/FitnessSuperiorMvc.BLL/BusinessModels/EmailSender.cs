@@ -6,7 +6,8 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels
     public class EmailSender
     {
         private readonly ISecretesStorage _secretes;
-        
+
+        public EmailSender() {}
         public EmailSender(ISecretesStorage secretes)
         {
             _secretes = secretes;
@@ -24,14 +25,14 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels
                 };
                 smtpClient.Send(mailMessage);
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                Console.WriteLine(e);
-                throw;
+                throw new Exception();
             }
         }
         private MailMessage CreateMailMessage(string email, string name, string subject, string message)
         {
+            if (_secretes == null) throw new ArgumentNullException(nameof(_secretes), "Secrets are null");
             MailMessage mailMessage = new MailMessage { From = new MailAddress(_secretes.EmailAddress) };
             mailMessage.To.Add(_secretes.EmailAddress);
             mailMessage.Subject = subject;

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FitnessSuperiorMvc.BLL.BusinessModels;
-using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Entities.Nutrition;
 using FitnessSuperiorMvc.DA.Entities.People;
-using FitnessSuperiorMvc.DA.Entities.Sport;
 using FitnessSuperiorMvc.DA.Interfaces;
 
 namespace FitnessSuperiorMvc.Services.Programs
@@ -14,39 +11,41 @@ namespace FitnessSuperiorMvc.Services.Programs
     {
         private readonly IRepository<NutritionProgram> _programRepository;
         private readonly IRepository<MealPlan> _mealPlanRepository;
+        private readonly IStaffRepository _staffRepository;
+        private readonly IFitnessServicesRepository _fitnessServicesRepository;
+
         public NutritionProgramService() {}
-        public NutritionProgramService(IRepository<NutritionProgram> programRepository, IRepository<MealPlan> mealPlanRepository)
+        public NutritionProgramService(
+            IRepository<NutritionProgram> programRepository,
+            IRepository<MealPlan> mealPlanRepository,
+            IStaffRepository staffRepository,
+            IFitnessServicesRepository fitnessServicesRepository)
         {
             _programRepository = programRepository;
             _mealPlanRepository = mealPlanRepository;
+            _staffRepository = staffRepository;
+            _fitnessServicesRepository = fitnessServicesRepository;
         }
 
         public virtual List<NutritionProgram> GetAll() => _programRepository.GetAll().OrderBy(s => s.Id).ToList();
 
-        public virtual NutritionProgram GetById(int id, FitnessAppContext context)
+        public virtual NutritionProgram GetById(int id)
         {
-            var binder = new Binder(context);
             var program = _programRepository.GetById(id);
-            program.MealPlans = binder.GetMealPlansOfProgram(id);
-            program.Nutritionist = binder.GetNutritionistOfProgram(id);
+            program.MealPlans = _fitnessServicesRepository.GetMealPlansOfProgram(id);
+            program.Nutritionist = _fitnessServicesRepository.GetNutritionistOfProgram(id);
             return program;
         }
-        public virtual List<NutritionProgram> GetNutritionPrograms(int id, FitnessAppContext context)
+
+        public virtual List<NutritionProgram> GetNutritionPrograms(int id)
+            => _fitnessServicesRepository.GetNutritionPrograms(id);
+
+        public virtual List<MealPlan> GetAddingMealPlans(Nutritionist user)
+            => _staffRepository.GetMealPlans(user);
+
+        public virtual void DeleteAddingMealPlans(Nutritionist user)
         {
-            Binder binder = new Binder(context);
-            var programs = binder.GetNutritionPrograms(id);
-            return programs;
-        }
-        public virtual List<MealPlan> GetAddingMealPlans(Nutritionist user, FitnessAppContext context)
-        {
-            AddingController controller = new AddingController(context);
-            var mealPlans = controller.GetMealPlans(user);
-            return mealPlans;
-        }
-        public virtual void DeleteAddingMealPlans(Nutritionist user, FitnessAppContext context)
-        {
-            AddingController controller = new AddingController(context);
-            controller.DeleteMealPlan(user);
+            _staffRepository.DeleteMealPlan(user);
         }
         public virtual void Update(NutritionProgram program) => _programRepository.Update(program);
 

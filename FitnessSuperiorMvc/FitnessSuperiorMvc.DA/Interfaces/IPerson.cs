@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FitnessSuperiorMvc.DA.Interfaces
+﻿namespace FitnessSuperiorMvc.DA.Interfaces
 {
     internal interface IPerson
     {

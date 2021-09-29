@@ -5,15 +5,16 @@ using FitnessSuperiorMvc.DA.Entities.Binders;
 using FitnessSuperiorMvc.DA.Entities.Nutrition;
 using FitnessSuperiorMvc.DA.Entities.People;
 using FitnessSuperiorMvc.DA.Entities.Sport;
+using FitnessSuperiorMvc.DA.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitnessSuperiorMvc.BLL.BusinessModels
+namespace FitnessSuperiorMvc.DA.Repositories
 {
-    public class AddingController
+    public class StaffRepository : IStaffRepository
     {
         private readonly FitnessAppContext _context;
 
-        public AddingController(FitnessAppContext context)
+        public StaffRepository(FitnessAppContext context)
         {
             _context = context;
         }

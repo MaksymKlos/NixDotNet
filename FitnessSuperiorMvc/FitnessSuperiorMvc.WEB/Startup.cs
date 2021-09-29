@@ -1,3 +1,4 @@
+using FitnessSuperiorMvc.BLL.BusinessModels;
 using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Interfaces;
 using FitnessSuperiorMvc.DA.Repositories;
@@ -25,7 +26,7 @@ namespace FitnessSuperiorMvc.WEB
 
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = Configuration.GetConnectionString("DefaultConnection");
+            var connection = Configuration.GetConnectionString("DefaultConnection");
             
             services.AddDbContext<FitnessAppContext>(options => options.UseSqlServer(connection));
             services.AddDbContext<SecurityContext>(options => options.UseSqlServer(connection));
@@ -45,6 +46,10 @@ namespace FitnessSuperiorMvc.WEB
             services.AddScoped<ManagerService>();
 
             services.AddScoped<CalendarService>();
+
+            services.AddScoped<ISecretesStorage, SecretesStorage>();
+            services.AddScoped<IStaffRepository, StaffRepository>();
+            services.AddScoped<IFitnessServicesRepository, FitnessServicesRepository>();
 
             services.Add(ServiceDescriptor.Scoped(typeof(IRepository<>), typeof(FitnessAppRepository<>)));
 

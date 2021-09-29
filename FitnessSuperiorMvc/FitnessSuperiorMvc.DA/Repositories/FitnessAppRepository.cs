@@ -10,7 +10,6 @@ namespace FitnessSuperiorMvc.DA.Repositories
     {
         private readonly FitnessAppContext _context;
         protected DbSet<T> DbSet;
-
         public FitnessAppRepository(FitnessAppContext context)
         {
             _context = context;

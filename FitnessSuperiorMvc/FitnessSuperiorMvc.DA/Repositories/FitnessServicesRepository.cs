@@ -4,15 +4,16 @@ using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Entities.Nutrition;
 using FitnessSuperiorMvc.DA.Entities.People;
 using FitnessSuperiorMvc.DA.Entities.Sport;
+using FitnessSuperiorMvc.DA.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace FitnessSuperiorMvc.BLL.BusinessModels
+namespace FitnessSuperiorMvc.DA.Repositories
 {
-    public class Binder
+    public class FitnessServicesRepository : IFitnessServicesRepository
     {
         private readonly FitnessAppContext _context;
 
-        public Binder(FitnessAppContext context)
+        public FitnessServicesRepository(FitnessAppContext context)
         {
             _context = context;
         }

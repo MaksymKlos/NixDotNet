@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.Services.People;
 using FitnessSuperiorMvc.Services.Programs;
 using Microsoft.AspNetCore.Authorization;
@@ -25,8 +24,6 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         private readonly NutritionistService _nutritionistService;
         private readonly UserService _userService;
 
-        private readonly FitnessAppContext _context;
-
         public ListController(
             UserManager<IdentityUser> userManager,
             ExerciseService exerciseService,
@@ -34,7 +31,10 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             FoodService foodService,
             MealPlanService mealPlanService,
             TrainerService trainerService,
-            NutritionistService nutritionistService, FitnessAppContext context, UserService userService, TrainingProgramsService trainingProgramsService, NutritionProgramService nutritionProgramService)
+            NutritionistService nutritionistService,
+            UserService userService,
+            TrainingProgramsService trainingProgramsService,
+            NutritionProgramService nutritionProgramService)
         {
             _userManager = userManager;
             _exerciseService = exerciseService;
@@ -43,7 +43,6 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             _mealPlanService = mealPlanService;
             _trainerService = trainerService;
             _nutritionistService = nutritionistService;
-            _context = context;
             _userService = userService;
             _trainingProgramsService = trainingProgramsService;
             _nutritionProgramService = nutritionProgramService;
@@ -53,7 +52,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _trainerService.GetByIdentityId(userId));
-            var exercises =await Task.Run(()=>_exerciseService.GetAddingExercises(user,_context));
+            var exercises =await Task.Run(()=>_exerciseService.GetAddingExercises(user));
             return View(exercises);
         }
         [HttpGet]
@@ -64,7 +63,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _trainerService.GetByIdentityId(userId));
             var exercise = await Task.Run(()=>_exerciseService.GetById(id));
-            await Task.Run(() => _exerciseService.AddAddingExercises(exercise, user,_context));
+            await Task.Run(() => _exerciseService.AddAddingExercises(exercise, user));
             return RedirectToAction("ExercisesInComplex");
         }
         [HttpGet]
@@ -73,7 +72,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _trainerService.GetByIdentityId(userId));
-            await Task.Run(()=>_exerciseService.RemoveAddingExercises(id,user,_context));
+            await Task.Run(()=>_exerciseService.RemoveAddingExercises(id,user));
             return RedirectToAction("ExercisesInComplex");
         }
 
@@ -83,7 +82,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _trainerService.GetByIdentityId(userId));
-            var complexes = await Task.Run(() => _setOfExercisesService.GetAddingComplexes(user,_context));
+            var complexes = await Task.Run(() => _setOfExercisesService.GetAddingComplexes(user));
             return View(complexes);
         }
         [HttpGet]
@@ -93,8 +92,8 @@ namespace FitnessSuperiorMvc.WEB.Controllers
 
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _trainerService.GetByIdentityId(userId));
-            var complex = await Task.Run(()=>_setOfExercisesService.GetById(id, _context));
-            await Task.Run(() => _setOfExercisesService.AddAddingComplexes(complex, user, _context));
+            var complex = await Task.Run(()=>_setOfExercisesService.GetById(id));
+            await Task.Run(() => _setOfExercisesService.AddAddingComplexes(complex, user));
             return RedirectToAction("ComplexesInProgram");
         }
         [HttpGet]
@@ -103,7 +102,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _trainerService.GetByIdentityId(userId));
-            await Task.Run(() => _setOfExercisesService.RemoveAddingComplexes(id, user, _context));
+            await Task.Run(() => _setOfExercisesService.RemoveAddingComplexes(id, user));
             return RedirectToAction("ComplexesInProgram");
         }
         [HttpGet]
@@ -111,7 +110,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _nutritionistService.GetByIdentityId(userId));
-            var food = await Task.Run(() => _foodService.GetAddingFood(user, _context));
+            var food = await Task.Run(() => _foodService.GetAddingFood(user));
             return View(food);
         }
         [HttpGet]
@@ -122,7 +121,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _nutritionistService.GetByIdentityId(userId));
             var food = await Task.Run(() => _foodService.GetById(id));
-            await Task.Run(() => _foodService.AddAddingFood(food, user, _context));
+            await Task.Run(() => _foodService.AddAddingFood(food, user));
             return RedirectToAction("FoodInMealPlan");
         }
         [HttpGet]
@@ -131,7 +130,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _nutritionistService.GetByIdentityId(userId));
-            await Task.Run(() => _foodService.RemoveAddingFood(id, user, _context));
+            await Task.Run(() => _foodService.RemoveAddingFood(id, user));
             return RedirectToAction("FoodInMealPlan");
         }
 
@@ -141,7 +140,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _nutritionistService.GetByIdentityId(userId));
-            var mealPlans = await Task.Run(() => _mealPlanService.GetAddingMealPlans(user, _context));
+            var mealPlans = await Task.Run(() => _mealPlanService.GetAddingMealPlans(user));
             return View(mealPlans);
         }
         [HttpGet]
@@ -151,8 +150,8 @@ namespace FitnessSuperiorMvc.WEB.Controllers
 
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _nutritionistService.GetByIdentityId(userId));
-            var mealPlan = await Task.Run(() => _mealPlanService.GetById(id, _context));
-            await Task.Run(() => _mealPlanService.AddAddingMealPlans(mealPlan, user, _context));
+            var mealPlan = await Task.Run(() => _mealPlanService.GetById(id));
+            await Task.Run(() => _mealPlanService.AddAddingMealPlans(mealPlan, user));
             return RedirectToAction("MealPlansInProgram");
         }
         [HttpGet]
@@ -161,7 +160,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         {
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _nutritionistService.GetByIdentityId(userId));
-            await Task.Run(() => _mealPlanService.RemoveAddingMealPlan(id, user, _context));
+            await Task.Run(() => _mealPlanService.RemoveAddingMealPlan(id, user));
             return RedirectToAction("MealPlansInProgram");
         }
 
@@ -173,7 +172,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _userService.GetByIdentityId(userId));
             
-            var program = await Task.Run(() => _trainingProgramsService.GetById(id, _context));
+            var program = await Task.Run(() => _trainingProgramsService.GetById(id));
             user.TrainingPrograms.Add(program);
             await Task.Run(() => _userService.Update(user));
 
@@ -187,7 +186,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _userService.GetByIdentityId(userId));
 
-            var program = await Task.Run(() => _trainingProgramsService.GetById(id, _context));
+            var program = await Task.Run(() => _trainingProgramsService.GetById(id));
             user.TrainingPrograms.Remove(program);
             await Task.Run(() => _userService.Update(user));
 
@@ -201,7 +200,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _userService.GetByIdentityId(userId));
 
-            var program = await Task.Run(() => _nutritionProgramService.GetById(id, _context));
+            var program = await Task.Run(() => _nutritionProgramService.GetById(id));
             user.NutritionPrograms.Add(program);
             await Task.Run(() => _userService.Update(user));
 
@@ -215,7 +214,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _userService.GetByIdentityId(userId));
 
-            var program = await Task.Run(() => _nutritionProgramService.GetById(id, _context));
+            var program = await Task.Run(() => _nutritionProgramService.GetById(id));
             user.NutritionPrograms.Remove(program);
             await Task.Run(() => _userService.Update(user));
 
@@ -229,7 +228,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             var userId = _userManager.GetUserId(User);
             var user = await Task.Run(() => _userService.GetByIdentityId(userId));
 
-            var program = await Task.Run(() => _trainingProgramsService.GetById(id, _context));
+            var program = await Task.Run(() => _trainingProgramsService.GetById(id));
             user.TrainingPrograms.Remove(program);
             await Task.Run(() => _userService.Update(user));
 

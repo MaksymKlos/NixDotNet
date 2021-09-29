@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using FitnessSuperiorMvc.BLL.BusinessModels;
-using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Entities.Nutrition;
 using FitnessSuperiorMvc.DA.Entities.People;
 using FitnessSuperiorMvc.DA.Interfaces;
@@ -12,36 +10,32 @@ namespace FitnessSuperiorMvc.Services.Programs
     public class FoodService
     {
         private readonly IRepository<Food> _foodRepository;
+        private readonly IStaffRepository _staffRepository;
         public FoodService() {}
-        public FoodService(IRepository<Food> foodRepository)
+        public FoodService(IRepository<Food> foodRepository, IStaffRepository staffRepository)
         {
             _foodRepository = foodRepository;
+            _staffRepository = staffRepository;
         }
 
         public virtual List<Food> GetAll() => _foodRepository.GetAll().OrderBy(s=>s.Id).ToList();
 
         public virtual Food GetById(int id) => _foodRepository.GetById(id);
-        public virtual List<Food> GetAddingFood(Nutritionist user, FitnessAppContext context)
+        public virtual List<Food> GetAddingFood(Nutritionist user) =>
+             _staffRepository.GetFood(user);
+
+        public virtual void AddAddingFood(Food food, Nutritionist user)
         {
-            AddingController controller = new AddingController(context);
-            var exercises = controller.GetFood(user);
-            return exercises;
+            _staffRepository.AddAddingFood(food, user);
         }
-        public virtual void AddAddingFood(Food food, Nutritionist user, FitnessAppContext context)
+        public virtual void DeleteAddingFood(Nutritionist user)
         {
-            AddingController controller = new AddingController(context);
-            controller.AddAddingFood(food, user);
-        }
-        public virtual void DeleteAddingFood(Nutritionist user, FitnessAppContext context)
-        {
-            AddingController controller = new AddingController(context);
-            controller.DeleteFood(user);
+            _staffRepository.DeleteFood(user);
         }
 
-        public virtual void RemoveAddingFood(int id, Nutritionist user, FitnessAppContext context)
+        public virtual void RemoveAddingFood(int id, Nutritionist user)
         {
-            AddingController controller = new AddingController(context);
-            controller.RemoveAddingFood(id, user);
+            _staffRepository.RemoveAddingFood(id, user);
         }
         public virtual void Update(Food food) => _foodRepository.Update(food);
 
