@@ -26,7 +26,7 @@ namespace FitnessSuperiorMvc.WEB
         public void ConfigureServices(IServiceCollection services)
         {
             string connection = Configuration.GetConnectionString("DefaultConnection");
-
+            
             services.AddDbContext<FitnessAppContext>(options => options.UseSqlServer(connection));
             services.AddDbContext<SecurityContext>(options => options.UseSqlServer(connection));
             services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<SecurityContext>();

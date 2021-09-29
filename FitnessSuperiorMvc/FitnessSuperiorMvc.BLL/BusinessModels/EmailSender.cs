@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Linq;
 using System.Net.Mail;
-using FitnessSuperiorMvc.DA.EF;
-using FitnessSuperiorMvc.DA.Entities.Interaction;
 
 namespace FitnessSuperiorMvc.BLL.BusinessModels
 {
     public class EmailSender
     {
-        private readonly FitnessAppContext _context;
-        private string _email;
-        private string _password;
+        private readonly ISecretesStorage _secretes;
         
-        public EmailSender(FitnessAppContext context)
+        public EmailSender(ISecretesStorage secretes)
         {
-            _context = context;
-            SetMailAndPassword();
+            _secretes = secretes;
         }
 
         public void PushEmail(string email, string name, string subject, string message)
@@ -23,10 +17,10 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels
             var mailMessage = CreateMailMessage(email, name, subject, message);
             try
             {
-                using SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587)
+                using SmtpClient smtpClient = new SmtpClient(_secretes.Host, _secretes.Port)
                 {
                     EnableSsl = true,
-                    Credentials = new System.Net.NetworkCredential(_email, _password),
+                    Credentials = new System.Net.NetworkCredential(_secretes.EmailAddress, _secretes.EmailPassword),
                 };
                 smtpClient.Send(mailMessage);
             }
@@ -36,18 +30,10 @@ namespace FitnessSuperiorMvc.BLL.BusinessModels
                 throw;
             }
         }
-        private void SetMailAndPassword()
-        {
-            Mailer mailer = _context.Mailer.FirstOrDefault();
-            if (mailer == null) throw new ArgumentNullException(nameof(mailer),"Mail data is null.");
-            _email = mailer.Email;
-            _password = mailer.Password;
-        }
-
         private MailMessage CreateMailMessage(string email, string name, string subject, string message)
         {
-            MailMessage mailMessage = new MailMessage { From = new MailAddress(_email) };
-            mailMessage.To.Add(_email);
+            MailMessage mailMessage = new MailMessage { From = new MailAddress(_secretes.EmailAddress) };
+            mailMessage.To.Add(_secretes.EmailAddress);
             mailMessage.Subject = subject;
             mailMessage.IsBodyHtml = true;
             mailMessage.Body = $"<b style=\"color: red;\">Sender name:</b> {name}<br/><hr/>" +

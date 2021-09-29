@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using FitnessSuperiorMvc.DA.EF;
 using FitnessSuperiorMvc.DA.Interfaces;
 using Microsoft.EntityFrameworkCore;

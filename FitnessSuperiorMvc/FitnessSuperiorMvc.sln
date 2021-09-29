@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessSuperiorMvc.WEB", "F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FitnessSuperiorMvc.Services", "FitnessSuperiorMvc.Services\FitnessSuperiorMvc.Services.csproj", "{8AB387D8-E60E-49C8-A076-D1AC2DE4B570}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FitnessSuperior.WEB.Tests", "FitnessSuperior.WEB.Tests\FitnessSuperior.WEB.Tests.csproj", "{73BDCB6E-6635-4A6A-8E8E-1466631EAA20}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,10 +41,6 @@ Global
 		{8AB387D8-E60E-49C8-A076-D1AC2DE4B570}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8AB387D8-E60E-49C8-A076-D1AC2DE4B570}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8AB387D8-E60E-49C8-A076-D1AC2DE4B570}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73BDCB6E-6635-4A6A-8E8E-1466631EAA20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73BDCB6E-6635-4A6A-8E8E-1466631EAA20}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73BDCB6E-6635-4A6A-8E8E-1466631EAA20}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73BDCB6E-6635-4A6A-8E8E-1466631EAA20}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -56,7 +50,6 @@ Global
 		{4556519D-0451-43A0-A474-50CA28C8B357} = {E596DFDD-13CD-4064-9CCD-083D1DA9E6BE}
 		{471437D8-CFA3-4780-B5A6-A72290ED5FB2} = {B63C8D1C-9E15-422C-9518-32538FCB21DA}
 		{8AB387D8-E60E-49C8-A076-D1AC2DE4B570} = {090A1A83-ABA0-41A7-95FF-07BBEB16735A}
-		{73BDCB6E-6635-4A6A-8E8E-1466631EAA20} = {B82F02B4-94C2-4204-B275-16FF24E7079A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A8AB401-79A2-49D3-943D-6B15C9D0A835}
