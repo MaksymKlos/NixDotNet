@@ -210,6 +210,7 @@ namespace FitnessSuperiorMvc.WEB.Controllers
             };
             return View(programView);
         }
+        //TODO: Move Calendar and Get Event in another controller
         [HttpGet]
         public IActionResult Calendar()
         {

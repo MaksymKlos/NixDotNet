@@ -1,7 +1,9 @@
 using FitnessSuperiorMvc.BLL.BusinessModels;
 using FitnessSuperiorMvc.DA.EF;
+using FitnessSuperiorMvc.DA.Entities.Configuration;
 using FitnessSuperiorMvc.DA.Interfaces;
 using FitnessSuperiorMvc.DA.Repositories;
+using FitnessSuperiorMvc.Services.Interaction;
 using FitnessSuperiorMvc.Services.People;
 using FitnessSuperiorMvc.Services.Programs;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -46,11 +48,15 @@ namespace FitnessSuperiorMvc.WEB
             services.AddScoped<ManagerService>();
 
             services.AddScoped<CalendarService>();
+            services.AddScoped<EmailSenderService>();
 
             services.AddScoped<ISecretesStorage, SecretesStorage>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+            services.AddScoped<IMessageCreator, MessageCreator>();
+
             services.AddScoped<IStaffRepository, StaffRepository>();
             services.AddScoped<IFitnessServicesRepository, FitnessServicesRepository>();
-            services.AddScoped<IClientService, ClientService>();
+            
 
             services.Add(ServiceDescriptor.Scoped(typeof(IRepository<>), typeof(FitnessAppRepository<>)));
 

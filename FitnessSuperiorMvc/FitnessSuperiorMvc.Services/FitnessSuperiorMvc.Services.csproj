@@ -9,4 +9,8 @@
     <ProjectReference Include="..\FitnessSuperiorMvc.DA\FitnessSuperiorMvc.DA.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interaction\" />
+  </ItemGroup>
+
 </Project>

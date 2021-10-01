@@ -1,15 +1,22 @@
 ﻿using System;
 using FitnessSuperiorMvc.WEB.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 using FitnessSuperiorMvc.BLL.BusinessModels;
-using FitnessSuperiorMvc.DA.EF;
+using FitnessSuperiorMvc.Services.Interaction;
 
 namespace FitnessSuperiorMvc.WEB.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IMessageCreator _messageCreator;
+        private readonly EmailSenderService _emailSender;
+
+        public HomeController(IMessageCreator messageCreator, EmailSenderService emailSender)
+        {
+            _messageCreator = messageCreator;
+            _emailSender = emailSender;
+        }
         [HttpGet]
         public IActionResult Index()
         {
@@ -35,8 +42,16 @@ namespace FitnessSuperiorMvc.WEB.Controllers
         [HttpPost]
         public IActionResult ContactUs(string email, string name, string subject, string message)
         {
-            EmailSender mailSender = new EmailSender();
-            mailSender.PushEmail(email,name,subject,message);
+            try
+            {
+                var mail = _messageCreator.CreateMailMessage(email, name, subject, message);
+                _emailSender.PushEmail(mail);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+            
             return View();
         }
     }

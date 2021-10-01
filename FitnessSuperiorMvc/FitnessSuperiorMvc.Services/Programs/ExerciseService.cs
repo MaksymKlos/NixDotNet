@@ -20,14 +20,21 @@ namespace FitnessSuperiorMvc.Services.Programs
             _staffRepository = staffRepository;
         }
 
-        public virtual List<Exercise> GetAll() =>
-            _exerciseRepository.GetAll().OrderBy(s=>s.Id).ToList();
+        public virtual List<Exercise> GetAll()
+        {
+            var exercises = _exerciseRepository.GetAll();
+            return exercises != null ? exercises.OrderBy(s => s.Id).ToList() : new List<Exercise>();
+        }
+            
 
         public virtual Exercise GetById(int id) =>
             _exerciseRepository.GetById(id);
 
         public virtual List<Exercise> GetAddingExercises(Trainer user)
-            => _staffRepository.GetExercises(user);
+        {
+            return _staffRepository.GetExercises(user);
+        }
+            
 
         public virtual void AddAddingExercises(Exercise exercise, Trainer user)
         { 
@@ -42,7 +49,12 @@ namespace FitnessSuperiorMvc.Services.Programs
         {
             _staffRepository.RemoveAddingExercises(id,user);
         }
-        public virtual void Update(Exercise exercise) => _exerciseRepository.Update(exercise);
+
+        public virtual void Update(Exercise exercise)
+        {
+            VerifyExercise(exercise);
+            _exerciseRepository.Update(exercise);
+        } 
 
         public virtual void Remove(int id)
         {
@@ -55,5 +67,17 @@ namespace FitnessSuperiorMvc.Services.Programs
         }
 
         public virtual Exercise Create(Exercise exercise) => _exerciseRepository.Create(exercise);
+
+        private static void VerifyTrainer(Trainer trainer)
+        {
+            if (trainer == null)
+                throw new ArgumentNullException(nameof(trainer), $"{nameof(trainer)} is null");
+        }
+
+        private static void VerifyExercise(Exercise exercise)
+        {
+            if (exercise == null)
+                throw new ArgumentNullException(nameof(exercise), $"{nameof(exercise)} is null.");
+        }
     }
 }

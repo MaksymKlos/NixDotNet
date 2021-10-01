@@ -15,7 +15,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FitnessSuperiorMvc.BLL\FitnessSuperiorMvc.BLL.csproj" />
     <ProjectReference Include="..\FitnessSuperiorMvc.DA\FitnessSuperiorMvc.DA.csproj" />
     <ProjectReference Include="..\FitnessSuperiorMvc.Services\FitnessSuperiorMvc.Services.csproj" />
   </ItemGroup>

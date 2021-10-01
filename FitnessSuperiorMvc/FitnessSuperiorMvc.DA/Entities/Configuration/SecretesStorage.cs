@@ -1,13 +1,13 @@
 ﻿using System;
 using Microsoft.Extensions.Configuration;
 
-namespace FitnessSuperiorMvc.BLL.BusinessModels
+namespace FitnessSuperiorMvc.DA.Entities.Configuration
 {
     public interface ISecretesStorage
     {
         string EmailAddress { get; }
         string EmailPassword { get; }
-        string Host { get;}
+        string Host { get; }
         int Port { get; }
     }
 
